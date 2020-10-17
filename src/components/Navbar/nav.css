@@ -1,0 +1,9 @@
+.my-container {
+  display: flex; 
+  flex-direction: column;
+  align-content: flex-start;
+}
+
+#date {
+  align-self: center;
+}
