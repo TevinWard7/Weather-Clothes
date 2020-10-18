@@ -1,16 +1,29 @@
 import React from 'react';
 import './App.css';
 import Navbar from "./components/Navbar/nav"
-import Calender from "./components/Calender/calender";
-import WeatherClothes from "../src/components/WeatherClothes/weatherclothes";
+import WeatherClothes from "./Pages/WeatherClothes/weatherclothes";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+} from "react-router-dom";
+import AddOutfit from './Pages/AddOutfit/addoutfit';
 
 function App() {
   return (
-    <>
-      <Navbar/>
-      <Calender/>
-      <WeatherClothes/>
-    </>
+
+    <Router>
+      <Navbar />
+        <Switch>
+          <Route path="/add">
+            <AddOutfit />
+          </Route>
+          <Route path="/">
+            <WeatherClothes />
+          </Route>
+        </Switch>
+    </Router>
+  
   );
 }
 
