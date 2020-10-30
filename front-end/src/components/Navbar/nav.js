@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import "./nav.css";
 import SettingsSharpIcon from '@material-ui/icons/SettingsSharp';
 import { IconButton, Avatar } from "@material-ui/core";
-import { useStateValue } from "../../stateProvider";
+import { useStateValue } from "../../utils/stateProvider";
 
 const Navbar = () => {
+
+    // Get User info from data layer
     const [{ user }, dispatch] = useStateValue();
     console.log(user)
     // Determine if nav pop is open/closed
@@ -25,6 +27,7 @@ const Navbar = () => {
 
     return(
         <div className="my-container">
+
             <nav>
             <div>
                 <IconButton id="gear" onClick={toggleNav}><SettingsSharpIcon /></IconButton>
@@ -40,6 +43,7 @@ const Navbar = () => {
             </nav>
             
             <div id="date"><p>today's date</p></div>
+            
         </div>
     )
 }

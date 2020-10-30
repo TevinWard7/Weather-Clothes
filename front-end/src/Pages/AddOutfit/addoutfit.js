@@ -4,11 +4,15 @@ import "./addoutfit.css"
 const AddOutfit = () => {
 
     const [topName, setTopName] = useState();
+    console.log("AddOutfit -> topName", topName)
     const [outerWearName, setOuterWearName] = useState();
+    console.log("AddOutfit -> outerWearName", outerWearName)
     const [accesoriesName, setAccesoriesName] = useState();
+    console.log("AddOutfit -> accesoriesName", accesoriesName)
     const [bottomName, setBottomName] = useState();
+    console.log("AddOutfit -> bottomName", bottomName)
     const [shoesName, setShoesName] = useState();
-    console.log(topName)
+    console.log("AddOutfit -> shoesName", shoesName)
 
     return(
         <div className="row text-center page-content">

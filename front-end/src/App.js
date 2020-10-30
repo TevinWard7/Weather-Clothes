@@ -11,7 +11,7 @@ import AddOutfit from './Pages/AddOutfit/addoutfit';
 import Wardrobe from './Pages/Wardrobe/wardrobe';
 import LogIn from "./Pages/LogIn/login"
 import Pusher from "pusher-js";
-import { useStateValue } from "./stateProvider";
+import { useStateValue } from "./utils/stateProvider";
 
 function App() {
   const [{ user }, dispatch] = useStateValue();
