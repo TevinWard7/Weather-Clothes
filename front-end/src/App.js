@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import Navbar from "./components/Navbar/nav"
 import WeatherClothes from "./Pages/WeatherClothes/weatherclothes";
@@ -11,10 +11,10 @@ import AddOutfit from './Pages/AddOutfit/addoutfit';
 import Wardrobe from './Pages/Wardrobe/wardrobe';
 import LogIn from "./Pages/LogIn/login"
 import Pusher from "pusher-js";
+import { useStateValue } from "./stateProvider";
 
 function App() {
-
-  const [user, setUser] = useState();
+  const [{ user }, dispatch] = useStateValue();
 
   useEffect(() => {
     const pusher = new Pusher('287ac456408137934fc5', {
