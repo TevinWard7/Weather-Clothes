@@ -1,0 +1,17 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+  
+body {
+    overflow: hidden;
+}
+
+.app {
+  background-color: tomato;
+}
+
+/* .page-content {
+  margin: 25px;
+} */

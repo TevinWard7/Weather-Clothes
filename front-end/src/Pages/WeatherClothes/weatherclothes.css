@@ -1,0 +1,10 @@
+.day-list{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    justify-content: space-evenly;
+}
+
+.clothes-list {
+    list-style-type: none;
+}
