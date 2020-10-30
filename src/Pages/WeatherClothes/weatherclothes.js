@@ -3,8 +3,9 @@ import "./weatherclothes.css";
 
 const WeatherClothes = () => {
 
+
     return(
-        <>
+        <div className="page-content">
 
     <ul className="day-list">
         <li id="monday">M</li>
@@ -20,7 +21,7 @@ const WeatherClothes = () => {
 
         <div className="row text-center">
             <div className="col-12">
-                Weather Icon
+                Weather Icon, Temperature
             </div>
         </div>
 
@@ -41,7 +42,7 @@ const WeatherClothes = () => {
         
         </div>
 
-        </>
+        </div>
     )
 };
 

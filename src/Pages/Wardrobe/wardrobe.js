@@ -29,25 +29,27 @@ const Wardrobe = () => {
         <div className="container wardrobe-page">
 
             <div className="row">
-                <div className="col">
+
+                <div className="col-12 outfits">
                     {outfits ? 
                     outfits.map(outfit => 
-                    <div className="outfits">
-                     <h3>{outfit.outfit}</h3>
-                     </div>) 
+                        <ul>
+                            <li><h3>{outfit.outfit}</h3></li>
+                        </ul>) 
                     : <p>no outfits</p>}
                 </div>
+
+            </div>
+
+            <div className="row text-center">
+
                 <div className="col">
-                    <IconButton href="/add">
-                        <AddOutlinedIcon />
-                    </IconButton>
+                        <h3>Add New</h3>
+                        <IconButton href="/add">
+                            <AddOutlinedIcon />
+                        </IconButton>
                 </div>
             </div>
-            
-
-       {/* <button onClick={addOutfit}>new wardrobe</button> */}
-       
-
         </div>
     )
 };

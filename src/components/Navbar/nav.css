@@ -13,12 +13,11 @@ li a {
 }
 
 .nav-links {
-  z-index: 3;
+  z-index: 5;
   list-style-type: none;
   position: absolute;
   left: 0px;
   background-color:white;
-  top: 8vh;
   width: 50%;
   height: 100vh;
   display: flex;

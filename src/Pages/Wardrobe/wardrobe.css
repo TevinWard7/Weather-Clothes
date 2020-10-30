@@ -1,0 +1,15 @@
+.outfits {
+    display: flex;
+  justify-content: space-around;
+  color: #b6d8cf;
+  font-size:30px;
+  text-transform: uppercase;
+}
+
+.outfits > ul {
+    list-style: none;
+}
+
+.outfits > li {
+    display: inline;
+} 

@@ -2,3 +2,9 @@
     list-style-type: none;
     /* text-align: center; */
 }
+
+input {
+    text-align: center;
+    border: none;
+    outline-width: 0;
+}
