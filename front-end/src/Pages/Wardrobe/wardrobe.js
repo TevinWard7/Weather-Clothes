@@ -4,7 +4,7 @@ import Pusher from "pusher-js";
 import { useStateValue } from "../../utils/stateProvider";
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 import { IconButton } from "@material-ui/core";
-import "./wardobe.css";
+import "./wardrobe.css";
 
 const Wardrobe = () => {
 
@@ -25,27 +25,28 @@ const Wardrobe = () => {
         
     },[user.uid]);
 
-    // const addOutfit = () => {
-    //     wardrobeRef.add(
-    //         {
-    //             uid: user.uid,
-    //             outfit: "coolfit",
-    //             shoes: "balenci"
-    //         }
-    //     )
-    // };
-
     return(
-        <div className="wardobe-page">
-            {outfits ? 
-            outfits.map(outfit => 
-            <div>
-                <h3>{outfit.outfit}</h3>
-            </div>) 
-            : <p>no outfits</p>}
+        <div className="container wardrobe-page">
+
+            <div className="row">
+                <div className="col">
+                    {outfits ? 
+                    outfits.map(outfit => 
+                    <div className="outfits">
+                     <h3>{outfit.outfit}</h3>
+                     </div>) 
+                    : <p>no outfits</p>}
+                </div>
+                <div className="col">
+                    <IconButton href="/add">
+                        <AddOutlinedIcon />
+                    </IconButton>
+                </div>
+            </div>
+            
 
        {/* <button onClick={addOutfit}>new wardrobe</button> */}
-       <IconButton><AddOutlinedIcon /></IconButton>
+       
 
         </div>
     )
