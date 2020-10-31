@@ -107,7 +107,14 @@ const AddOutfit = () => {
                     </select>
                     <br/>
                     <br/>
+
+                    {
+                    !outfitName ? 
+                    <Button disabled>Submit</Button>
+                    :
                     <Button onClick={addOutfit}>Submit</Button>
+                    }
+                    
 
                     </form>
             

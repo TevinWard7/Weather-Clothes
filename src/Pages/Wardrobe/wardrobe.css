@@ -1,9 +1,16 @@
+.wardrobe-page {
+    display: grid;
+    align-items: center;
+    height: 100vh;
+}
+
 .outfits {
+    overflow-y: scroll;
     display: flex;
-  justify-content: space-around;
-  color: #b6d8cf;
-  font-size:30px;
-  text-transform: uppercase;
+    justify-content: space-around;
+    color: #b6d8cf;
+    font-size:30px;
+    text-transform: uppercase;
 }
 
 .outfits > ul {

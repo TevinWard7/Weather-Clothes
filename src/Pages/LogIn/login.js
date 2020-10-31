@@ -6,9 +6,11 @@ import { useStateValue } from "../../utils/stateProvider";
 import { actionTypes } from "../../utils/reducer";
 
 const LogIn = () => {
+
     const [{}, dispatch] = useStateValue();
 
     const signIn = () => {
+
         auth
         .signInWithPopup(provider)
         .then(result => {
@@ -18,15 +20,20 @@ const LogIn = () => {
             })
         })
         .catch(err => console.log(err.message))
+
     };
 
     return(
         <div className="login">
+
             <div className="login-container">
+
                 <div>Welcome</div>
                 <h2>WW</h2>
                 <Button onClick={signIn}>Sign In</Button>
+                
             </div>
+
         </div>
     )
 };
