@@ -5,7 +5,7 @@
 }
 
 .outfits {
-    overflow-y: scroll;
+    overflow: scroll;
     display: flex;
     justify-content: space-around;
     color: #b6d8cf;
@@ -15,8 +15,13 @@
 
 .outfits > ul {
     list-style: none;
+    margin: 10px;
+
 }
 
 .outfits > li {
     display: inline;
+    border: black;
+    border-style: solid;
+    border-width: thick;
 } 

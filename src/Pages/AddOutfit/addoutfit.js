@@ -32,7 +32,6 @@ const AddOutfit = () => {
             {
                 uid: user.uid,
                 outfit: outfitName,
-                // shoes: "balenci"
             }
         ).then(history.push('/wardrobe'))
     };
@@ -46,7 +45,7 @@ const AddOutfit = () => {
 
                 {//Outfit Name Entry
                 }
-                <input type="text" placeholder="Outfit name" 
+                <input type="text" placeholder="Outfit" 
                 onChange={(e) => setOutfitName(e.target.value)}></input>
                 <br/>
                 <br/>

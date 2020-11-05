@@ -4,14 +4,17 @@ import { useStateValue } from "../../utils/stateProvider";
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 import { IconButton } from "@material-ui/core";
 import "./wardrobe.css";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const Wardrobe = () => {
 
     // Get loggedin user info
     const [{ user }, dispatch] = useStateValue();
-    // Get colleection from firebase
-    // const wardrobeRef = db.collection("wardrobe");
+    console.log("User ->", user)
     const [outfits, setOutfits] = useState();
+    console.log("Wardrobe -> outfits", outfits)
 
     
     useEffect(() => {
@@ -19,42 +22,39 @@ const Wardrobe = () => {
         db
         .collection("wardrobe")
         .where('uid', '==', user.uid)
+        // .orderBy('createdAt')
         .onSnapshot(snapshot => setOutfits(snapshot.docs.map((doc) => doc.data())))
         
     },[user.uid]);
 
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1
+      };
+
     return(
-        <div className="container wardrobe-page">
+        <>
+            <Slider {...settings}>
 
-            <div className="row">
-
-                <div className="col-12 outfits">
-
-                    {outfits ? 
+                {outfits ? 
                     outfits.map(outfit => 
-                        <ul>
-                            <li><h3>{outfit.outfit}</h3></li>
-                        </ul>) 
-                    : <p>no outfits</p>}
+                <div>
+                    <h3>{outfit.outfit}</h3>
+                </div>) 
+                : <div>
+                    <p>no outfits</p>
+                </div>}
 
-                </div>
+            </Slider>
 
+            <div>
+                <IconButton href="/add"><AddOutlinedIcon /></IconButton>
+                <h3>Add Outfit</h3>
             </div>
-
-            <div className="row text-center">
-
-                <div className="col">
-
-                        <h3>Add New</h3>
-                        <IconButton href="/add">
-                            <AddOutlinedIcon />
-                        </IconButton>
-                        
-                </div>
-
-            </div>
-
-        </div>
+        </>
     )
 };
 
