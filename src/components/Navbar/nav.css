@@ -8,8 +8,8 @@
   align-self: center;
 }
 
-li a {
-  color: black;
+.nav-links > li{
+  cursor: pointer;
 }
 
 .nav-links {

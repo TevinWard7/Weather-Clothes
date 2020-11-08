@@ -1,27 +1,15 @@
-.wardrobe-page {
-    display: grid;
-    align-items: center;
-    height: 100vh;
+.my-row {
+    margin-bottom: 10px;
 }
 
-.outfits {
-    overflow: scroll;
-    display: flex;
-    justify-content: space-around;
-    color: #b6d8cf;
-    font-size:30px;
-    text-transform: uppercase;
+.fits {
+    margin-top: 25px;
+    height: 300px;
 }
 
-.outfits > ul {
-    list-style: none;
-    margin: 10px;
-
+.add-fit {
+    position: absolute;
+    bottom: 0;
+    margin-top: 25px;
+    /* margin-bottom: 25px; */
 }
-
-.outfits > li {
-    display: inline;
-    border: black;
-    border-style: solid;
-    border-width: thick;
-} 
