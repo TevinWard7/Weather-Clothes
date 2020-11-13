@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./nav.css";
 import SettingsSharpIcon from '@material-ui/icons/SettingsSharp';
 import { IconButton, Avatar } from "@material-ui/core";
 import { useStateValue } from "../../utils/stateProvider";
 import { useHistory } from "react-router-dom";
+import API from "../../utils/API";
 
 const Navbar = () => {
 
@@ -13,8 +14,25 @@ const Navbar = () => {
     const [navActive, setNavActive] = useState("false");
     // Determine annimation
     const [fadeIn, setFadeIn] = useState(0);
+    const [location, setLocation] = useState();
     const history = useHistory();
 
+    console.log(user)
+
+    useEffect(() => {
+
+        navigator.geolocation.getCurrentPosition((position) => {
+
+            const {longitude, latitude} = position.coords;
+
+            API.search(longitude, latitude)
+            .then(res => console.log(res))
+            .catch(err => console.log(err));
+
+        })
+
+    },[])
+    
     // Toggle Our Navigation Bar
     const toggleNav = () => {
 
@@ -42,7 +60,11 @@ const Navbar = () => {
 
             case "/add":
                 history.push("/add")
-                break;        
+                break;
+            
+            case "/location":
+                history.push("/location")
+                break;    
         
             default:
                 break;
@@ -62,8 +84,8 @@ const Navbar = () => {
                 <ul className={`nav-links ${navActive === "true" ? "nav-active" : ""}`} fadein={fadeIn} onAnimationEnd={() => {setFadeIn(0)}}>
                     <li><Avatar src={user.photoURL}/></li>
                     <li onClick={() => linkAction("/")}>Home</li>
+                    <li onClick={() => linkAction("/location")}>Location</li>
                     <li onClick={() => linkAction("/wardrobe")}>Wardrobe</li>
-                    <li onClick={() => linkAction("/add")}>Add Outfit</li>
                 </ul>
                 
             </nav>

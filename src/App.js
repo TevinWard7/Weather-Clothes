@@ -9,23 +9,13 @@ import {
 } from "react-router-dom";
 import AddOutfit from './Pages/AddOutfit/addoutfit';
 import Wardrobe from './Pages/Wardrobe/wardrobe';
-import LogIn from "./Pages/LogIn/login"
-import Pusher from "pusher-js";
+import Location from "./Pages/Location/location";
+import LogIn from "./Pages/LogIn/login";
 import { useStateValue } from "./utils/stateProvider";
 
 function App() {
+
   const [{ user }, dispatch] = useStateValue();
-
-  useEffect(() => {
-    const pusher = new Pusher('287ac456408137934fc5', {
-      cluster: 'us2'
-    });
-
-    const channel = pusher.subscribe('outfits');
-    channel.bind('inserted', (data) => {
-      alert(JSON.stringify(data));
-    });
-  }, [])
 
 
   return (
@@ -38,6 +28,10 @@ function App() {
         <Switch>
         <Route path="/login">
             <LogIn />
+          </Route>
+          <Route path="/location">
+          <Navbar />
+            <Location />
           </Route>
           <Route path="/add">
             <Navbar />
