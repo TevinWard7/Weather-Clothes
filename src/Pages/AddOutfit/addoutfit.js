@@ -13,7 +13,6 @@ const AddOutfit = () => {
     const wardrobeRef = db.collection("wardrobe");
     const history = useHistory();
     const [outfitName, setOutfitName] = useState();
-    console.log("AddOutfit -> outfitName", outfitName)
 
     const addOutfit = () => {
         wardrobeRef.add(
