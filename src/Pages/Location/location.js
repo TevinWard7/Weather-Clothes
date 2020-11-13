@@ -3,20 +3,29 @@ import "./location.css";
 import { useStateValue } from "../../utils/stateProvider";
 import { actionTypes } from "../../utils/reducer";
 import { Button } from "@material-ui/core";
+import db from "../../utils/firebase";
 
 const Location = () => {
 
-    const [{ city }, dispatch] = useStateValue();
+    const [{ user }, dispatch] = useStateValue();
     const [location, setLocation] = useState("City");
 
-    console.log(city)
+    useEffect(() => {
 
-    // Send city info to data layer
-    const dispatchCity = () => {
+        db
+        .collection("city")
+        .where('uid', '==', user.uid)
+        .onSnapshot(snapshot => setLocation(snapshot.docs.map((doc) => doc.data())))
 
-        dispatch({
-            type: actionTypes.SET_CITY,
-            city: location
+    },[user.uid])
+
+    // Send city info to databae
+    const addCity = () => {
+
+        db.collection("city")
+        .add({
+            uid: user.uid,
+            city: location,
         })
 
     };
@@ -28,13 +37,14 @@ const Location = () => {
 
                 <div className="col">
                     <h3>Enter City</h3>
-                    <div><input placeholder={city || "city"} onChange={(e) => setLocation(e.target.value)} />
+                    <div>
+                        <input placeholder={location[0].city || "city"} onChange={(e) => setLocation(e.target.value)} />
 
                     {
                     !location? 
                     <Button disabled>Submit</Button>
                     :
-                    <Button onClick={() => dispatchCity()}>Submit</Button>
+                    <Button onClick={() => addCity()}>Submit</Button>
                     }
 
                     </div>

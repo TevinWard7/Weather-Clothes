@@ -1,13 +1,11 @@
 import { AccordionActions } from "@material-ui/core";
 
 export const initialState = {
-    user: null,
-    city: null
+    user: null
 };
 
 export const actionTypes = {
     SET_USER: "SET_USER",
-    SET_CITY: "SET_CITY"
 };
 
 const reducer = (state, action) => {
@@ -19,12 +17,6 @@ const reducer = (state, action) => {
                 user: action.user,
             }
         
-        case actionTypes.SET_CITY:
-            return {
-                ...state,
-                city: action.city
-            }    
-    
         default:
             return state;
     }
