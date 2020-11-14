@@ -81,6 +81,7 @@ const Wardrobe = () => {
                         <ClearIcon fontSize="small"/>
                         </IconButton>
                         <h3>{doc.data().outfit}</h3>
+                        {/* <img src={}></img> */}
                     </div>
                     ) 
                     : <div>

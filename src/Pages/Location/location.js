@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./location.css";
 import { useStateValue } from "../../utils/stateProvider";
-import { actionTypes } from "../../utils/reducer";
 import { Button } from "@material-ui/core";
 import db from "../../utils/firebase";
 
@@ -40,18 +39,23 @@ const Location = () => {
                     <div>
                         <input placeholder={location[0].city || "city"} onChange={(e) => setLocation(e.target.value)} />
 
-                    {
-                    !location? 
-                    <Button disabled>Submit</Button>
-                    :
-                    <Button onClick={() => addCity()}>Submit</Button>
-                    }
-
                     </div>
                 </div>
 
             </div>
         
+            <div className="row text-center">
+
+                <div className="col">
+                {
+                    !location? 
+                    <Button disabled>Submit</Button>
+                    :
+                    <Button onClick={() => addCity()}>Submit</Button>
+                    }
+                </div>
+
+            </div>
         </div>
     )
 

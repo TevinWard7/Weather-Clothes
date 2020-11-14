@@ -1,11 +1,34 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import "./weatherclothes.css";
 import { Button } from "@material-ui/core";
+import db from "../../utils/firebase";
+import { useStateValue } from "../../utils/stateProvider";
+import API from "../../utils/API";
 
 const WeatherClothes = () => {
 
+    const [{ user }, dispatch] = useStateValue();
+    const [location, setLocation] = useState();
+
+    useEffect(() => {
+
+        db
+        .collection("city")
+        .where('uid', '==', user.uid)
+        .onSnapshot(snapshot => setLocation(snapshot.docs.map((doc) => doc.data().city)))
+
+    },[user.uid])
+
+    useEffect(() => {
+        API.search(location)
+        .then(res => console.log(res))
+    },[location])
+
+
     return(
         <div className="page-content">
+
+            {/* <h3>{location}</h3> */}
 
             <ul className="day-list">
 

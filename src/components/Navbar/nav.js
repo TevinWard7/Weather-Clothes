@@ -4,7 +4,6 @@ import SettingsSharpIcon from '@material-ui/icons/SettingsSharp';
 import { IconButton, Avatar } from "@material-ui/core";
 import { useStateValue } from "../../utils/stateProvider";
 import { useHistory } from "react-router-dom";
-import API from "../../utils/API";
 
 const Navbar = () => {
 
@@ -16,22 +15,6 @@ const Navbar = () => {
     const [fadeIn, setFadeIn] = useState(0);
     const [location, setLocation] = useState();
     const history = useHistory();
-
-    console.log(user)
-
-    useEffect(() => {
-
-        navigator.geolocation.getCurrentPosition((position) => {
-
-            const {longitude, latitude} = position.coords;
-
-            API.search(longitude, latitude)
-            .then(res => console.log(res))
-            .catch(err => console.log(err));
-
-        })
-
-    },[])
     
     // Toggle Our Navigation Bar
     const toggleNav = () => {
