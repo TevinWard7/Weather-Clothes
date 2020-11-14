@@ -33,8 +33,6 @@ const WeatherClothes = () => {
     return(
         <div className="page-content">
 
-            
-
             <ul className="day-list">
 
                 <Button variant="outlined" size="large"><li id="monday">M</li></Button>
