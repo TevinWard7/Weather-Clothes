@@ -9,6 +9,7 @@ const WeatherClothes = () => {
 
     const [{ user }, dispatch] = useStateValue();
     const [location, setLocation] = useState();
+    const [todaysTemp, setTodaysTemp] = useState();
 
     useEffect(() => {
 
@@ -21,14 +22,18 @@ const WeatherClothes = () => {
 
     useEffect(() => {
         API.search(location)
-        .then(res => console.log(res))
+        .then(res => setTodaysTemp(res.data.list[0].main.temp))
     },[location])
+
+    const kelvinToFaran = (kelvin) => {
+        return (kelvin - 273.15) * 9/5 + 32
+    };
 
 
     return(
         <div className="page-content">
 
-            {/* <h3>{location}</h3> */}
+            
 
             <ul className="day-list">
 
@@ -48,7 +53,7 @@ const WeatherClothes = () => {
 
                     <div className="col-12">
 
-                        Weather Icon, Temperature
+                        Weather Icon, {Math.round(kelvinToFaran(todaysTemp)) + "°"}
 
                     </div>
                     
@@ -60,13 +65,7 @@ const WeatherClothes = () => {
 
                     <div className="col">
 
-                        <ul className="clothes-list">
-
-                            <li>clothes1 <span>name</span></li>
-                            <li>clothes1 <span>name</span></li>
-                            <li>clothes1 <span>name</span></li>
-
-                        </ul>
+                        outfit
 
                     </div>
 
