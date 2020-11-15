@@ -4,6 +4,7 @@ import { Button } from "@material-ui/core";
 import db from "../../utils/firebase";
 import { useStateValue } from "../../utils/stateProvider";
 import API from "../../utils/API";
+import { number } from "yargs";
 
 const WeatherClothes = () => {
 
@@ -50,8 +51,18 @@ const WeatherClothes = () => {
                 <div className="row text-center">
 
                     <div className="col-12">
+ 
+                        {
+                            (()=> {
 
-                        Weather Icon, {Math.round(kelvinToFaran(todaysTemp)) + "°"}
+                            if (typeof todaysTemp === "number") {
+                            return "Weather Icon", Math.round(kelvinToFaran(todaysTemp))
+                            }
+                            else {
+                            console.log("no temp")
+                            }
+                            })()
+                        }
 
                     </div>
                     

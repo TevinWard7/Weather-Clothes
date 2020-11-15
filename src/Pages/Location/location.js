@@ -62,10 +62,6 @@ const Location = () => {
 
     };
 
-    const saycool = () => {
-        console.log("cool")
-    }
-
     return(
         <div className="container">
 
@@ -91,7 +87,7 @@ const Location = () => {
                     
                     (()=> {
 
-                        initialCity ? saycool() : setInitialCity([{city: "City"}])
+                        !initialCity ? setInitialCity([{city: "City"}]) : console.log("cool")
 
                         const {city} = initialCity[0]
 
