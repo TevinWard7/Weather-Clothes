@@ -8,21 +8,27 @@ import db from "../../utils/firebase";
 const Location = () => {
 
     const [{ user }, dispatch] = useStateValue();
-    const [initialCity, setInitialCity] = useState();
-    console.log("Location -> initialCity", initialCity)
+    const [initialCity, setInitialCity] = useState("City");
     const [newCity, setNewCity] = useState();
     const [id, setId] = useState();
-    console.log("Location -> cityDocId", id)
+    const cityRef = db.collection("city").where('uid', '==', user.uid);
 
     // Pull user's city from the database
     useEffect(() => {
 
-        db
-        .collection("city")
-        .where('uid', '==', user.uid)
-        .onSnapshot(snapshot => setInitialCity(snapshot.docs.map((doc) => doc.data())))
+        cityRef.onSnapshot(snapshot => {
 
-    },[user.uid])
+            const data = snapshot.docs.map((doc) => doc.data())
+
+            // If the DB has a city store it else log no city
+            if (data[0]) {
+                setInitialCity(data[0].city)
+            } else {
+                console.log("no city from db")
+            }
+        })
+        
+    },[cityRef, user.uid])
 
     // Pull ID of the doc from firebase
     useEffect(() => {
@@ -48,9 +54,13 @@ const Location = () => {
             uid: user.uid,
             city: newCity,
         })
+        .then(
+            alert("Saved")
+        )
 
     };
 
+    // Update city in db according to new user input
     const updateCity = (id, newCity) => {
 
         db
@@ -59,6 +69,9 @@ const Location = () => {
         .update({
             city: newCity
         })
+        .then(
+            alert("Updated")
+        )
 
     };
 
@@ -71,7 +84,7 @@ const Location = () => {
 
                     <h3>Enter City</h3>
                     <div>
-                        <input placeholder={initialCity ? initialCity[0].city : "City"} onChange={(e) => setNewCity(e.target.value)} />
+                        <input placeholder={initialCity || "City"} onChange={(e) => setNewCity(e.target.value)} />
 
                     </div>
 
@@ -87,28 +100,24 @@ const Location = () => {
                     
                     (()=> {
 
-                        !initialCity ? setInitialCity([{city: "City"}]) : console.log("cool")
-
-                        const {city} = initialCity[0]
-
-
-                        if (!newCity || newCity === city ) {
-
-                            return <Button disabled>Submit</Button>;} 
-                        
-                        if (newCity && !city) {
+                        if (newCity && initialCity === "City") {
 
                             return <Button onClick={() => addCity(newCity)}>Submit</Button>;
         
-                        }      
+                        }    
 
-                        if (city && city != newCity) {
+                        if (!newCity || newCity === initialCity ) {
+
+                            return <Button disabled>Submit</Button>;}   
+
+                        if (initialCity && initialCity != newCity) {
 
                             return <Button onClick={() => updateCity(id, newCity)}>Update</Button>
 
                     }
 
-                    })()}
+                    })()
+                    }
                     
                 </div>
 
