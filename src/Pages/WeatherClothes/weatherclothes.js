@@ -4,7 +4,6 @@ import { Button } from "@material-ui/core";
 import db from "../../utils/firebase";
 import { useStateValue } from "../../utils/stateProvider";
 import API from "../../utils/API";
-import { number } from "yargs";
 
 const WeatherClothes = () => {
 
@@ -25,6 +24,7 @@ const WeatherClothes = () => {
         API.search(location)
         .then(res => setTodaysTemp(res.data.list[0].main.temp))
     },[location])
+
 
     const kelvinToFaran = (kelvin) => {
         return (kelvin - 273.15) * 9/5 + 32
@@ -56,10 +56,18 @@ const WeatherClothes = () => {
                             (()=> {
 
                             if (typeof todaysTemp === "number") {
-                            return "Weather Icon", Math.round(kelvinToFaran(todaysTemp))
+
+                                const temperature = Math.round(kelvinToFaran(todaysTemp)) + "°";
+
+                                return (
+                                    <>
+                                        <div>{temperature}</div>
+                                        <div>Weather Icon</div> 
+                                    </>
+                                )
                             }
                             else {
-                            console.log("no temp")
+                                console.log("no temp")
                             }
                             })()
                         }
