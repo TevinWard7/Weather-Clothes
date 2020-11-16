@@ -10,6 +10,7 @@
 
 .nav-links > li{
   cursor: pointer;
+  margin-top: 35px;
 }
 
 .nav-links {

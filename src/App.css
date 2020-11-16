@@ -1,12 +1,31 @@
+@font-face {
+  font-family: apercu-bold;
+  src: url(./fonts/Apercu/Apercu\ Pro\ Bold.otf);
+}
+
+@font-face {
+  font-family: apercu-medium;
+  src: url(./fonts/Apercu/Apercu\ Pro\ Medium.otf);
+}
+
+@font-face {
+  font-family: apercu;
+  src: url(./fonts/Apercu/Apercu\ Pro\ Regular.otf);
+}
+
 *{
+    font-family: apercu;
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
+}  
+
+* > h1 {
+  font-family: apercu-bold;
 }
-  
-body {
-    overflow: hidden;
-    background-color: rgb(228, 228, 228);
+
+* > h2, h3 {
+  font-family: apercu-medium;
 }
 
 .app {

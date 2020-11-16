@@ -28,7 +28,7 @@ const Wardrobe = () => {
 
     const removeFit = (theDoc) => {
 
-        const confirmDelete = prompt("are you sure?");
+        const confirmDelete = window.confirm("are you sure?");
 
         if (confirmDelete) {
             db

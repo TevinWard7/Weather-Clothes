@@ -83,7 +83,7 @@ const Location = () => {
 
                 <div className="col">
 
-                    <h3>Enter City</h3>
+                    <h1>Enter City</h1>
 
                     <div>
 

@@ -46,7 +46,7 @@ function App() {
                 <Navbar />
                 <WeatherClothes />
             </Route>
-            
+
           </Switch>
 
         </Router>

@@ -28,5 +28,17 @@ input {
 
 .fits {
     margin: 25px;
-
 }
+
+.custom-select {
+    text-align-last: center;
+}
+
+.select-items {
+    position: absolute;
+    background-color: DodgerBlue;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 99;
+  }

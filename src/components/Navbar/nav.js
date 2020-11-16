@@ -73,7 +73,7 @@ const Navbar = () => {
                 
             </nav>
             
-            <div id="date"><p>today's date</p></div>
+            <div id="date"><h5>today's date</h5></div>
             
         </div>
     )

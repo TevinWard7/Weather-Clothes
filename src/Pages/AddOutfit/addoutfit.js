@@ -75,7 +75,7 @@ const AddOutfit = () => {
 
                         {//Outfit Name Entry
                         }
-                        <h3>Enter Outfit</h3>
+                        <h1>Enter Outfit</h1>
                         <input type="text" placeholder="Outfit" 
                         onChange={(e) => setOutfitName(e.target.value)}></input>
                         
@@ -90,18 +90,20 @@ const AddOutfit = () => {
 
                         {// Get Weather description input for oufit
                         }
-                        <select className="custom-select" onChange={(e) => {
+                        <select className="custom-select" style={{width: "200px"}} onChange={(e) => {
                             setFitWeather(e.target.value)
                         }}>
-                            <option value="clear Sky">Clear Sky</option>
+                            <option></option>
+                            <option value="clear Sky" className="select-items">Clear Sky</option>
                             <option value="overcast">Overcast</option>
                             <option value="rain">Rain</option>
                             <option value="sunny">Sunny</option>
                         </select>
 
-                        <select className="custom-select" onChange={(e) => {
+                        <select className="custom-select" style={{width: "200px"}} onChange={(e) => {
                             setFitTemp(e.target.value)
                         }}>
+                            <option></option>
                             <option value="neutral">Neutral</option>
                             <option value="hot">Hot</option>
                             <option value="cold">Cold</option>
