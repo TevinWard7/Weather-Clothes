@@ -10,7 +10,9 @@ const WeatherClothes = () => {
     const [{ user }, dispatch] = useStateValue();
     const [location, setLocation] = useState();
     const [todaysTemp, setTodaysTemp] = useState();
+    const [todayDescript, setTodayDescript] = useState();
 
+    // Get location data from DB
     useEffect(() => {
 
         db
@@ -20,15 +22,24 @@ const WeatherClothes = () => {
 
     },[user.uid])
 
+    // Get weather data from API based on city from DB
     useEffect(() => {
         API.search(location)
-        .then(res => setTodaysTemp(res.data.list[0].main.temp))
+        .then((res) => {
+            setTodaysTemp(res.data.list[0].main.temp)
+            setTodayDescript(res.data.list[0].weather[0].description)
+        })
     },[location])
 
+    useEffect(() => {
+
+    },[])
 
     const kelvinToFaran = (kelvin) => {
         return (kelvin - 273.15) * 9/5 + 32
     };
+
+
 
 
     return(

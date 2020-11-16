@@ -11,6 +11,7 @@ const Location = () => {
     const [initialCity, setInitialCity] = useState("City");
     const [newCity, setNewCity] = useState();
     const [id, setId] = useState();
+    console.log("Location -> id", id)
     const cityRef = db.collection("city").where('uid', '==', user.uid);
 
     // Pull user's city from the database
