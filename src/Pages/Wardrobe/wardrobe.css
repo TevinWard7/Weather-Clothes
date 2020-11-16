@@ -19,3 +19,11 @@
     height: 300px;
     width: 300px;
 }
+
+.x-button {
+    display: none;
+}
+
+.slide:hover > .x-button {
+    display: block;
+}
