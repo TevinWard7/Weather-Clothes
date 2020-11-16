@@ -42,3 +42,12 @@ input {
     right: 0;
     z-index: 99;
 }
+
+#enter-fit {
+    font-weight: 400;
+    font-size: 50px;
+}
+
+#fit-input {
+    font-size: 25px;
+}

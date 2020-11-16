@@ -1,26 +1,16 @@
-.my-row {
-    margin-bottom: 10px;
-}
-
-.fits {
-    /* margin-top: 25px; */
-    height: 400px;
-}
-
 .add-fit {
-    position:fixed;
     bottom:0;
     width: 100%;
     text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 25px;
 }
 
 #fit-pic {
     height: 300px;
-    width: 300px;
-    margin: 25px;
     padding: 15px;
-    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .x-button {

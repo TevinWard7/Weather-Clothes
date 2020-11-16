@@ -75,9 +75,9 @@ const AddOutfit = () => {
 
                         {//Outfit Name Entry
                         }
-                        <h1>Enter Outfit</h1>
+                        <h1 id="enter-fit">Enter Outfit</h1>
                         <input type="text" placeholder="Name Your Outfit" 
-                        onChange={(e) => setOutfitName(e.target.value)}></input>
+                        onChange={(e) => setOutfitName(e.target.value)} id="fit-input"></input>
                         
                         <br/>
                         <br/>

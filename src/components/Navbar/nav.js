@@ -60,6 +60,7 @@ const Navbar = () => {
         <div className="my-container">
 
             <nav>
+                
                 <div>
                     <IconButton id="gear" onClick={toggleNav}><SettingsSharpIcon /></IconButton>
                 </div>
@@ -73,7 +74,7 @@ const Navbar = () => {
                     
             </nav>
             
-            <div id="date"><h5>today's date</h5></div>
+            <div id="date"><p>today's date</p></div>
             
         </div>
     )
