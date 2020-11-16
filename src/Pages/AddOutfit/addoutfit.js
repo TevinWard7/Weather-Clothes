@@ -17,7 +17,9 @@ const AddOutfit = () => {
     const [fitImage, setFitImage] = useState();
     const [imgUrl, setImgUrl] = useState();
     const [fitWeather, setFitWeather] = useState();
+    const [fitTemp, setFitTemp] = useState();
     console.log(fitWeather)
+    console.log(fitTemp)
 
     const handleImgUpload = (event) => {
 
@@ -53,12 +55,12 @@ const AddOutfit = () => {
             {
                 uid: user.uid,
                 outfit: outfitName,
+                weather: fitWeather,
+                tempertature: fitTemp,
                 image: imgUrl
             }
         ).then(history.push('/wardrobe'))
     };
-
-
 
     return(
 
@@ -75,11 +77,13 @@ const AddOutfit = () => {
                         <h3>Enter Outfit</h3>
                         <input type="text" placeholder="Outfit" 
                         onChange={(e) => setOutfitName(e.target.value)}></input>
+                        
                         <br/>
                         <br/>
 
                         <input type="file" accept="image/*" onChange={(event) => setFitImage(event.target.files[0])} id="img-upload"></input>
                         <button onClick={(event) => {handleImgUpload(event)}} id="upload-button">Upload</button>
+                        
                         <br/>
                         <br/>
 
@@ -94,10 +98,12 @@ const AddOutfit = () => {
                             <option value="sunny">Sunny</option>
                         </select>
 
-                        <select>
-                            <option>Neutral</option>
-                            <option>Hot</option>
-                            <option>Cold</option>
+                        <select className="custom-select" onChange={(e) => {
+                            setFitTemp(e.target.value)
+                        }}>
+                            <option value="neutral">Neutral</option>
+                            <option value="hot">Hot</option>
+                            <option value="cold">Cold</option>
                         </select>
 
                         <br/>
