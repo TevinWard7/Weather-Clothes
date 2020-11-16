@@ -32,8 +32,29 @@ const WeatherClothes = () => {
     },[location])
 
     useEffect(() => {
+        
+        switch (todayDescript) {
+            case "light rain" || "moderate rain":
+                
+                break;
+            
+            case "clear sky":
+                
+                break;
+            
+            case "overcast clouds":
+                
+                break;
+            
+            case "broken clouds":
+                
+                break;
+        
+            default:
+                break;
+        }
 
-    },[])
+    },[todayDescript])
 
     const kelvinToFaran = (kelvin) => {
         return (kelvin - 273.15) * 9/5 + 32
