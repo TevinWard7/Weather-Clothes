@@ -4,7 +4,7 @@
 
 .fits {
     margin-top: 25px;
-    height: 300px;
+    height: 400px;
 }
 
 .add-fit {
@@ -16,7 +16,6 @@
 }
 
 #fit-pic {
-    height: 200px;
-    width: 200px;
-
+    height: 300px;
+    width: 300px;
 }

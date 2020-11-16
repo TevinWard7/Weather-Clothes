@@ -28,16 +28,23 @@ const Wardrobe = () => {
 
     const removeFit = (theDoc) => {
 
-        db
-        .collection("wardrobe")
-        .doc(theDoc)
-        .delete()
-        .then(() => {
-            console.log("Document successfully deleted!");
-            
-        }).catch((error) => {
-            console.error("Error removing document: ", error);
-        });
+        const confirmDelete = prompt("are you sure?");
+
+        if (confirmDelete) {
+            db
+            .collection("wardrobe")
+            .doc(theDoc)
+            .delete()
+            .then(() => {
+                console.log("Document successfully deleted!");
+                
+            }).catch((error) => {
+                console.error("Error removing document: ", error);
+            });
+        }
+        else {
+            console.log("good save")
+        }
 
     };
 
@@ -46,7 +53,7 @@ const Wardrobe = () => {
         return (
           <div
             className={className}
-            style={{ ...style, display: "block", background: "green" }}
+            style={{ ...style, display: "block", background: "black" }}
             onClick={onClick}
           />
         );
@@ -61,16 +68,16 @@ const Wardrobe = () => {
         nextArrow: <Arrows />,
         swipe: true,
         speed: 500,
-        slidesToShow: 3,
+        slidesToShow: 4,
         slidesToScroll: 1
-      };
+    };
 
     return(
         <div>
 
             <div className="row text-center">
 
-                <div className="col-12">
+                <div className="col">
 
                     <Slider {...settings}>
 
@@ -79,23 +86,15 @@ const Wardrobe = () => {
                         outfits.map(doc =>   
                     <div key={doc.id}>
 
-                        <div>
+                        <IconButton onClick={() => removeFit(doc.id)}>
+                            <ClearIcon fontSize="small"/>
+                        </IconButton>
 
-                            <h3>
-                                {doc.data().outfit}
-                                <IconButton onClick={() => removeFit(doc.id)}>
-                                    <ClearIcon fontSize="small"/>
-                                </IconButton>
-                            </h3>
-                            
+                        <h3>
+                            {doc.data().outfit}
+                        </h3>
 
-                        </div>
-                        
-                        <div>
-
-                            <img src={doc.data().image} alt="outfit" id="fit-pic" />
-
-                        </div>
+                        <img src={doc.data().image} alt="outfit" id="fit-pic" />
 
                     </div>
                     ) 
