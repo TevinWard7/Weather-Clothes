@@ -42,6 +42,8 @@ const AddOutfit = () => {
             }
         )
 
+        addOutfit();
+
     };
 
     const addOutfit = () => {
@@ -64,7 +66,7 @@ const AddOutfit = () => {
                 {//Outfit Name Entry
                 }
                 <input type="text" placeholder="Outfit" 
-                onChange={(e) => setOutfitName(e.target.value)}></input><button onClick={(event) => {handleImgUpload(event)}}>Upload</button>
+                onChange={(e) => setOutfitName(e.target.value)}></input>
                 <br/>
                 <br/>
 
@@ -96,7 +98,7 @@ const AddOutfit = () => {
                     !outfitName ? 
                     <Button disabled>Submit</Button>
                     :
-                    <Button onClick={addOutfit}>Submit</Button>
+                    <Button onClick={(event) => {handleImgUpload(event)}}>Submit</Button>
                     }
                     
                     </form>
