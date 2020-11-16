@@ -4,6 +4,7 @@ import { useStateValue } from "../../utils/stateProvider";
 import db from "../../utils/firebase";
 import { Button } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
+import { storage } from "../../utils/firebase";
 
 const AddOutfit = () => {
 
@@ -16,6 +17,33 @@ const AddOutfit = () => {
     const [fitImage, setFitImage] = useState();
 
     console.log(fitImage)
+
+    const handleImgUpload = (event) => {
+
+        event.preventDefault()
+
+        // Upload image to firestore and store in variable
+        const uploadTask = storage.ref(`images/${fitImage.name}`).put(fitImage);
+
+        // Get url of image just uploaded to firestore storage
+        uploadTask.on(
+            "state_changed",
+            snapshot => {},
+            error => {
+                console.log(error)
+            },
+            () => {
+                storage
+                .ref("images")
+                .child(fitImage.name)
+                .getDownloadURL()
+                .then(url =>
+                    console.log(url)
+                )
+            }
+        )
+
+    };
 
     const addOutfit = () => {
         wardrobeRef.add(
@@ -36,7 +64,7 @@ const AddOutfit = () => {
                 {//Outfit Name Entry
                 }
                 <input type="text" placeholder="Outfit" 
-                onChange={(e) => setOutfitName(e.target.value)}></input>
+                onChange={(e) => setOutfitName(e.target.value)}></input><button onClick={(event) => {handleImgUpload(event)}}>Upload</button>
                 <br/>
                 <br/>
 
@@ -46,7 +74,7 @@ const AddOutfit = () => {
                         <option value="event">Event</option>
                     </select> */}
 
-                    <input type="file" accept="image/*" onChange={(event) => setFitImage(event.target.value)}></input>
+                    <input type="file" accept="image/*" onChange={(event) => setFitImage(event.target.files[0])}></input>
                     <br/>
                     <br/>
 
