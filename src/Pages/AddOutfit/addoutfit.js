@@ -68,13 +68,14 @@ const AddOutfit = () => {
 
                         {//Outfit Name Entry
                         }
+                        <h3>Enter Outfit</h3>
                         <input type="text" placeholder="Outfit" 
                         onChange={(e) => setOutfitName(e.target.value)}></input>
                         <br/>
                         <br/>
 
                         <input type="file" accept="image/*" onChange={(event) => setFitImage(event.target.files[0])} id="img-upload"></input>
-                        <button onClick={(event) => {handleImgUpload(event)}}>Upload</button>
+                        <button onClick={(event) => {handleImgUpload(event)}} id="upload-button">Upload</button>
                         <br/>
                         <br/>
 
@@ -82,11 +83,6 @@ const AddOutfit = () => {
                             <option>Neutral</option>
                             <option>Hot</option>
                             <option>Cold</option>
-                        </select>
-
-                        <select>
-                            <option>Dry</option>
-                            <option>Rain</option>
                         </select>
 
                         <br/>

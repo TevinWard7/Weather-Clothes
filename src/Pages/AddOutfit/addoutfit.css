@@ -25,3 +25,8 @@ input {
         white-space: nowrap;
         cursor: pointer;
 }
+
+.fits {
+    margin: 25px;
+
+}
