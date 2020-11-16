@@ -36,6 +36,7 @@ const WeatherClothes = () => {
         })
     },[location])
 
+    // Set weatherIcon state according to weather description from API
     useEffect(() => {
 
         switch (todayDescript) {
@@ -70,13 +71,13 @@ const WeatherClothes = () => {
 
     },[todayDescript])
 
+    // Convery kelvin temp to faranheight
     const kelvinToFaran = (kelvin) => {
         return (kelvin - 273.15) * 9/5 + 32
     };
 
-
-
     return(
+
         <div className="page-content">
 
             <ul className="day-list">
@@ -137,6 +138,7 @@ const WeatherClothes = () => {
             </div>
 
         </div>
+        
     )
 };
 

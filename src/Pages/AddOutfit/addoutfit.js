@@ -37,11 +37,15 @@ const AddOutfit = () => {
                 <br/>
                 <br/>
 
-                    <select>
+                    {/* <select>
                         <option value="casual">Casual</option>
                         <option value="work">Work</option>
                         <option value="event">Event</option>
-                    </select>
+                    </select> */}
+
+                    <input type="file" accept="image/*"></input>
+                    <br/>
+                    <br/>
 
                     <select>
                         <option>Neutral</option>
