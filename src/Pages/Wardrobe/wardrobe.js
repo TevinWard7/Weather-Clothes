@@ -77,11 +77,25 @@ const Wardrobe = () => {
                     outfits ? 
                         outfits.map(doc =>   
                     <div key={doc.id}>
-                        <IconButton onClick={() => removeFit(doc.id)}>
-                            <ClearIcon fontSize="small"/>
-                        </IconButton>
-                        <h3>{doc.data().outfit}</h3>
-                        <div><img src={doc.data().image} alt="outfit" id="fit-pic" /></div>
+
+                        <div>
+
+                            <h3>
+                                {doc.data().outfit}
+                                <IconButton onClick={() => removeFit(doc.id)}>
+                                    <ClearIcon fontSize="small"/>
+                                </IconButton>
+                            </h3>
+                            
+
+                        </div>
+                        
+                        <div>
+
+                            <img src={doc.data().image} alt="outfit" id="fit-pic" />
+
+                        </div>
+
                     </div>
                     ) 
                     : <div>

@@ -73,12 +73,6 @@ const AddOutfit = () => {
                         <br/>
                         <br/>
 
-                        {/* <select>
-                            <option value="casual">Casual</option>
-                            <option value="work">Work</option>
-                            <option value="event">Event</option>
-                        </select> */}
-
                         <input type="file" accept="image/*" onChange={(event) => setFitImage(event.target.files[0])} id="img-upload"></input>
                         <button onClick={(event) => {handleImgUpload(event)}}>Upload</button>
                         <br/>
