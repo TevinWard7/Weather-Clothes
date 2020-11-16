@@ -68,7 +68,7 @@ const Wardrobe = () => {
         nextArrow: <Arrows />,
         swipe: true,
         speed: 500,
-        slidesToShow: 4,
+        slidesToShow: 1,
         slidesToScroll: 1
     };
 
@@ -86,16 +86,18 @@ const Wardrobe = () => {
                         outfits.map(doc =>   
                     <div className="slide">
 
-                        <div className="x-button">
-                            <IconButton onClick={() => removeFit(doc.id)}>
-                                <ClearIcon fontSize="small" />
-                            </IconButton>
+                        <div>
+                            <div className="x-button">
+                                <IconButton onClick={() => removeFit(doc.id)}>
+                                    <ClearIcon fontSize="small" />
+                                </IconButton>
                         </div>
                         
-
-                        <h3>
+                        <h1>
                             {doc.data().outfit}
-                        </h3>
+                        </h1>
+                        </div>
+                        
 
                         <img src={doc.data().image} alt="outfit" id="fit-pic" />
 
@@ -116,7 +118,7 @@ const Wardrobe = () => {
 
                 <div>
                     <IconButton onClick={() => history.push("/add")}><AddOutlinedIcon /></IconButton>
-                    <h3>Add Outfit</h3>
+                    <p>Add Outfit</p>
                 </div>
 
             </div>

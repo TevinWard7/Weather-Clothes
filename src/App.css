@@ -18,7 +18,11 @@
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
-}  
+}
+
+body {
+  background-color: #edeae4;
+}
 
 * > h1 {
   font-family: apercu-bold;
@@ -27,11 +31,3 @@
 * > h2, h3 {
   font-family: apercu-medium;
 }
-
-.app {
-  background-color: tomato;
-}
-
-/* .page-content {
-  margin: 25px;
-} */
