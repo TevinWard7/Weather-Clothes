@@ -25,28 +25,31 @@ function App() {
       ) : (
         <Router>
       
-        <Switch>
-        <Route path="/login">
-            <LogIn />
-          </Route>
-          <Route path="/location">
-          <Navbar />
-            <Location />
-          </Route>
-          <Route path="/add">
-            <Navbar />
-            <AddOutfit />
-          </Route>
-          <Route path="/wardrobe">
-            <Navbar />
-            <Wardrobe />
-          </Route>
-          <Route path="/">
-            <Navbar />
-            <WeatherClothes />
-          </Route>
-        </Switch>
-    </Router>
+          <Switch>
+
+            <Route path="/login">
+                <LogIn />
+            </Route>
+            <Route path="/location">
+              <Navbar />
+                <Location />
+            </Route>
+            <Route path="/add">
+                <Navbar />
+                <AddOutfit />
+            </Route>
+            <Route path="/wardrobe">
+                <Navbar />
+                <Wardrobe />
+            </Route>
+            <Route path="/">
+                <Navbar />
+                <WeatherClothes />
+            </Route>
+            
+          </Switch>
+
+        </Router>
       )}
     
     </>

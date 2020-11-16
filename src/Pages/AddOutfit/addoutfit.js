@@ -42,7 +42,7 @@ const AddOutfit = () => {
             }
         )
 
-        addOutfit();
+        alert("uploaded!")
 
     };
 
@@ -79,7 +79,8 @@ const AddOutfit = () => {
                             <option value="event">Event</option>
                         </select> */}
 
-                        <input type="file" accept="image/*" onChange={(event) => setFitImage(event.target.files[0])}></input>
+                        <input type="file" accept="image/*" onChange={(event) => setFitImage(event.target.files[0])} id="img-upload"></input>
+                        <button onClick={(event) => {handleImgUpload(event)}}>Upload</button>
                         <br/>
                         <br/>
 
@@ -101,7 +102,7 @@ const AddOutfit = () => {
                         !outfitName ? 
                         <Button disabled>Submit</Button>
                         :
-                        <Button onClick={(event) => {handleImgUpload(event)}}>Submit</Button>
+                        <Button onClick={() => addOutfit()}>Submit</Button>
                         }
                         
                     </form>
@@ -111,6 +112,7 @@ const AddOutfit = () => {
             </div>
 
             <div className="row"></div>
+
         </div>
         
         )

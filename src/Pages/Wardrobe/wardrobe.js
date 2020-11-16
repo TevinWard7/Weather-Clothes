@@ -76,7 +76,7 @@ const Wardrobe = () => {
                     {
                     outfits ? 
                         outfits.map(doc =>   
-                    <div>
+                    <div key={doc.id}>
                         <IconButton onClick={() => removeFit(doc.id)}>
                             <ClearIcon fontSize="small"/>
                         </IconButton>
