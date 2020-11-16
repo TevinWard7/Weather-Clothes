@@ -13,6 +13,9 @@ const AddOutfit = () => {
     const wardrobeRef = db.collection("wardrobe");
     const history = useHistory();
     const [outfitName, setOutfitName] = useState();
+    const [fitImage, setFitImage] = useState();
+
+    console.log(fitImage)
 
     const addOutfit = () => {
         wardrobeRef.add(
@@ -43,7 +46,7 @@ const AddOutfit = () => {
                         <option value="event">Event</option>
                     </select> */}
 
-                    <input type="file" accept="image/*"></input>
+                    <input type="file" accept="image/*" onChange={(event) => setFitImage(event.target.value)}></input>
                     <br/>
                     <br/>
 
