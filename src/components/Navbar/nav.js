@@ -60,17 +60,17 @@ const Navbar = () => {
         <div className="my-container">
 
             <nav>
-            <div>
-                <IconButton id="gear" onClick={toggleNav}><SettingsSharpIcon /></IconButton>
-            </div>
-            
-                <ul className={`nav-links ${navActive === "true" ? "nav-active" : ""}`} fadein={fadeIn} onAnimationEnd={() => {setFadeIn(0)}}>
-                    <li><Avatar src={user.photoURL}/></li>
-                    <li onClick={() => linkAction("/")}>Home</li>
-                    <li onClick={() => linkAction("/location")}>Location</li>
-                    <li onClick={() => linkAction("/wardrobe")}>Wardrobe</li>
-                </ul>
+                <div>
+                    <IconButton id="gear" onClick={toggleNav}><SettingsSharpIcon /></IconButton>
+                </div>
                 
+                    <ul className={`nav-links ${navActive === "true" ? "nav-active" : ""}`} fadein={fadeIn} onAnimationEnd={() => {setFadeIn(0)}}>
+                        <li><Avatar src={user.photoURL}/></li>
+                        <li onClick={() => linkAction("/")}>Home</li>
+                        <li onClick={() => linkAction("/location")}>Location</li>
+                        <li onClick={() => linkAction("/wardrobe")}>Wardrobe</li>
+                    </ul>
+                    
             </nav>
             
             <div id="date"><h5>today's date</h5></div>

@@ -76,7 +76,7 @@ const AddOutfit = () => {
                         {//Outfit Name Entry
                         }
                         <h1>Enter Outfit</h1>
-                        <input type="text" placeholder="Outfit" 
+                        <input type="text" placeholder="Name Your Outfit" 
                         onChange={(e) => setOutfitName(e.target.value)}></input>
                         
                         <br/>
@@ -115,7 +115,7 @@ const AddOutfit = () => {
                         {// If there is no outfit name and details disable submit button otherwise enable
                         }
                         {
-                        !outfitName && !fitWeather && !fitTemp  ? 
+                        !outfitName && !fitWeather && !fitTemp && !imgUrl  ? 
                         <Button disabled>Submit</Button>
                         :
                         <Button onClick={() => addOutfit()}>Submit</Button>

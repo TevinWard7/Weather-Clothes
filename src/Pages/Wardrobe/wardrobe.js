@@ -73,7 +73,7 @@ const Wardrobe = () => {
     };
 
     return(
-        <div>
+        <div className="wardrobe-page">
 
             <div className="row text-center">
 
@@ -91,15 +91,16 @@ const Wardrobe = () => {
                                 <IconButton onClick={() => removeFit(doc.id)}>
                                     <ClearIcon fontSize="small" />
                                 </IconButton>
+                            </div>
+                        
+                            <h1 id="fit-name">
+                                {doc.data().outfit}
+                            </h1>
                         </div>
                         
-                        <h1>
-                            {doc.data().outfit}
-                        </h1>
-                        </div>
                         
-
                         <img src={doc.data().image} alt="outfit" id="fit-pic" />
+                        
 
                     </div>
                     ) 

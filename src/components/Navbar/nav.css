@@ -1,16 +1,18 @@
 .my-container {
-  display: flex; 
-  flex-direction: column;
-  align-content: flex-start;
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 20px;
 }
 
 #date {
-  align-self: center;
+  margin: 20px;
 }
 
 .nav-links > li{
   cursor: pointer;
   margin-top: 35px;
+  font-size: 20px; 
+  font-weight: 500;
 }
 
 .nav-links {
@@ -18,7 +20,7 @@
   list-style-type: none;
   position: absolute;
   left: 0px;
-  background-color:white;
+  background-color: white;
   width: 50%;
   height: 100vh;
   display: flex;

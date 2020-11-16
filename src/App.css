@@ -18,11 +18,12 @@
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
+    color: #28282a;
 }
 
-body {
+/* * > body {
   background-color: #edeae4;
-}
+} */
 
 * > h1 {
   font-family: apercu-bold;
