@@ -4,6 +4,10 @@ import { Button } from "@material-ui/core";
 import db from "../../utils/firebase";
 import { useStateValue } from "../../utils/stateProvider";
 import API from "../../utils/API";
+import Sun from "./images/sun.png";
+import Cloudy from "./images/clouds.png";
+import Rain from "./images/rain.png";
+import Breakaway from "./images/breakaway.png";
 
 const WeatherClothes = () => {
 
@@ -11,6 +15,7 @@ const WeatherClothes = () => {
     const [location, setLocation] = useState();
     const [todaysTemp, setTodaysTemp] = useState();
     const [todayDescript, setTodayDescript] = useState();
+    const [weatherIcon, setWeatherIcon] = useState();
 
     // Get location data from DB
     useEffect(() => {
@@ -32,21 +37,30 @@ const WeatherClothes = () => {
     },[location])
 
     useEffect(() => {
-        
+
         switch (todayDescript) {
+
             case "light rain" || "moderate rain":
-                
+
+                setWeatherIcon(Rain)
+
                 break;
             
             case "clear sky":
-                
+
+                setWeatherIcon(Sun)
+
                 break;
             
             case "overcast clouds":
-                
+
+                setWeatherIcon(Cloudy)
+
                 break;
             
             case "broken clouds":
+
+                setWeatherIcon(Breakaway)
                 
                 break;
         
@@ -59,7 +73,6 @@ const WeatherClothes = () => {
     const kelvinToFaran = (kelvin) => {
         return (kelvin - 273.15) * 9/5 + 32
     };
-
 
 
 
@@ -93,8 +106,7 @@ const WeatherClothes = () => {
 
                                 return (
                                     <>
-                                        <div>{temperature}</div>
-                                        <div>Weather Icon</div> 
+                                        <div>{temperature}<img src={weatherIcon} id="weather-icon"></img></div>
                                     </>
                                 )
                             }
