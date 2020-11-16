@@ -96,15 +96,7 @@ const WeatherClothes = () => {
 
                 <div className="row text-center">
 
-                    <div col>
-
-                    </div>
-
-                    <div className="col-12">
- 
-                        
-
-                    </div>
+                    <div className="col-12"></div>
                     
                 </div>
 

@@ -10,12 +10,14 @@ const AddOutfit = () => {
 
     // Get loggedin user info
     const [{ user }, dispatch] = useStateValue();
+    const history = useHistory();
     // Get colleection from firebase
     const wardrobeRef = db.collection("wardrobe");
-    const history = useHistory();
     const [outfitName, setOutfitName] = useState();
     const [fitImage, setFitImage] = useState();
     const [imgUrl, setImgUrl] = useState();
+    const [fitWeather, setFitWeather] = useState();
+    console.log(fitWeather)
 
     const handleImgUpload = (event) => {
 
@@ -56,6 +58,8 @@ const AddOutfit = () => {
         ).then(history.push('/wardrobe'))
     };
 
+
+
     return(
 
         <div className="add-page">
@@ -79,6 +83,17 @@ const AddOutfit = () => {
                         <br/>
                         <br/>
 
+                        {// Get Weather description input for oufit
+                        }
+                        <select className="custom-select" onChange={(e) => {
+                            setFitWeather(e.target.value)
+                        }}>
+                            <option value="clear Sky">Clear Sky</option>
+                            <option value="overcast">Overcast</option>
+                            <option value="rain">Rain</option>
+                            <option value="sunny">Sunny</option>
+                        </select>
+
                         <select>
                             <option>Neutral</option>
                             <option>Hot</option>
@@ -88,6 +103,8 @@ const AddOutfit = () => {
                         <br/>
                         <br/>
 
+                        {// If there is am outfit name allow submit button else disable it
+                        }
                         {
                         !outfitName ? 
                         <Button disabled>Submit</Button>
