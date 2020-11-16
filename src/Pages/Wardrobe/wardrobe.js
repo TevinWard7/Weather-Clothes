@@ -86,7 +86,6 @@ const Wardrobe = () => {
                         outfits.map(doc =>   
                     <div className="slide">
 
-                        <div>
                             <div className="x-button">
                                 <IconButton onClick={() => removeFit(doc.id)}>
                                     <ClearIcon fontSize="small" />
@@ -96,8 +95,6 @@ const Wardrobe = () => {
                             <h1 id="fit-name">
                                 {doc.data().outfit}
                             </h1>
-                        </div>
-                        
                         
                         <img src={doc.data().image} alt="outfit" id="fit-pic" />
                         

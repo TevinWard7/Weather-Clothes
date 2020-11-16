@@ -3,3 +3,12 @@
     place-items: center;
     height: 100vh;
 }
+
+.enter-city > h1 {
+    font-weight: 400;
+    font-size: 50px;
+}
+
+.enter-city > div > input {
+    font-size: 25px;
+}

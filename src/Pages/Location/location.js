@@ -81,7 +81,7 @@ const Location = () => {
 
             <div className="row text-center">
 
-                <div className="col">
+                <div className="col enter-city">
 
                     <h1>Enter City</h1>
 

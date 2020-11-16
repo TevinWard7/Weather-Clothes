@@ -18,7 +18,6 @@
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
-    color: #28282a;
 }
 
 /* * > body {
@@ -27,8 +26,14 @@
 
 * > h1 {
   font-family: apercu-bold;
+  color: #28282a;
 }
 
 * > h2, h3 {
   font-family: apercu-medium;
+  color: #28282a;
+}
+
+* > h5, p, li {
+  color: #28282a;
 }
