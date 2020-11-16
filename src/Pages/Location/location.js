@@ -77,17 +77,47 @@ const Location = () => {
     };
 
     return(
-        <div className="container">
+        <div className="container location-page">
 
             <div className="row text-center">
 
                 <div className="col">
 
                     <h3>Enter City</h3>
-                    <div>
-                        <input placeholder={initialCity || "City"} onChange={(e) => setNewCity(e.target.value)} />
 
+                    <div>
+
+                        <input placeholder={initialCity || "City"} onChange={(e) => setNewCity(e.target.value)} />
+                    
                     </div>
+
+                    <div>
+
+                        {
+                        
+                        (()=> {
+
+                            if (newCity && initialCity === "City") {
+
+                                return <Button onClick={() => addCity(newCity)}>Submit</Button>;
+            
+                            }    
+
+                            if (!newCity || newCity === initialCity ) {
+
+                                return <Button disabled>Submit</Button>;}   
+
+                            if (initialCity && initialCity != newCity) {
+
+                                return <Button onClick={() => updateCity(id, newCity)}>Update</Button>
+
+                        }
+
+                        })()
+                        }
+                    
+                    </div>
+                    
 
                 </div>
 
@@ -95,32 +125,7 @@ const Location = () => {
         
             <div className="row text-center">
 
-                <div className="col">
-                    
-                    {
-                    
-                    (()=> {
-
-                        if (newCity && initialCity === "City") {
-
-                            return <Button onClick={() => addCity(newCity)}>Submit</Button>;
-        
-                        }    
-
-                        if (!newCity || newCity === initialCity ) {
-
-                            return <Button disabled>Submit</Button>;}   
-
-                        if (initialCity && initialCity != newCity) {
-
-                            return <Button onClick={() => updateCity(id, newCity)}>Update</Button>
-
-                    }
-
-                    })()
-                    }
-                    
-                </div>
+                <div className="col"></div>
 
             </div>
         

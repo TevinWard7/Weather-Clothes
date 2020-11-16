@@ -74,7 +74,7 @@ const Wardrobe = () => {
                     <Slider {...settings}>
 
                     {
-                    outfits[0] ? 
+                    outfits ? 
                         outfits.map(doc =>   
                     <div>
                         <IconButton onClick={() => removeFit(doc.id)}>
