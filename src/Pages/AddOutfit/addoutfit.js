@@ -15,8 +15,7 @@ const AddOutfit = () => {
     const history = useHistory();
     const [outfitName, setOutfitName] = useState();
     const [fitImage, setFitImage] = useState();
-
-    console.log(fitImage)
+    const [imgUrl, setImgUrl] = useState();
 
     const handleImgUpload = (event) => {
 
@@ -38,7 +37,7 @@ const AddOutfit = () => {
                 .child(fitImage.name)
                 .getDownloadURL()
                 .then(url =>
-                    console.log(url)
+                    setImgUrl(url)
                 )
             }
         )
@@ -50,6 +49,7 @@ const AddOutfit = () => {
             {
                 uid: user.uid,
                 outfit: outfitName,
+                img: imgUrl
             }
         ).then(history.push('/wardrobe'))
     };
