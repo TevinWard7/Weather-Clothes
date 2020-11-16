@@ -57,58 +57,63 @@ const AddOutfit = () => {
     };
 
     return(
-        <div className="row text-center add-page">
 
-            <div className="col">
-                
-                <form>
+        <div className="add-page">
 
-                {//Outfit Name Entry
-                }
-                <input type="text" placeholder="Outfit" 
-                onChange={(e) => setOutfitName(e.target.value)}></input>
-                <br/>
-                <br/>
+            <div className="row text-center">
 
-                    {/* <select>
-                        <option value="casual">Casual</option>
-                        <option value="work">Work</option>
-                        <option value="event">Event</option>
-                    </select> */}
-
-                    <input type="file" accept="image/*" onChange={(event) => setFitImage(event.target.files[0])}></input>
-                    <br/>
-                    <br/>
-
-                    <select>
-                        <option>Neutral</option>
-                        <option>Hot</option>
-                        <option>Cold</option>
-                    </select>
-
-                    <select>
-                        <option>Dry</option>
-                        <option>Rain</option>
-                    </select>
-
-                    <br/>
-                    <br/>
-
-                    {
-                    !outfitName ? 
-                    <Button disabled>Submit</Button>
-                    :
-                    <Button onClick={(event) => {handleImgUpload(event)}}>Submit</Button>
-                    }
+                <div className="col">
                     
+                    <form>
+
+                        {//Outfit Name Entry
+                        }
+                        <input type="text" placeholder="Outfit" 
+                        onChange={(e) => setOutfitName(e.target.value)}></input>
+                        <br/>
+                        <br/>
+
+                        {/* <select>
+                            <option value="casual">Casual</option>
+                            <option value="work">Work</option>
+                            <option value="event">Event</option>
+                        </select> */}
+
+                        <input type="file" accept="image/*" onChange={(event) => setFitImage(event.target.files[0])}></input>
+                        <br/>
+                        <br/>
+
+                        <select>
+                            <option>Neutral</option>
+                            <option>Hot</option>
+                            <option>Cold</option>
+                        </select>
+
+                        <select>
+                            <option>Dry</option>
+                            <option>Rain</option>
+                        </select>
+
+                        <br/>
+                        <br/>
+
+                        {
+                        !outfitName ? 
+                        <Button disabled>Submit</Button>
+                        :
+                        <Button onClick={(event) => {handleImgUpload(event)}}>Submit</Button>
+                        }
+                        
                     </form>
-            
+
+                </div>
+
             </div>
 
+            <div className="row"></div>
         </div>
-
         
-    )
+        )
 
 };
 
