@@ -51,6 +51,7 @@ const AddOutfit = () => {
     };
 
     const addOutfit = () => {
+
         wardrobeRef.add(
             {
                 uid: user.uid,
@@ -109,10 +110,10 @@ const AddOutfit = () => {
                         <br/>
                         <br/>
 
-                        {// If there is am outfit name allow submit button else disable it
+                        {// If there is no outfit name and details disable submit button otherwise enable
                         }
                         {
-                        !outfitName ? 
+                        !outfitName && !fitWeather && !fitTemp  ? 
                         <Button disabled>Submit</Button>
                         :
                         <Button onClick={() => addOutfit()}>Submit</Button>

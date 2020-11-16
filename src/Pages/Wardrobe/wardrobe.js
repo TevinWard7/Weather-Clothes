@@ -41,7 +41,7 @@ const Wardrobe = () => {
 
     };
 
-    const SamplePrevArrow = (props) => {
+    const Arrows = (props) => {
         const { className, style, onClick } = props;
         return (
           <div
@@ -50,14 +50,15 @@ const Wardrobe = () => {
             onClick={onClick}
           />
         );
-      }
+    };
 
     const settings = {
         className: "fits",
         dots: true,
         infinite: true,
         arrows: true,
-        prevArrow: <SamplePrevArrow />,
+        prevArrow: <Arrows />,
+        nextArrow: <Arrows />,
         swipe: true,
         speed: 500,
         slidesToShow: 3,
