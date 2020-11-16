@@ -23,7 +23,6 @@ const Wardrobe = () => {
         .collection("wardrobe")
         .where('uid', '==', user.uid)
         .onSnapshot(snapshot => setOutfits(snapshot.docs.map((doc) => doc)))
-        // .onSnapshot(snapshot => setOutfits(snapshot.docs.map((doc) => doc.data())));
 
     },[user.uid]);
 
@@ -71,17 +70,18 @@ const Wardrobe = () => {
             <div className="row text-center">
 
                 <div className="col-12">
+
                     <Slider {...settings}>
 
                     {
-                    outfits ? 
+                    outfits[0] ? 
                         outfits.map(doc =>   
                     <div>
                         <IconButton onClick={() => removeFit(doc.id)}>
-                        <ClearIcon fontSize="small"/>
+                            <ClearIcon fontSize="small"/>
                         </IconButton>
                         <h3>{doc.data().outfit}</h3>
-                        <img src={doc.data().img}></img>
+                        <div><img src={doc.data().image} alt="outfit" id="fit-pic" /></div>
                     </div>
                     ) 
                     : <div>
@@ -90,13 +90,14 @@ const Wardrobe = () => {
                     }
 
                     </Slider>
+
                 </div>
                 
             </div>
 
-            <div className="row text-center">
+            <div className="add-fit">
 
-                <div className="col add-fit">
+                <div>
                     <IconButton onClick={() => history.push("/add")}><AddOutlinedIcon /></IconButton>
                     <h3>Add Outfit</h3>
                 </div>

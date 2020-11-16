@@ -8,8 +8,15 @@
 }
 
 .add-fit {
-    position: absolute;
-    bottom: 0;
-    margin-top: 25px;
-    /* margin-bottom: 25px; */
+    position:fixed;
+    bottom:0;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+#fit-pic {
+    height: 200px;
+    width: 200px;
+
 }

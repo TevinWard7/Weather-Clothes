@@ -49,7 +49,7 @@ const AddOutfit = () => {
             {
                 uid: user.uid,
                 outfit: outfitName,
-                img: imgUrl
+                image: imgUrl
             }
         ).then(history.push('/wardrobe'))
     };

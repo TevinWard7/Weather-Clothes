@@ -96,9 +96,23 @@ const WeatherClothes = () => {
 
                 <div className="row text-center">
 
+                    <div col>
+
+                    </div>
+
                     <div className="col-12">
  
-                        {
+                        
+
+                    </div>
+                    
+                </div>
+
+                <div className="row text-center">
+
+                    <div className="col">
+
+                    {
                             (()=> {
 
                             if (typeof todaysTemp === "number") {
@@ -107,7 +121,7 @@ const WeatherClothes = () => {
 
                                 return (
                                     <>
-                                        <div>{temperature}<img src={weatherIcon} id="weather-icon"></img></div>
+                                        <div>{temperature}<img src={weatherIcon} id="weather-icon" alt="icon" /></div>
                                     </>
                                 )
                             }
@@ -118,12 +132,6 @@ const WeatherClothes = () => {
                         }
 
                     </div>
-                    
-                </div>
-
-                <div className="row text-center">
-
-                    <div className="col"></div>
 
                     <div className="col">
 
