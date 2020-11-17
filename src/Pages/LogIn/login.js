@@ -29,7 +29,7 @@ const LogIn = () => {
             <div className="login-container">
 
                 <p>Welcome</p>
-                <h1>Weather Wear</h1>
+                <h1>WW</h1>
                 <Button onClick={signIn}>Sign In</Button>
                 
             </div>
