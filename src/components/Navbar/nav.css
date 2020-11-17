@@ -4,6 +4,10 @@
   padding-bottom: 20px;
 }
 
+#gear {
+  z-index: 6;
+}
+
 #date {
   margin: 20px;
 }
@@ -11,16 +15,17 @@
 .nav-links > li{
   cursor: pointer;
   margin-top: 35px;
-  font-size: 20px; 
-  font-weight: 500;
+  /* font-size: 25px;  */
+  /* font-weight: 500; */
 }
 
 .nav-links {
+  top: 0;
   z-index: 5;
   list-style-type: none;
   position: absolute;
   left: 0px;
-  background-color: white;
+  background-image: linear-gradient(to bottom right, rgb(250, 249, 249),#edeae4, #e1d4c0);
   width: 50%;
   height: 100vh;
   display: flex;

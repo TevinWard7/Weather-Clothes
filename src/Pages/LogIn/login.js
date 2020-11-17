@@ -28,8 +28,8 @@ const LogIn = () => {
 
             <div className="login-container">
 
-                <div>Welcome</div>
-                <h2>WW</h2>
+                <p>Welcome</p>
+                <h1>Weather Wear</h1>
                 <Button onClick={signIn}>Sign In</Button>
                 
             </div>

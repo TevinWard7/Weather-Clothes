@@ -13,16 +13,17 @@
   src: url(./fonts/Apercu/Apercu\ Pro\ Regular.otf);
 }
 
+@font-face {
+  font-family: rais;
+  src: url(./fonts/Raisonne/Raisonne.otf);
+}
+
 *{
     font-family: apercu;
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
 }
-
-/* * > body {
-  background-color: #edeae4;
-} */
 
 * > h1 {
   font-family: apercu-bold;
@@ -34,6 +35,7 @@
   color: #28282a;
 }
 
-* > h5, p, li {
+* > h5, p, button {
   color: #28282a;
+  font-family: rais;
 }
