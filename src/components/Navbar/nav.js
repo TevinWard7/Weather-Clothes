@@ -57,14 +57,20 @@ const Navbar = () => {
     };
 
     return(
-        <div className="my-container">
+        <div >
 
             <nav>
 
-                <div id="gear">
-                    <IconButton onClick={toggleNav}><SettingsSharpIcon /></IconButton>
+                <div className="bar">
+
+                    <div id="gear">
+                        <IconButton onClick={toggleNav}><SettingsSharpIcon /></IconButton>
+                    </div>
+
+                    <div id="date"><p>today's date</p></div>
+
                 </div>
-                
+
                 <ul className={`nav-links ${navActive === "true" ? "nav-active" : ""}`} fadein={fadeIn} onAnimationEnd={() => {setFadeIn(0)}}>
                         <li><Avatar src={user.photoURL}/></li>
                         <li onClick={() => linkAction("/")}>Home</li>
@@ -73,8 +79,6 @@ const Navbar = () => {
                     </ul>
                     
             </nav>
-            
-            <div id="date"><p>today's date</p></div>
             
         </div>
     )
