@@ -19,7 +19,7 @@ function App() {
 
 
   return (
-    <>
+    <div className="app">
       {!user ? (
         <LogIn />
       ) : (
@@ -52,7 +52,7 @@ function App() {
         </Router>
       )}
     
-    </>
+    </div>
   
   );
 }

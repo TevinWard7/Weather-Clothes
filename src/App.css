@@ -25,6 +25,18 @@
     box-sizing: border-box;
 }
 
+/* * > body {
+  background-color: #EDEAE4;
+  position: fixed;
+  min-width: 100%;
+  min-height: 100%;
+  background-size: cover;
+}
+
+.app {
+  
+} */
+
 * > h1 {
   font-family: apercu-bold;
   color: #28282a;
