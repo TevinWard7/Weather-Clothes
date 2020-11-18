@@ -23,3 +23,12 @@
 .login-container > h1 {
     font-size: 50px;
 }
+
+#sun {
+    position: absolute;
+    left: 550px;
+    height: 1000px;
+    width: 1500px; 
+    opacity: 12%;
+    top: 150px;
+}

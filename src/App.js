@@ -24,26 +24,24 @@ function App() {
         <LogIn />
       ) : (
         <Router>
-      
+
+          <Navbar />
+          
           <Switch>
 
-            <Route path="/login">
-                <LogIn />
-            </Route>
             <Route path="/location">
-              <Navbar />
-                <Location />
+               <Location />
             </Route>
+
             <Route path="/add">
-                <Navbar />
                 <AddOutfit />
             </Route>
+
             <Route path="/wardrobe">
-                <Navbar />
                 <Wardrobe />
             </Route>
+
             <Route path="/">
-                <Navbar />
                 <WeatherClothes />
             </Route>
 
