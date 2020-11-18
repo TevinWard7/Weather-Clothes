@@ -5,6 +5,7 @@ import { auth, provider } from "../../utils/firebase";
 import { useStateValue } from "../../utils/stateProvider";
 import { actionTypes } from "../../utils/reducer";
 import sunImg from "./images/sun.png";
+import catImg from "./images/cat.png";
 
 const LogIn = () => {
 
@@ -25,7 +26,7 @@ const LogIn = () => {
     };
 
     return(
-        <div className="login">
+        <div className="login" scroll="no">
 
             <div className="login-container">
 
@@ -33,6 +34,7 @@ const LogIn = () => {
                 <h1>WW</h1>
                 <Button onClick={signIn}>Sign In</Button>
                 <div><img src={sunImg} alt="sun-icon" id="sun" /></div>
+                <div><img id="model" src={catImg} alt="model" /></div>
             </div>
 
         </div>

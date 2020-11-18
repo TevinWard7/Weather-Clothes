@@ -1,18 +1,18 @@
-.wardobe-page {
+/* .wardobe-page {
     background-color: black;
-}
+} */
 
 .add-fit {
     bottom:0;
     width: 100%;
     text-align: center;
-    padding-bottom: 25px;
-    padding-top: 25px;
+    padding-top: 45px;
 }
 
 #fit-pic {
     height: 300px;
     padding: 15px;
+    margin-bottom: 25px;
     display: block;
     margin-left: auto;
     margin-right: auto;

@@ -112,9 +112,9 @@ const Wardrobe = () => {
                 
             </div>
 
-            <div className="add-fit">
+            <div>
 
-                <div>
+                <div className="add-fit">
                     <IconButton onClick={() => history.push("/add")}><AddOutlinedIcon /></IconButton>
                     <p>Add Outfit</p>
                 </div>

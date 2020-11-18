@@ -1,5 +1,9 @@
+body {
+    overflow: hidden;
+}
+
 .login {
-    background-image: linear-gradient(to bottom right, rgb(250, 249, 249),#edeae4, #e1d4c0);
+    background-image: linear-gradient(to bottom right, rgba(255, 255, 255, 0.945), rgb(250, 249, 249),#edeae4, #e1d4c0);
     width: 100vw;
     height: 100vh;
     display: grid;
@@ -18,11 +22,12 @@
     text-transform: inherit !important;
     margin-top: 25px;
     background-color: ivory;
-    z-index: 2;
+    z-index: 999;
 }
 
 .login-container > h1 {
-    font-size: 50px;
+    font-size: 150px;
+    z-index: 999 !important;
 }
 
 #sun {
@@ -30,6 +35,13 @@
     left: 550px;
     height: 1000px;
     width: 1400px; 
-    opacity: 5%;
+    opacity: 10%;
     top: 150px;
+}
+
+#model {
+    position: absolute;
+    height: 750px;
+    top: 75px;
+    left: 430px;
 }

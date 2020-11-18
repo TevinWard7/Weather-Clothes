@@ -77,7 +77,9 @@ const Location = () => {
     };
 
     return(
-        <div className="container location-page">
+        <div className="location-page">
+
+            {/* <div className="row"></div> */}
 
             <div className="row text-center">
 
@@ -118,17 +120,12 @@ const Location = () => {
                     
                     </div>
                     
-
                 </div>
 
             </div>
         
-            <div className="row text-center">
+            <div className="row"></div>
 
-                <div className="col"></div>
-
-            </div>
-        
         </div>
     )
 
