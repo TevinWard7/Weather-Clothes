@@ -18,6 +18,7 @@
     text-transform: inherit !important;
     margin-top: 25px;
     background-color: ivory;
+    z-index: 2;
 }
 
 .login-container > h1 {
@@ -28,7 +29,7 @@
     position: absolute;
     left: 550px;
     height: 1000px;
-    width: 1500px; 
-    opacity: 12%;
+    width: 1400px; 
+    opacity: 5%;
     top: 150px;
 }

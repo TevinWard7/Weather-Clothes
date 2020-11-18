@@ -19,7 +19,7 @@ function App() {
 
 
   return (
-    <div className="app">
+    <>
       {!user ? (
         <LogIn />
       ) : (
@@ -29,28 +29,33 @@ function App() {
           
           <Switch>
 
-            <Route path="/location">
-               <Location />
-            </Route>
-
-            <Route path="/add">
-                <AddOutfit />
-            </Route>
-
             <Route path="/wardrobe">
-                <Wardrobe />
+                  <Wardrobe />
             </Route>
 
-            <Route path="/">
-                <WeatherClothes />
-            </Route>
+            <div className="default-bck">
+
+              <Route path="/location">
+                <Location />
+              </Route>
+
+              <Route path="/add">
+                  <AddOutfit />
+              </Route>
+
+              <Route path="/">
+                  <WeatherClothes />
+              </Route>
+
+            </div>
+            
 
           </Switch>
 
         </Router>
       )}
     
-    </div>
+    </>
   
   );
 }

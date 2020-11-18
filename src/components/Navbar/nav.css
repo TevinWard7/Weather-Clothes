@@ -1,22 +1,25 @@
 .my-container {
   display: flex;
   justify-content: space-between;
-  padding-bottom: 20px;
+  background-color: #EDEAE4;
+  height: 45px;
 }
 
 #gear {
   z-index: 6;
 }
 
-#date {
-  margin: 20px;
+#date, #gear {
+  margin: 0;
+  position: relative;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
 .nav-links > li{
   cursor: pointer;
   margin-top: 35px;
-  /* font-size: 25px;  */
-  /* font-weight: 500; */
 }
 
 .nav-links {
@@ -25,7 +28,8 @@
   list-style-type: none;
   position: absolute;
   left: 0px;
-  background-image: linear-gradient(to bottom right, rgb(250, 249, 249),#edeae4, #e1d4c0);
+  /* background-image: linear-gradient(to bottom right, rgb(250, 249, 249),#edeae4, #e1d4c0); */
+  background-color: #EDEAE4;
   width: 50%;
   height: 100vh;
   display: flex;
@@ -37,7 +41,6 @@
 
 .nav-active {
   transform: translateX(0%);
-
 }
 
 .nav-links[fadein='1'] {

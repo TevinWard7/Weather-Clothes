@@ -60,12 +60,12 @@ const Navbar = () => {
         <div className="my-container">
 
             <nav>
-                
-                <div>
-                    <IconButton id="gear" onClick={toggleNav}><SettingsSharpIcon /></IconButton>
+
+                <div id="gear">
+                    <IconButton onClick={toggleNav}><SettingsSharpIcon /></IconButton>
                 </div>
                 
-                    <ul className={`nav-links ${navActive === "true" ? "nav-active" : ""}`} fadein={fadeIn} onAnimationEnd={() => {setFadeIn(0)}}>
+                <ul className={`nav-links ${navActive === "true" ? "nav-active" : ""}`} fadein={fadeIn} onAnimationEnd={() => {setFadeIn(0)}}>
                         <li><Avatar src={user.photoURL}/></li>
                         <li onClick={() => linkAction("/")}>Home</li>
                         <li onClick={() => linkAction("/location")}>Location</li>

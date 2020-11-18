@@ -1,5 +1,8 @@
+.wardobe-page {
+    background-color: black;
+}
+
 .add-fit {
-    /* position: absolute; */
     bottom:0;
     width: 100%;
     text-align: center;

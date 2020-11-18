@@ -11,4 +11,5 @@
 
 .enter-city > div > input {
     font-size: 25px;
+    background-color: inherit;
 }
