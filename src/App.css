@@ -25,14 +25,14 @@
     box-sizing: border-box;
 }
 
-.default-bck {
-  /* background-color: #EDEAE4;
+/* .default-bck {
+  background-color: #EDEAE4;
   position: fixed;
   min-width: 100%;
   min-height: 100%;
-  background-size: cover;  */
-  
-}
+  background-size: cover; 
+
+} */
 
 * > h1 {
   font-family: apercu-bold;

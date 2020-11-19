@@ -82,13 +82,13 @@ const WeatherClothes = () => {
 
             <ul className="day-list">
 
-                <Button size="large"><li id="monday">M</li></Button>
-                <Button size="large"><li id="tuesday">T</li></Button>
-                <Button size="large"><li id="wednsday">W</li></Button>
-                <Button size="large"><li id="thursday">T</li></Button>
-                <Button size="large"><li id="friday">F</li></Button>
-                <Button size="large"><li id="saturday">S</li></Button>
-                <Button size="large"><li id="sunday">S</li></Button>
+                <Button size="large"><li className="days" id="monday">M</li></Button>
+                <Button size="large"><li className="days" id="tuesday">T</li></Button>
+                <Button size="large"><li className="days" id="wednsday">W</li></Button>
+                <Button size="large"><li className="days" id="thursday">T</li></Button>
+                <Button size="large"><li className="days" id="friday">F</li></Button>
+                <Button size="large"><li className="days" id="saturday">S</li></Button>
+                <Button size="large"><li className="days" id="sunday">S</li></Button>
 
             </ul>
     
