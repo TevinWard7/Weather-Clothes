@@ -49,3 +49,8 @@
     transform: translateX(0);
   }
 }
+
+#sign-out {
+    text-transform: capitalize;
+    /* background-color: ivory; */
+}
