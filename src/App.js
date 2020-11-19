@@ -14,21 +14,24 @@ import LogIn from "./Pages/LogIn/login";
 import { useStateValue } from "./utils/stateProvider";
 import { auth } from "./utils/firebase";
 import { actionTypes } from "./utils/reducer";
+import { CircularProgress} from "@material-ui/core";
 
 const App = () => {
 
   const [{ user }, dispatch] = useStateValue();
+  const [fetching, setFetching] = useState()
 
-  useEffect(() => {
+  useEffect(() => { 
 
+    setFetching(true)
     // Check to see if user is logged in via firebase persistence
     auth.onAuthStateChanged(userSaved => {
-      console.log(userSaved)
       dispatch({
         type: actionTypes.SET_USER,
         // If there's a user send user info to data layer (will be null if no persistence user)
         user: userSaved
     })
+    setFetching(false)
     })
 
   },[dispatch])
@@ -36,7 +39,12 @@ const App = () => {
   return (
     <>
       {!user ? (
+        fetching ? (
+          <CircularProgress />
+        )
+        : (
         <LogIn />
+        )
       ) : (
         <Router>
 
@@ -45,7 +53,7 @@ const App = () => {
           <Switch>
 
             <Route path="/wardrobe">
-                  <Wardrobe />
+                <Wardrobe /> 
             </Route>
 
             <div className="default-bck">
