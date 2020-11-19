@@ -4,6 +4,7 @@ import SettingsSharpIcon from '@material-ui/icons/SettingsSharp';
 import { IconButton, Avatar } from "@material-ui/core";
 import { useStateValue } from "../../utils/stateProvider";
 import { useHistory } from "react-router-dom";
+import moment from "moment";
 
 const Navbar = () => {
 
@@ -67,7 +68,7 @@ const Navbar = () => {
                         <IconButton onClick={toggleNav}><SettingsSharpIcon /></IconButton>
                     </div>
 
-                    <div id="date"><p>today's date</p></div>
+                    <div id="date"><p>{moment().format("MMM Do YY")}</p></div>
 
                 </div>
 
