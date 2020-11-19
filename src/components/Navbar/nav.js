@@ -5,6 +5,7 @@ import { IconButton, Avatar } from "@material-ui/core";
 import { useStateValue } from "../../utils/stateProvider";
 import { useHistory } from "react-router-dom";
 import moment from "moment";
+import { auth } from "../../utils/firebase";
 
 const Navbar = () => {
 
@@ -57,6 +58,10 @@ const Navbar = () => {
         toggleNav();
     };
 
+    const signOut = () => {
+        auth.signOut()
+    };
+
     return(
         <div >
 
@@ -77,6 +82,7 @@ const Navbar = () => {
                         <li onClick={() => linkAction("/")}>Home</li>
                         <li onClick={() => linkAction("/location")}>Location</li>
                         <li onClick={() => linkAction("/wardrobe")}>Wardrobe</li>
+                        <li><button onClick={() => signOut()}>Sign Out</button></li>
                     </ul>
                     
             </nav>

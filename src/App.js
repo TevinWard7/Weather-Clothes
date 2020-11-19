@@ -18,7 +18,6 @@ import { actionTypes } from "./utils/reducer";
 const App = () => {
 
   const [{ user }, dispatch] = useStateValue();
-  console.log("App -> user", user)
 
   useEffect(() => {
 
