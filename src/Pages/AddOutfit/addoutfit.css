@@ -26,6 +26,10 @@ input {
         cursor: pointer;
 }
 
+#img-upload {
+    background-color: inherit;
+}
+
 .fits {
     margin: 25px;
 }
@@ -50,4 +54,5 @@ input {
 
 #fit-input {
     font-size: 25px;
+    background-color: inherit;
 }

@@ -78,21 +78,21 @@ const WeatherClothes = () => {
 
     return(
 
-        <div className="page-content">
+        <div className="main-page">
 
             <ul className="day-list">
 
-                <Button variant="outlined" size="large"><li id="monday">M</li></Button>
-                <Button variant="outlined" size="large"><li id="tuesday">T</li></Button>
-                <Button variant="outlined" size="large"><li id="wednsday">W</li></Button>
-                <Button variant="outlined" size="large"><li id="thursday">T</li></Button>
-                <Button variant="outlined" size="large"><li id="friday">F</li></Button>
-                <Button variant="outlined" size="large"><li id="saturday">S</li></Button>
-                <Button variant="outlined" size="large"><li id="sunday">S</li></Button>
+                <Button size="large"><li id="monday">M</li></Button>
+                <Button size="large"><li id="tuesday">T</li></Button>
+                <Button size="large"><li id="wednsday">W</li></Button>
+                <Button size="large"><li id="thursday">T</li></Button>
+                <Button size="large"><li id="friday">F</li></Button>
+                <Button size="large"><li id="saturday">S</li></Button>
+                <Button size="large"><li id="sunday">S</li></Button>
 
             </ul>
     
-            <div className="container">
+            <div className="my-container">
 
                 <div className="row text-center">
 

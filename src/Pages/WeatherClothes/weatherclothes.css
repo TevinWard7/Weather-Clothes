@@ -1,8 +1,14 @@
+.main-page > div {
+    background-color:white;
+}
+
 .day-list{
     list-style: none;
     display: flex;
     justify-content: center;
     justify-content: space-evenly;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .clothes-list {

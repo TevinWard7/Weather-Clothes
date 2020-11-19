@@ -115,10 +115,10 @@ const AddOutfit = () => {
                         {// If there is no outfit name and details disable submit button otherwise enable
                         }
                         {
-                        !outfitName && !fitWeather && !fitTemp && !imgUrl  ? 
-                        <Button disabled>Submit</Button>
-                        :
+                        outfitName && fitWeather && fitTemp && imgUrl  ? 
                         <Button onClick={() => addOutfit()}>Submit</Button>
+                        :
+                        <Button disabled>Submit</Button>
                         }
                         
                     </form>
