@@ -26,8 +26,14 @@ body {
 }
 
 .login-container > h1 {
+    position: relative;
     font-size: 150px;
-    z-index: 999 !important;
+    z-index: 999;
+}
+
+.login-container > p {
+    position: relative;
+    z-index: 999;
 }
 
 #sun {
@@ -41,7 +47,8 @@ body {
 
 #model {
     position: absolute;
-    height: 750px;
-    top: 75px;
-    left: 430px;
+    height: 800px;
+    top: 60px;
+    left: 400px;
+    opacity: 90%;
 }
