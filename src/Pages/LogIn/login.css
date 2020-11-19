@@ -50,5 +50,9 @@ body {
     height: 800px;
     top: 60px;
     left: 400px;
-    opacity: 90%;
+    opacity: 75%;
 }
+
+@media only screen and (max-width: 600px) {
+    
+  }

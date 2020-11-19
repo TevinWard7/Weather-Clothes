@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import { Button } from "@material-ui/core";
 import "./login.css";
-import { auth, provider } from "../../utils/firebase";
+import { firebase, auth, provider } from "../../utils/firebase";
 import { useStateValue } from "../../utils/stateProvider";
 import { actionTypes } from "../../utils/reducer";
 import sunImg from "./images/sun.png";
@@ -11,8 +11,6 @@ import anime from 'animejs/lib/anime.es.js';
 const LogIn = () => {
 
     useEffect(() => {
-
-
 
         anime({
             targets: '.login-container > h1',
@@ -40,14 +38,19 @@ const LogIn = () => {
     const signIn = () => {
 
         auth
-        .signInWithPopup(provider)
-        .then(result => {
+        .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+        .then(() => {
+
+            auth.signInWithPopup(provider)
+            .then(result => {
             dispatch({
                 type: actionTypes.SET_USER,
                 user: result.user
             })
         })
         .catch(err => console.log(err.message))
+
+        })
 
     };
 

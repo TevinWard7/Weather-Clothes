@@ -78,9 +78,9 @@ const WeatherClothes = () => {
 
     return(
 
-        <div className="main-page">
+        <div className="container main-page">
 
-            <ul className="day-list">
+            <ul className="row day-list">
 
                 <Button size="large"><li className="days" id="monday">M</li></Button>
                 <Button size="large"><li className="days" id="tuesday">T</li></Button>

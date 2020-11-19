@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import Navbar from "./components/Navbar/nav"
 import WeatherClothes from "./Pages/WeatherClothes/weatherclothes";
@@ -12,11 +12,27 @@ import Wardrobe from './Pages/Wardrobe/wardrobe';
 import Location from "./Pages/Location/location";
 import LogIn from "./Pages/LogIn/login";
 import { useStateValue } from "./utils/stateProvider";
+import { auth } from "./utils/firebase";
+import { actionTypes } from "./utils/reducer";
 
-function App() {
+const App = () => {
 
   const [{ user }, dispatch] = useStateValue();
+  console.log("App -> user", user)
 
+  useEffect(() => {
+
+    // Check to see if user is logged in via firebase persistence
+    auth.onAuthStateChanged(userSaved => {
+      console.log(userSaved)
+      dispatch({
+        type: actionTypes.SET_USER,
+        // If there's a user send user info to data layer (will be null if no persistence user)
+        user: userSaved
+    })
+    })
+
+  },[dispatch])
 
   return (
     <>
