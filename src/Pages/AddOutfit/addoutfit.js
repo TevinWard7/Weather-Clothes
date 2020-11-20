@@ -18,8 +18,7 @@ const AddOutfit = () => {
     const [imgUrl, setImgUrl] = useState();
     const [fitWeather, setFitWeather] = useState();
     const [fitTemp, setFitTemp] = useState();
-    console.log(fitWeather)
-    console.log(fitTemp)
+    const [fitContext, setFitContext] = useState();
 
     const handleImgUpload = (event) => {
 
@@ -58,7 +57,8 @@ const AddOutfit = () => {
                 outfit: outfitName,
                 weather: fitWeather,
                 tempertature: fitTemp,
-                image: imgUrl
+                image: imgUrl,
+                context: fitContext
             }
         ).then(history.push('/wardrobe'))
     };
@@ -90,7 +90,7 @@ const AddOutfit = () => {
 
                         {// Get Weather description input for oufit
                         }
-                        <select className="custom-select" style={{width: "200px"}} onChange={(e) => {
+                        <select className="custom-select" style={{width: "133px"}} onChange={(e) => {
                             setFitWeather(e.target.value)
                         }}>
                             <option></option>
@@ -100,7 +100,7 @@ const AddOutfit = () => {
                             <option value="sunny">Sunny</option>
                         </select>
 
-                        <select className="custom-select" style={{width: "200px"}} onChange={(e) => {
+                        <select className="custom-select" style={{width: "133px"}} onChange={(e) => {
                             setFitTemp(e.target.value)
                         }}>
                             <option></option>
@@ -109,13 +109,23 @@ const AddOutfit = () => {
                             <option value="cold">Cold</option>
                         </select>
 
+                        <select className="custom-select" style={{width: "133px"}} onChange={(e) => {
+                            setFitContext(e.target.value)
+                        }}>
+                            <option></option>
+                            <option value="neutral">Home</option>
+                            <option value="hot">Work</option>
+                            <option value="cold">Casual</option>
+                            <option value="cold">Event</option>
+                        </select>
+
                         <br/>
                         <br/>
 
                         {// If there is no outfit name and details disable submit button otherwise enable
                         }
                         {
-                        outfitName && fitWeather && fitTemp && imgUrl  ? 
+                        outfitName && fitWeather && fitTemp && imgUrl && fitContext  ? 
                         <Button onClick={() => addOutfit()}>Submit</Button>
                         :
                         <Button disabled>Submit</Button>

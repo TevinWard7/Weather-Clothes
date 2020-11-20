@@ -20,7 +20,10 @@
 }
 
 #weather-icon {
-    width: 90px;
-    height: 90px;
-    margin: 25px;
+    position: absolute;
+    left: 550px;
+    height: 1000px;
+    width: 1400px; 
+    opacity: 10%;
+    top: 150px;
 }

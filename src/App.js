@@ -40,7 +40,7 @@ const App = () => {
     <>
       {!user ? (
         fetching ? (
-          <CircularProgress />
+          <div id="loader"><CircularProgress /></div>
         )
         : (
         <LogIn />

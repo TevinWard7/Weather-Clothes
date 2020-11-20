@@ -3,6 +3,7 @@ import "./weatherclothes.css";
 import { Button } from "@material-ui/core";
 import db from "../../utils/firebase";
 import { useStateValue } from "../../utils/stateProvider";
+import moment from "moment";
 import API from "../../utils/API";
 import Sun from "./images/sun.png";
 import Cloudy from "./images/clouds.png";
@@ -16,6 +17,10 @@ const WeatherClothes = () => {
     const [todaysTemp, setTodaysTemp] = useState();
     const [todayDescript, setTodayDescript] = useState();
     const [weatherIcon, setWeatherIcon] = useState();
+
+    useEffect(() => {
+        console.log(moment().format('dddd'))
+    })
 
     // Get location data from DB
     useEffect(() => {
@@ -31,6 +36,7 @@ const WeatherClothes = () => {
     useEffect(() => {
         API.search(location)
         .then((res) => {
+            console.log(res)
             setTodaysTemp(res.data.list[0].main.temp)
             setTodayDescript(res.data.list[0].weather[0].description)
         })
@@ -71,7 +77,7 @@ const WeatherClothes = () => {
 
     },[todayDescript])
 
-    // Convery kelvin temp to faranheight
+    // Convert kelvin temp to faranheight
     const kelvinToFaran = (kelvin) => {
         return (kelvin - 273.15) * 9/5 + 32
     };
@@ -113,12 +119,12 @@ const WeatherClothes = () => {
 
                                 return (
                                     <>
-                                        <div>{temperature}<img src={weatherIcon} id="weather-icon" alt="icon" /></div>
+                                        <div>{temperature}</div>
                                     </>
                                 )
                             }
                             else {
-                                console.log("no temp")
+                                console.log("no temperture found")
                             }
                             })()
                         }
@@ -131,7 +137,9 @@ const WeatherClothes = () => {
 
                     </div>
 
-                    <div className="col"></div>
+                    <div className="col">
+                        <div><img id="weather-icon" src={weatherIcon} alt="icon"></img></div>
+                    </div>
 
                 </div>
         
