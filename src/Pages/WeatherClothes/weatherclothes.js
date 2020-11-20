@@ -99,49 +99,11 @@ const WeatherClothes = () => {
         
     // };
 
-    let fridayStyle = "";
-
-    const styleDay = () => {
-
-        switch (weekDay) {
-            case "Monday":
-                
-                break;
-            
-            case "Tuesday":
-                
-                break;
-
-            case "Wednsday":
-                
-                break;
-
-            case "Thursday":
-                
-                break;
-
-            case "Friday":
-                fridayStyle = "underline"
-                break;
-
-            case "Saturday":
-                
-                break;
-
-            case "Sunday":
-                
-                break;
-        
-            default:
-                break;
-        }
-    }
 
      // Get the day of the week
      useEffect(() => {
         setWeekDay(moment().format('dddd'))
-        styleDay()
-    },[setWeekDay, styleDay])
+    },[setWeekDay])
 
     return(
 
@@ -149,13 +111,13 @@ const WeatherClothes = () => {
 
             <ul className="row day-list">
 
-                <Button size="large"><li className="days">M</li></Button>
-                <Button size="large"><li className="days">T</li></Button>
-                <Button size="large"><li className="days">W</li></Button>
-                <Button size="large"><li className="days">T</li></Button>
-                <Button size="large"><li className="days" style={{opacity: "100%"}}>F</li></Button>
-                <Button size="large"><li className="days">S</li></Button>
-                <Button size="large"><li className="days">S</li></Button>
+                <li className={weekDay === "Monday" ? "selected-day" : "days"}>M</li>
+                <li className={weekDay === "Tuesday" ? "selected-day" : "days"}>T</li>
+                <li className={weekDay === "Wednsday" ? "selected-day" : "days"}>W</li>
+                <li className={weekDay === "Thursday" ? "selected-day" : "days"}>T</li>
+                <li className={weekDay === "Friday" ? "selected-day" : "days"}>F</li>
+                <li className={weekDay === "Saturday" ? "selected-day" : "days"}>S</li>
+                <li className={weekDay === "Sunday" ? "selected-day" : "days"}>S</li>
 
             </ul>
     
