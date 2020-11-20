@@ -17,6 +17,7 @@ const Wardrobe = () => {
     const [outfits, setOutfits] = useState();
     const history = useHistory();
 
+    // Get outfits
     useEffect(() => {
         
         db

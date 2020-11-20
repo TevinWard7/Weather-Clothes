@@ -14,23 +14,30 @@ const WeatherClothes = () => {
 
     const [{ user }, dispatch] = useStateValue();
     const [location, setLocation] = useState();
+    const [outfits, setOutfits] = useState();
     const [todaysTemp, setTodaysTemp] = useState();
     const [todayDescript, setTodayDescript] = useState();
     const [weatherIcon, setWeatherIcon] = useState();
+    const [weekDay, setWeekDay] = useState();
 
-    useEffect(() => {
-        console.log(moment().format('dddd'))
-    })
-
-    // Get location data from DB
+    // Fetch data from DB
     useEffect(() => {
 
+        // Get outfits from DB
+        db
+        .collection("wardrobe")
+        .where('uid', '==', user.uid)
+        .onSnapshot(snapshot => {
+            setOutfits(snapshot.docs.map((doc) => doc.data()))
+        })
+
+        // Get location data from DB
         db
         .collection("city")
         .where('uid', '==', user.uid)
         .onSnapshot(snapshot => setLocation(snapshot.docs.map((doc) => doc.data().city)))
 
-    },[user.uid])
+    },[user.uid]);
 
     // Get weather data from API based on city from DB
     useEffect(() => {
@@ -82,19 +89,73 @@ const WeatherClothes = () => {
         return (kelvin - 273.15) * 9/5 + 32
     };
 
+    // useEffect(() => {
+    //     shuffleArray(outfits)
+    // },[outfits])
+
+    // const shuffleArray = (arr) => {
+    //     console.log(arr[0])
+    //     console.log(arr.length * Math.floor(Math.random()))
+        
+    // };
+
+    let fridayStyle = "";
+
+    const styleDay = () => {
+
+        switch (weekDay) {
+            case "Monday":
+                
+                break;
+            
+            case "Tuesday":
+                
+                break;
+
+            case "Wednsday":
+                
+                break;
+
+            case "Thursday":
+                
+                break;
+
+            case "Friday":
+                fridayStyle = "underline"
+                break;
+
+            case "Saturday":
+                
+                break;
+
+            case "Sunday":
+                
+                break;
+        
+            default:
+                break;
+        }
+    }
+
+     // Get the day of the week
+     useEffect(() => {
+        setWeekDay(moment().format('dddd'))
+        styleDay()
+    },[setWeekDay, styleDay])
+
     return(
 
         <div className="container main-page">
 
             <ul className="row day-list">
 
-                <Button size="large"><li className="days" id="monday">M</li></Button>
-                <Button size="large"><li className="days" id="tuesday">T</li></Button>
-                <Button size="large"><li className="days" id="wednsday">W</li></Button>
-                <Button size="large"><li className="days" id="thursday">T</li></Button>
-                <Button size="large"><li className="days" id="friday">F</li></Button>
-                <Button size="large"><li className="days" id="saturday">S</li></Button>
-                <Button size="large"><li className="days" id="sunday">S</li></Button>
+                <Button size="large"><li className="days">M</li></Button>
+                <Button size="large"><li className="days">T</li></Button>
+                <Button size="large"><li className="days">W</li></Button>
+                <Button size="large"><li className="days">T</li></Button>
+                <Button size="large"><li className="days" style={{opacity: "100%"}}>F</li></Button>
+                <Button size="large"><li className="days">S</li></Button>
+                <Button size="large"><li className="days">S</li></Button>
 
             </ul>
     

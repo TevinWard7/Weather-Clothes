@@ -113,10 +113,9 @@ const AddOutfit = () => {
                             setFitContext(e.target.value)
                         }}>
                             <option></option>
-                            <option value="neutral">Home</option>
-                            <option value="hot">Work</option>
-                            <option value="cold">Casual</option>
-                            <option value="cold">Event</option>
+                            <option value="home">Home</option>
+                            <option value="work">Work</option>
+                            <option value="casual">Casual</option>
                         </select>
 
                         <br/>
