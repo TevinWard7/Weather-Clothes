@@ -1,24 +1,20 @@
 import React, {useState, useEffect} from "react";
 import "./weatherclothes.css";
-import { Button } from "@material-ui/core";
 import db from "../../utils/firebase";
 import { useStateValue } from "../../utils/stateProvider";
 import moment from "moment";
 import API from "../../utils/API";
-import Sun from "./images/sun.png";
-import Cloudy from "./images/clouds.png";
-import Rain from "./images/rain.png";
-import Breakaway from "./images/breakaway.png";
 
 const WeatherClothes = () => {
 
     const [{ user }, dispatch] = useStateValue();
     const [location, setLocation] = useState();
-    const [outfits, setOutfits] = useState();
+    // const [outfits, setOutfits] = useState();
     const [todaysTemp, setTodaysTemp] = useState();
-    const [todayDescript, setTodayDescript] = useState();
-    const [weatherIcon, setWeatherIcon] = useState();
+    // const [todayDescript, setTodayDescript] = useState();
+    // const [weatherIcon, setWeatherIcon] = useState();
     const [weekDay, setWeekDay] = useState();
+    
 
     // Fetch data from DB
     useEffect(() => {
@@ -28,7 +24,12 @@ const WeatherClothes = () => {
         .collection("wardrobe")
         .where('uid', '==', user.uid)
         .onSnapshot(snapshot => {
-            setOutfits(snapshot.docs.map((doc) => doc.data()))
+
+            const fits = snapshot.docs.map((doc) => doc.data());
+            const fitNum = fits.length
+            const randomFitNum = (Math.floor(Math.random() * fitNum));
+            console.log(randomFitNum)
+
         })
 
         // Get location data from DB
@@ -37,57 +38,72 @@ const WeatherClothes = () => {
         .where('uid', '==', user.uid)
         .onSnapshot(snapshot => setLocation(snapshot.docs.map((doc) => doc.data().city)))
 
+
     },[user.uid]);
 
     // Get weather data from API based on city from DB
     useEffect(() => {
-        API.search(location)
+
+        const abortController = new AbortController()
+        const signal = abortController.signal
+
+        API.search(location, { signal: signal })
         .then((res) => {
             console.log(res)
             setTodaysTemp(res.data.list[0].main.temp)
             setTodayDescript(res.data.list[0].weather[0].description)
         })
+
+        
+        const cleanup = () => {
+            abortController.abort()
+        }
+
+        cleanup()
+
     },[location])
 
     // Set weatherIcon state according to weather description from API
-    useEffect(() => {
 
-        switch (todayDescript) {
+    // useEffect(() => {
 
-            case "light rain" || "moderate rain":
+    //     switch (todayDescript) {
 
-                setWeatherIcon(Rain)
+    //         case "light rain" || "moderate rain":
 
-                break;
+    //             setWeatherIcon(Rain)
+
+    //             break;
             
-            case "clear sky":
+    //         case "clear sky":
 
-                setWeatherIcon(Sun)
+    //             setWeatherIcon(Sun)
 
-                break;
+    //             break;
             
-            case "overcast clouds":
+    //         case "overcast clouds":
 
-                setWeatherIcon(Cloudy)
+    //             setWeatherIcon(Cloudy)
 
-                break;
+    //             break;
             
-            case "broken clouds":
+    //         case "broken clouds" || "scattered clouds":
 
-                setWeatherIcon(Breakaway)
+    //             setWeatherIcon(Breakaway)
                 
-                break;
+    //             break;
         
-            default:
-                break;
-        }
+    //         default:
+    //             break;
+    //     }
 
-    },[todayDescript])
+    // },[todayDescript])
 
     // Convert kelvin temp to faranheight
     const kelvinToFaran = (kelvin) => {
         return (kelvin - 273.15) * 9/5 + 32
     };
+
 
     // useEffect(() => {
     //     shuffleArray(outfits)
@@ -111,13 +127,13 @@ const WeatherClothes = () => {
 
             <ul className="row day-list">
 
-                <li className={weekDay === "Monday" ? "selected-day" : "days"}>M</li>
-                <li className={weekDay === "Tuesday" ? "selected-day" : "days"}>T</li>
-                <li className={weekDay === "Wednsday" ? "selected-day" : "days"}>W</li>
-                <li className={weekDay === "Thursday" ? "selected-day" : "days"}>T</li>
-                <li className={weekDay === "Friday" ? "selected-day" : "days"}>F</li>
-                <li className={weekDay === "Saturday" ? "selected-day" : "days"}>S</li>
-                <li className={weekDay === "Sunday" ? "selected-day" : "days"}>S</li>
+                <li className={weekDay === "Monday" ? "current-day" : "days"}>M</li>
+                <li className={weekDay === "Tuesday" ? "current-day" : "days"}>T</li>
+                <li className={weekDay === "Wednsday" ? "current-day" : "days"}>W</li>
+                <li className={weekDay === "Thursday" ? "current-day" : "days"}>T</li>
+                <li className={weekDay === "Friday" ? "current-day" : "days"}>F</li>
+                <li className={weekDay === "Saturday" ? "current-day" : "days"}>S</li>
+                <li className={weekDay === "Sunday" ? "current-day" : "days"}>S</li>
 
             </ul>
     
@@ -160,12 +176,16 @@ const WeatherClothes = () => {
 
                     </div>
 
-                    <div className="col">
-                        <div><img id="weather-icon" src={weatherIcon} alt="icon"></img></div>
-                    </div>
+                    <div className="col"></div>
 
                 </div>
-        
+
+                <div className="row">
+                    
+                    {/* <div className="break">{weatherIcon ? <img id="weather-icon" src={weatherIcon} alt="icon"></img> : console.log("noimg")}</div> */}
+                   
+                </div>
+                
             </div>
 
         </div>
