@@ -12,6 +12,7 @@ const WeatherClothes = () => {
     const [todaysTemp, setTodaysTemp] = useState();
     const [todayDescript, setTodayDescript] = useState();
     const [weekDay, setWeekDay] = useState();
+    const [outfit, setOutfit] = useState("No Outfit Loading");
 
     // Convert kelvin temp to faranheight
     const kelvinToFaran = (kelvin) => {
@@ -50,11 +51,15 @@ const WeatherClothes = () => {
         .onSnapshot(snapshot => {
 
             const fits = snapshot.docs.map((doc) => doc.data())
-            const fitNum = fits.length
-            const randomFitNum = (Math.floor(Math.random() * fitNum));
+            let hotFits = fits.filter(fit => fit.temperature === "hot");
+            let neutralFits = fits.filter(fit => fit.temperature === "neutral");
+            let coldFits = fits.filter(fit => fit.temperature === "cold");
 
-            // let hotFits = fits.filter(fit => fit.temperature === "hot");
-            console.log(fits.filter(fit => fit.temperature === "hot"))
+            // if (todaysTemp => 70) {
+                const hotfitNum = hotFits.length
+                const randomHotFitNum = (Math.floor(Math.random() * hotfitNum));
+                console.log(hotFits[randomHotFitNum])
+            // }
 
         })
 
@@ -113,7 +118,7 @@ const WeatherClothes = () => {
 
                     <div className="col">
 
-                        outfit
+                        {outfit}
 
                     </div>
 
