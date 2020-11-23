@@ -9,28 +9,13 @@ const WeatherClothes = () => {
 
     const [{ user }, dispatch] = useStateValue();
     const [location, setLocation] = useState();
-    // const [outfits, setOutfits] = useState();
+    // const [outfits, setOutfits] = useState(["example", "example2"]);
     const [todaysTemp, setTodaysTemp] = useState();
-    // const [todayDescript, setTodayDescript] = useState();
-    // const [weatherIcon, setWeatherIcon] = useState();
+    const [todayDescript, setTodayDescript] = useState();
     const [weekDay, setWeekDay] = useState();
-    
 
-    // Fetch data from DB
+    // Data fetching
     useEffect(() => {
-
-        // Get outfits from DB
-        db
-        .collection("wardrobe")
-        .where('uid', '==', user.uid)
-        .onSnapshot(snapshot => {
-
-            const fits = snapshot.docs.map((doc) => doc.data());
-            const fitNum = fits.length
-            const randomFitNum = (Math.floor(Math.random() * fitNum));
-            console.log(randomFitNum)
-
-        })
 
         // Get location data from DB
         db
@@ -38,88 +23,67 @@ const WeatherClothes = () => {
         .where('uid', '==', user.uid)
         .onSnapshot(snapshot => setLocation(snapshot.docs.map((doc) => doc.data().city)))
 
-
-    },[user.uid]);
-
-    // Get weather data from API based on city from DB
-    useEffect(() => {
-
-        const abortController = new AbortController()
-        const signal = abortController.signal
-
-        API.search(location, { signal: signal })
+        // Get weather data from API based on city from DB
+        API.search(location)
         .then((res) => {
-            console.log(res)
+            // console.log(res)
             setTodaysTemp(res.data.list[0].main.temp)
             setTodayDescript(res.data.list[0].weather[0].description)
         })
 
-        
-        const cleanup = () => {
-            abortController.abort()
-        }
+        // Get & set the day of the week
+        setWeekDay(moment().format('dddd'))
 
-        cleanup()
+        // Get outfits from DB
+        db
+        .collection("wardrobe")
+        .where('uid', '==', user.uid)
+        .onSnapshot(snapshot => {
 
-    },[location])
+            snapshot.docs.map((doc) => doc.data())
+            // const fitNum = fits.length
+            // const randomFitNum = (Math.floor(Math.random() * fitNum));
 
-    // Set weatherIcon state according to weather description from API
+            // fits.map(fit => {
+            //     const fitTemps = fit.tempertature
+            //     console.log(fitTemps.fiter())
+            // })
 
-    // useEffect(() => {
+        })
 
-    //     switch (todayDescript) {
-
-    //         case "light rain" || "moderate rain":
-
-    //             setWeatherIcon(Rain)
-
-    //             break;
-            
-    //         case "clear sky":
-
-    //             setWeatherIcon(Sun)
-
-    //             break;
-            
-    //         case "overcast clouds":
-
-    //             setWeatherIcon(Cloudy)
-
-    //             break;
-            
-    //         case "broken clouds" || "scattered clouds":
-
-    //             setWeatherIcon(Breakaway)
-                
-    //             break;
-        
-    //         default:
-    //             break;
-    //     }
-
-    // },[todayDescript])
+    //eslint-disable-next-line
+    },[]);
 
     // Convert kelvin temp to faranheight
     const kelvinToFaran = (kelvin) => {
         return (kelvin - 273.15) * 9/5 + 32
     };
 
+    const clothesTempSelect = (array) => {
 
-    // useEffect(() => {
-    //     shuffleArray(outfits)
-    // },[outfits])
+        const heatCheck = (weather) => {
+            return weather === "hot";
+        }
 
-    // const shuffleArray = (arr) => {
-    //     console.log(arr[0])
-    //     console.log(arr.length * Math.floor(Math.random()))
-        
-    // };
+        const neautralCheck = (weather) => {
+            return weather === "hot";
+        }
 
+        const coldCheck = (weather) => {
+            return weather === "hot";
+        }
 
-     // Get the day of the week
-     useEffect(() => {
-        setWeekDay(moment().format('dddd'))
-    },[setWeekDay])
+        if (todaysTemp > 70) {
+            array.filter(heatCheck)
+        }
+        if (todaysTemp === 70) {
+            array.filter(neautralCheck)
+        }
+        if (todaysTemp < 70) {
+            array.filter(coldCheck)
+        }
+            
+    }
 
     return(
 
@@ -149,7 +113,7 @@ const WeatherClothes = () => {
 
                     <div className="col">
 
-                    {
+                        {
                             (()=> {
 
                             if (typeof todaysTemp === "number") {

@@ -28,8 +28,9 @@ const Location = () => {
                 console.log("no city from db")
             }
         })
-        
-    },[cityRef, user.uid])
+
+    //eslint-disable-next-line        
+    },[])
 
     // Pull ID of the doc from firebase
     useEffect(() => {
@@ -45,7 +46,8 @@ const Location = () => {
             });
         });
 
-    },[user.uid])
+    //eslint-disable-next-line
+    },[])
 
     // Send new city input into databae
     const addCity = (newCity) => {
