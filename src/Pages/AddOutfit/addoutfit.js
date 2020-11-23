@@ -56,7 +56,7 @@ const AddOutfit = () => {
                 uid: user.uid,
                 outfit: outfitName,
                 weather: fitWeather,
-                tempertature: fitTemp,
+                temperature: fitTemp,
                 image: imgUrl,
                 context: fitContext
             }
@@ -104,7 +104,7 @@ const AddOutfit = () => {
                             setFitTemp(e.target.value)
                         }}>
                             <option></option>
-                            <option value="neutral">Neutral</option>
+                            <option value="neutral">neutral</option>
                             <option value="hot">Hot</option>
                             <option value="cold">Cold</option>
                         </select>

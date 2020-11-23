@@ -9,12 +9,16 @@ const WeatherClothes = () => {
 
     const [{ user }, dispatch] = useStateValue();
     const [location, setLocation] = useState();
-    // const [outfits, setOutfits] = useState(["example", "example2"]);
     const [todaysTemp, setTodaysTemp] = useState();
     const [todayDescript, setTodayDescript] = useState();
     const [weekDay, setWeekDay] = useState();
 
-    // Data fetching
+    // Convert kelvin temp to faranheight
+    const kelvinToFaran = (kelvin) => {
+        return (kelvin - 273.15) * 9/5 + 32
+    };
+
+    // Location, Weather & Weekday Data fetching
     useEffect(() => {
 
         // Get location data from DB
@@ -34,56 +38,28 @@ const WeatherClothes = () => {
         // Get & set the day of the week
         setWeekDay(moment().format('dddd'))
 
+    //eslint-disable-next-line
+    },[])
+
+    useEffect(() => {
+
         // Get outfits from DB
         db
         .collection("wardrobe")
         .where('uid', '==', user.uid)
         .onSnapshot(snapshot => {
 
-            snapshot.docs.map((doc) => doc.data())
-            // const fitNum = fits.length
-            // const randomFitNum = (Math.floor(Math.random() * fitNum));
+            const fits = snapshot.docs.map((doc) => doc.data())
+            const fitNum = fits.length
+            const randomFitNum = (Math.floor(Math.random() * fitNum));
 
-            // fits.map(fit => {
-            //     const fitTemps = fit.tempertature
-            //     console.log(fitTemps.fiter())
-            // })
+            // let hotFits = fits.filter(fit => fit.temperature === "hot");
+            console.log(fits.filter(fit => fit.temperature === "hot"))
 
         })
 
     //eslint-disable-next-line
     },[]);
-
-    // Convert kelvin temp to faranheight
-    const kelvinToFaran = (kelvin) => {
-        return (kelvin - 273.15) * 9/5 + 32
-    };
-
-    const clothesTempSelect = (array) => {
-
-        const heatCheck = (weather) => {
-            return weather === "hot";
-        }
-
-        const neautralCheck = (weather) => {
-            return weather === "hot";
-        }
-
-        const coldCheck = (weather) => {
-            return weather === "hot";
-        }
-
-        if (todaysTemp > 70) {
-            array.filter(heatCheck)
-        }
-        if (todaysTemp === 70) {
-            array.filter(neautralCheck)
-        }
-        if (todaysTemp < 70) {
-            array.filter(coldCheck)
-        }
-            
-    }
 
     return(
 
@@ -127,7 +103,8 @@ const WeatherClothes = () => {
                                 )
                             }
                             else {
-                                console.log("no temperture found")
+                                // console.log("no temperture found")
+                                return <div></div>
                             }
                             })()
                         }
