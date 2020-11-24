@@ -56,3 +56,8 @@ input {
     font-size: 25px;
     background-color: inherit;
 }
+
+.toastie {
+    position: absolute;
+    
+}

@@ -5,6 +5,7 @@ import db from "../../utils/firebase";
 import { Button } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { storage } from "../../utils/firebase";
+import { Toast, Row, Col } from 'react-bootstrap';
 
 const AddOutfit = () => {
 
@@ -19,6 +20,7 @@ const AddOutfit = () => {
     const [fitWeather, setFitWeather] = useState();
     const [fitTemp, setFitTemp] = useState();
     const [fitContext, setFitContext] = useState();
+    const [show, setShow] = useState(false);
 
     const handleImgUpload = (event) => {
 
@@ -44,8 +46,7 @@ const AddOutfit = () => {
                 )
             }
         )
-
-        alert("uploaded!")
+        setShow(true)
 
     };
 
@@ -66,6 +67,23 @@ const AddOutfit = () => {
     return(
 
         <div className="add-page">
+
+            <Row>
+                <Col xs={12}>
+
+                    <Toast className="toastie" onClose={() => setShow(false)} show={show} delay={3000} autohide>
+                        <Toast.Header>
+                        <img
+                            src="holder.js/20x20?text=%20"
+                            className="rounded mr-2"
+                            alt=""
+                        />
+                        </Toast.Header>
+                        <Toast.Body>Image uploaded!</Toast.Body>
+                    </Toast>
+
+                </Col>
+            </Row>
 
             <div className="row text-center">
 
@@ -104,7 +122,7 @@ const AddOutfit = () => {
                             setFitTemp(e.target.value)
                         }}>
                             <option></option>
-                            <option value="neutral">neutral</option>
+                            <option value="neutral">Neutral</option>
                             <option value="hot">Hot</option>
                             <option value="cold">Cold</option>
                         </select>
