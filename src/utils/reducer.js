@@ -1,5 +1,3 @@
-import { AccordionActions } from "@material-ui/core";
-
 export const initialState = {
     user: null
 };

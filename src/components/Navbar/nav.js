@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./nav.css";
 import SettingsSharpIcon from '@material-ui/icons/SettingsSharp';
 import { IconButton, Avatar } from "@material-ui/core";
@@ -11,12 +11,12 @@ import { Button } from "@material-ui/core";
 const Navbar = () => {
 
     // Get User info from data layer
-    const [{ user }, dispatch] = useStateValue();
+    const [{ user }] = useStateValue();
     // Determine if nav pop is open/closed
     const [navActive, setNavActive] = useState("false");
     // Determine annimation
     const [fadeIn, setFadeIn] = useState(0);
-    const [location, setLocation] = useState();
+    // const [location, setLocation] = useState();
     const history = useHistory();
     
     // Toggle Our Navigation Bar
