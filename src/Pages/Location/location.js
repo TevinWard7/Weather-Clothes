@@ -3,12 +3,12 @@ import "./location.css";
 import { useStateValue } from "../../utils/stateProvider";
 import { Button } from "@material-ui/core";
 import db from "../../utils/firebase";
-import { Toast, Row, Col } from 'react-bootstrap';
+import { Toast } from 'react-bootstrap';
 
 
 const Location = () => {
 
-    const [{ user }, dispatch] = useStateValue();
+    const [{ user }] = useStateValue();
     const [initialCity, setInitialCity] = useState("City");
     const [newCity, setNewCity] = useState();
     const [id, setId] = useState();
@@ -123,7 +123,7 @@ const Location = () => {
 
                                 return <Button disabled>Submit</Button>;}   
 
-                            if (initialCity && initialCity != newCity) {
+                            if (initialCity && initialCity !== newCity) {
 
                                 return <Button onClick={() => updateCity(id, newCity)}>Update</Button>
 

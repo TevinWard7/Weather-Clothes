@@ -5,12 +5,12 @@ import db from "../../utils/firebase";
 import { Button } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { storage } from "../../utils/firebase";
-import { Toast, Row, Col } from 'react-bootstrap';
+import { Toast } from 'react-bootstrap';
 
 const AddOutfit = () => {
 
     // Get loggedin user info
-    const [{ user }, dispatch] = useStateValue();
+    const [{ user }] = useStateValue();
     const history = useHistory();
     // Get colleection from firebase
     const wardrobeRef = db.collection("wardrobe");

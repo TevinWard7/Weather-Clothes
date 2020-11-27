@@ -13,7 +13,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 const Wardrobe = () => {
 
     // Get loggedin user info
-    const [{ user }, dispatch] = useStateValue();
+    const [{ user }] = useStateValue();
     const [outfits, setOutfits] = useState();
     const history = useHistory();
 
