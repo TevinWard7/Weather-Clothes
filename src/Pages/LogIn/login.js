@@ -33,7 +33,7 @@ const LogIn = () => {
 
     },[])
 
-    const [{}, dispatch] = useStateValue();
+    const [dispatch] = useStateValue();
 
     const signIn = () => {
 
@@ -59,8 +59,8 @@ const LogIn = () => {
 
             <div className="login-container">
 
-                <p>Weather Wear</p>
                 <h1 style={{opacity: 0}}>WW</h1>
+                <p>Weather Wear</p>
                 <Button onClick={signIn}>Sign In</Button>
                 <div><img src={sunImg} alt="sun-icon" id="sun" /></div>
                 <div><img id="model" src={catImg} alt="model" /></div>

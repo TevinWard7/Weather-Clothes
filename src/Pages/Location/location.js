@@ -3,6 +3,7 @@ import "./location.css";
 import { useStateValue } from "../../utils/stateProvider";
 import { Button } from "@material-ui/core";
 import db from "../../utils/firebase";
+import { Toast, Row, Col } from 'react-bootstrap';
 
 
 const Location = () => {
@@ -13,6 +14,7 @@ const Location = () => {
     const [id, setId] = useState();
     console.log("Location -> id", id)
     const cityRef = db.collection("city").where('uid', '==', user.uid);
+    const [show, setShow] = useState(false);
 
     // Pull user's city from the database
     useEffect(() => {
@@ -73,7 +75,7 @@ const Location = () => {
             city: newCity
         })
         .then(
-            alert("Updated")
+            setShow(true)
         )
 
     };
@@ -81,7 +83,17 @@ const Location = () => {
     return(
         <div className="location-page">
 
-            {/* <div className="row"></div> */}
+            {/* <Row>
+                <Col xs={12}> */}
+
+                    <Toast className="toastie" onClose={() => setShow(false)} show={show} delay={3000} autohide>
+                        <Toast.Header>
+                        </Toast.Header>
+                        <Toast.Body>Updated!</Toast.Body>
+                    </Toast>
+
+                {/* </Col>
+            </Row> */}
 
             <div className="row text-center">
 

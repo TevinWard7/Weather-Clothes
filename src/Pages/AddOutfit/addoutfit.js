@@ -68,22 +68,17 @@ const AddOutfit = () => {
 
         <div className="add-page">
 
-            <Row>
-                <Col xs={12}>
+            {/* <Row>
+                <Col xs={12}> */}
 
                     <Toast className="toastie" onClose={() => setShow(false)} show={show} delay={3000} autohide>
                         <Toast.Header>
-                        <img
-                            src="holder.js/20x20?text=%20"
-                            className="rounded mr-2"
-                            alt=""
-                        />
                         </Toast.Header>
                         <Toast.Body>Image uploaded!</Toast.Body>
                     </Toast>
 
-                </Col>
-            </Row>
+                {/* </Col>
+            </Row> */}
 
             <div className="row text-center">
 

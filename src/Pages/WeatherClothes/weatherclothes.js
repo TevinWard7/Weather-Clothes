@@ -7,12 +7,14 @@ import API from "../../utils/API";
 
 const WeatherClothes = () => {
 
-    const [{ user }, dispatch] = useStateValue();
+    const [{ user }] = useStateValue();
     const [location, setLocation] = useState();
     const [todaysTemp, setTodaysTemp] = useState();
     const [todayDescript, setTodayDescript] = useState();
+    console.log("WeatherClothes -> todayDescript", todayDescript)
     const [weekDay, setWeekDay] = useState();
     const [outfit, setOutfit] = useState("No Outfit Loading");
+    console.log("WeatherClothes -> outfit", setOutfit)
 
     // Convert kelvin temp to faranheight
     const kelvinToFaran = (kelvin) => {
@@ -31,7 +33,7 @@ const WeatherClothes = () => {
         // Get weather data from API based on city from DB
         API.search(location)
         .then((res) => {
-            // console.log(res)
+            console.log(res)
             setTodaysTemp(res.data.list[0].main.temp)
             setTodayDescript(res.data.list[0].weather[0].description)
         })
@@ -52,8 +54,8 @@ const WeatherClothes = () => {
 
             const fits = snapshot.docs.map((doc) => doc.data())
             let hotFits = fits.filter(fit => fit.temperature === "hot");
-            let neutralFits = fits.filter(fit => fit.temperature === "neutral");
-            let coldFits = fits.filter(fit => fit.temperature === "cold");
+            // let neutralFits = fits.filter(fit => fit.temperature === "neutral");
+            // let coldFits = fits.filter(fit => fit.temperature === "cold");
 
             // if (todaysTemp => 70) {
                 const hotfitNum = hotFits.length
