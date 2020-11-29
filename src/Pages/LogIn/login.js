@@ -4,8 +4,8 @@ import "./login.css";
 import { firebase, auth, provider } from "../../utils/firebase";
 import { useStateValue } from "../../utils/stateProvider";
 import { actionTypes } from "../../utils/reducer";
-import sunImg from "../../media/sun.png";
-import catImg from "../../media/cat.png";
+import sunImg from "../../images/sun.png";
+import catImg from "../../images/cat.png";
 import anime from 'animejs/lib/anime.es.js';
 
 const LogIn = () => {
