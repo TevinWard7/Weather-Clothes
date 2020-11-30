@@ -6,11 +6,15 @@ import { useStateValue } from "../../utils/stateProvider";
 import { actionTypes } from "../../utils/reducer";
 import anime from 'animejs/lib/anime.es.js';
 import { storage } from "../../utils/firebase";
+// import catImg from "../../images/cat.png";
+// import sunImg from "../../images/sun.png";
 
 const LogIn = () => {
 
     const [catImg, setCatImg] = useState(); 
+    console.log("LogIn -> catImg", catImg)
     const [sunImg, setSunImg] = useState();
+    console.log("LogIn -> sunImg", sunImg)
 
     useEffect(() => {
 
@@ -81,7 +85,7 @@ const LogIn = () => {
                 <p>Weather Wear</p>
                 <Button onClick={signIn}>Sign In</Button>
                 <div><img src={sunImg} alt="sun-icon" id="sun" /></div>
-                <div><img id="model" src={catImg} alt="model" /></div>
+                <div><img src={catImg} alt="model" id="model"  /></div>
 
             </div>
 

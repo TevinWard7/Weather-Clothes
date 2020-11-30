@@ -72,6 +72,9 @@ const WeatherClothes = () => {
 
         <div className="container main-page">
 
+            {
+                // Weekdays list
+            }
             <ul className="row day-list">
 
                 <li className={weekDay === "Monday" ? "current-day" : "days"}>M</li>
@@ -84,6 +87,7 @@ const WeatherClothes = () => {
 
             </ul>
     
+
             <div className="my-container">
 
                 <div className="row text-center">
