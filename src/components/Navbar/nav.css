@@ -1,13 +1,18 @@
 .bar {
   display: flex;
-  justify-content: space-between;
+	justify-content: space-between;
+	align-items: center;
   background-color: #EDEAE4;
   height: 45px;
+  padding: 1rem;
 }
 
-#gear, #date {
-  z-index: 6;
-  vertical-align: middle;
+#gear {
+  z-index: 999;
+}
+
+.bar p {
+  margin: 1rem;
 }
 
 .nav-links > li{

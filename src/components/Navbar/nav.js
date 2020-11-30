@@ -16,7 +16,6 @@ const Navbar = () => {
     const [navActive, setNavActive] = useState("false");
     // Determine annimation
     const [fadeIn, setFadeIn] = useState(0);
-    // const [location, setLocation] = useState();
     const history = useHistory();
     
     // Toggle Our Navigation Bar
@@ -64,32 +63,30 @@ const Navbar = () => {
     };
 
     return(
-        <div>
+        <header>
 
             <nav>
 
                 <div className="bar">
 
-                    <div id="gear">
-                        <IconButton onClick={toggleNav}><SettingsSharpIcon /></IconButton>
-                    </div>
-
-                    <div id="date"><p>{moment().format("MMM Do YY")}</p>
-                    </div>
+                    <IconButton id="gear" onClick={toggleNav}><SettingsSharpIcon /></IconButton>
+                    <p>{moment().format("MMM Do YY")}</p>
 
                 </div>
 
                 <ul className={`nav-links ${navActive === "true" ? "nav-active" : ""}`} fadein={fadeIn} onAnimationEnd={() => {setFadeIn(0)}}>
+                    
                     <li><Avatar src={user.photoURL}/></li>
                     <li onClick={() => linkAction("/")}>Home</li>
                     <li onClick={() => linkAction("/location")}>Location</li>
                     <li onClick={() => linkAction("/wardrobe")}>Wardrobe</li>
                     <li><Button id="sign-out" onClick={signOut}>Sign Out</Button></li>
+
                 </ul>
                     
             </nav>
             
-        </div>
+        </header>
     )
 }
 
