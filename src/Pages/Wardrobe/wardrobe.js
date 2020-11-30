@@ -25,7 +25,7 @@ const Wardrobe = () => {
         .where('uid', '==', user.uid)
         .onSnapshot(snapshot => setOutfits(snapshot.docs.map((doc) => doc)))
 
-//eslint-disable-next-line
+    //eslint-disable-next-line
     },[]);
 
     const removeFit = (theDoc) => {

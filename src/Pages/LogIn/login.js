@@ -1,16 +1,34 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import { Button } from "@material-ui/core";
 import "./login.css";
 import { firebase, auth, provider } from "../../utils/firebase";
 import { useStateValue } from "../../utils/stateProvider";
 import { actionTypes } from "../../utils/reducer";
-import sunImg from "../../images/sun.png";
-import catImg from "../../images/cat.png";
 import anime from 'animejs/lib/anime.es.js';
+import { storage } from "../../utils/firebase";
 
 const LogIn = () => {
 
+    const [catImg, setCatImg] = useState(); 
+    const [sunImg, setSunImg] = useState();
+
     useEffect(() => {
+
+            storage
+            .ref("myImages")
+            .child("cat.png")
+            .getDownloadURL()
+            .then(url => {
+                setCatImg(url)
+            })
+
+            storage
+            .ref("myImages")
+            .child("sun.png")
+            .getDownloadURL()
+            .then(url => {
+                setSunImg(url)
+            })
 
         anime({
             targets: '.login-container > h1',
