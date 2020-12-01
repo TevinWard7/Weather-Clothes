@@ -104,7 +104,7 @@ const Wardrobe = () => {
                     </div>
                     ) 
                     : <div>
-                        <p>no outfits</p>
+                        <p>Add outfits</p>
                     </div>
                     }
 

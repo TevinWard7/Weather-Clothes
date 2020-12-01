@@ -15,6 +15,10 @@ const LogIn = () => {
     console.log("LogIn -> catImg", catImg)
     const [sunImg, setSunImg] = useState();
     console.log("LogIn -> sunImg", sunImg)
+    // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
+    let vh = window.innerHeight * 0.01;
+    // Then we set the value in the --vh custom property to the root of the document
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
 
     useEffect(() => {
 
@@ -77,7 +81,7 @@ const LogIn = () => {
     };
 
     return(
-        <div className="login" scroll="no">
+        <div className="container login">
 
             <div className="container login-container">
 
