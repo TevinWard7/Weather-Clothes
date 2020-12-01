@@ -81,9 +81,9 @@ const LogIn = () => {
     };
 
     return(
-        <div className="container login">
+        <div className="login">
 
-            <div className="container login-container">
+            <div className="login-container">
 
                 <h1 style={{opacity: 0}}>WW</h1>
                 <p>Weather Wear</p>
