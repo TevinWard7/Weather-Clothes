@@ -41,7 +41,7 @@
 }
 
 .nav-links[fadein='1'] {
-  animation: fadein 1s 1;
+  animation: fadein 0.3s 1;
 }
 
 @keyframes fadein{

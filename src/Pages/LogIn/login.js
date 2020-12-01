@@ -79,7 +79,7 @@ const LogIn = () => {
     return(
         <div className="login" scroll="no">
 
-            <div className="login-container">
+            <div className="container login-container">
 
                 <h1 style={{opacity: 0}}>WW</h1>
                 <p>Weather Wear</p>

@@ -75,7 +75,7 @@ const Wardrobe = () => {
     };
 
     return(
-        <div className="wardrobe-page">
+        <div className="container wardrobe-page">
 
             <div className="row text-center">
 
