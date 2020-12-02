@@ -9,10 +9,10 @@ A Minimalist's Web application that takes the effort out of deciding what to wea
 
 ## User Story
 ```
-As a minimalist
-I want to be able to upload and edit details of my wardobe and location
-And have them tied to the weather and occasion 
-So that I can look in the app and provided my outfit each day
+As a minimalist who likes simple and effecient
+I want to be able to upload and edit details of my wardobe as well as my current location
+Then have them tied to the weather and occasion
+So that I can open the app and it will have decided an outfit for me to wear each day based on these entries
 ```
 
 ## Technology
@@ -26,12 +26,12 @@ Front end
 * React
 * React Slick
 * Material UI
+* Anime.JS
 
 Back end
 * Firebase
 * Openweathermap API
 * Moment.JS
-* Anime.JS
 
 
 # Link To Deployed App
