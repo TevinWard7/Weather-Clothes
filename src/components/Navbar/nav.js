@@ -78,8 +78,8 @@ const Navbar = () => {
                     
                     <li><Avatar src={user.photoURL}/></li>
                     <li onClick={() => linkAction("/")}>Home</li>
-                    <li onClick={() => linkAction("/location")}>Location</li>
                     <li onClick={() => linkAction("/wardrobe")}>Wardrobe</li>
+                    <li onClick={() => linkAction("/location")}>Location</li>
                     <li><Button id="sign-out" onClick={signOut}>Sign Out</Button></li>
 
                 </ul>
