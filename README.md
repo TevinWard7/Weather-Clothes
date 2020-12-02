@@ -1,6 +1,6 @@
 # Weather Wear Clothes
 
-A Minimalist's Web application that takes the effort out of deciding what to wear each day by algorthimicaly deciding an outfit according to the weather & context
+A minimalist's web application that takes the effort out of deciding  what to wear by algorithmically determining an outfit each day according to the weather 
 
 ## Table Of Contents
 - [User Story](#User-Story)
