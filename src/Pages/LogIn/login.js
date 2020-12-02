@@ -56,6 +56,17 @@ const LogIn = () => {
               duration: 10500,
               easing: 'easeInQuad'
           });
+        
+        anime({
+          targets: '.login-container > Button',
+          keyframes: [
+              {translateY: 500},
+              {opacity: 100},
+              {translateY: 0},
+            ],
+            duration: 1000,
+            easing: 'easeInQuad'
+        });
 
     },[])
 
@@ -86,8 +97,8 @@ const LogIn = () => {
             <div className="login-container">
 
                 <h1 style={{opacity: 0}}>WW</h1>
-                <p>Weather Wear</p>
-                <Button onClick={signIn}>Sign In</Button>
+                <p><strong>Weather Wear</strong></p>
+                <Button onClick={signIn} style={{opacity: 0}}>Sign In</Button>
                 <div><img src={sunImg} alt="sun-icon" id="sun" /></div>
                 <div><img src={catImg} alt="model" id="model"  /></div>
 
