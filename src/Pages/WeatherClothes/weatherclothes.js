@@ -75,20 +75,26 @@ const WeatherClothes = () => {
             {
                 // Row 1 - Weekdays list
             }
-            <div className="row day-list">
+            <div className="row">
 
-                <li className={weekDay === "Monday" ? "current-day" : "days"}>M</li>
-                <li className={weekDay === "Tuesday" ? "current-day" : "days"}>T</li>
-                <li className={weekDay === "Wednsday" ? "current-day" : "days"}>W</li>
-                <li className={weekDay === "Thursday" ? "current-day" : "days"}>T</li>
-                <li className={weekDay === "Friday" ? "current-day" : "days"}>F</li>
-                <li className={weekDay === "Saturday" ? "current-day" : "days"}>S</li>
-                <li className={weekDay === "Sunday" ? "current-day" : "days"}>S</li>
+                <div className="col-12">
 
+                    <ul className="day-list">
+                        <li className={weekDay === "Monday" ? "current-day" : "days"}>M</li>
+                        <li className={weekDay === "Tuesday" ? "current-day" : "days"}>T</li>
+                        <li className={weekDay === "Wednsday" ? "current-day" : "days"}>W</li>
+                        <li className={weekDay === "Thursday" ? "current-day" : "days"}>T</li>
+                        <li className={weekDay === "Friday" ? "current-day" : "days"}>F</li>
+                        <li className={weekDay === "Saturday" ? "current-day" : "days"}>S</li>
+                        <li className={weekDay === "Sunday" ? "current-day" : "days"}>S</li>
+                    </ul>
+                    
+                </div>
+                
             </div>
 
             {
-                // Row 2
+                // Row 2 - Outfit for today
             }
             <div className="row text-center">
 
