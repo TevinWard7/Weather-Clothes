@@ -13,7 +13,7 @@ const WeatherClothes = () => {
     const [todayDescript, setTodayDescript] = useState();
     console.log("WeatherClothes -> todayDescript", todayDescript)
     const [weekDay, setWeekDay] = useState();
-    const [outfit, setOutfit] = useState("No Outfit Loading");
+    const [outfit, setOutfit] = useState("No Outfit Loading (out of API calls)");
     console.log("WeatherClothes -> outfit", setOutfit)
 
     // Convert kelvin temp to faranheight
@@ -73,9 +73,9 @@ const WeatherClothes = () => {
         <div className="container main-page">
 
             {
-                // Weekdays list
+                // Row 1 - Weekdays list
             }
-            <ul className="row day-list">
+            <div className="row day-list">
 
                 <li className={weekDay === "Monday" ? "current-day" : "days"}>M</li>
                 <li className={weekDay === "Tuesday" ? "current-day" : "days"}>T</li>
@@ -85,20 +85,14 @@ const WeatherClothes = () => {
                 <li className={weekDay === "Saturday" ? "current-day" : "days"}>S</li>
                 <li className={weekDay === "Sunday" ? "current-day" : "days"}>S</li>
 
-            </ul>
-    
+            </div>
 
-            <div className="my-container">
+            {
+                // Row 2
+            }
+            <div className="row text-center">
 
-                <div className="row text-center">
-
-                    <div className="col-12"></div>
-                    
-                </div>
-
-                <div className="row text-center">
-
-                    <div className="col">
+                <div className="col">
 
                         {
                             (()=> {
@@ -120,24 +114,18 @@ const WeatherClothes = () => {
                             })()
                         }
 
-                    </div>
+                </div>
 
-                    <div className="col">
+                <div className="col">
 
                         {outfit}
 
-                    </div>
+                </div>
 
-                    <div className="col"></div>
+                <div className="col">
 
                 </div>
 
-                <div className="row">
-                    
-                    {/* <div className="break">{weatherIcon ? <img id="weather-icon" src={weatherIcon} alt="icon"></img> : console.log("noimg")}</div> */}
-                   
-                </div>
-                
             </div>
 
         </div>
