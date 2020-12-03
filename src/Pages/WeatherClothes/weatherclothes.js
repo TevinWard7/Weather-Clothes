@@ -76,7 +76,7 @@ const WeatherClothes = () => {
                 // Row 1 - Weekdays list
             }
             <div className="row">
-
+LLLL
                 <div className="col-12">
 
                     <ul className="day-list">
