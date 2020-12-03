@@ -70,7 +70,7 @@ const WeatherClothes = () => {
 
     return(
 
-        <div className="container main-page">
+        <div className="container">
 
             {
                 // Row 1 - Weekdays list
@@ -80,6 +80,7 @@ const WeatherClothes = () => {
                 <div className="col-12">
 
                     <ul className="day-list">
+
                         <li className={weekDay === "Monday" ? "current-day" : "days"}>M</li>
                         <li className={weekDay === "Tuesday" ? "current-day" : "days"}>T</li>
                         <li className={weekDay === "Wednsday" ? "current-day" : "days"}>W</li>
@@ -87,8 +88,9 @@ const WeatherClothes = () => {
                         <li className={weekDay === "Friday" ? "current-day" : "days"}>F</li>
                         <li className={weekDay === "Saturday" ? "current-day" : "days"}>S</li>
                         <li className={weekDay === "Sunday" ? "current-day" : "days"}>S</li>
+
                     </ul>
-                    
+
                 </div>
                 
             </div>
