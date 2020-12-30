@@ -9,12 +9,12 @@ const WeatherClothes = () => {
 
     const [{ user }] = useStateValue();
     const [location, setLocation] = useState();
+    console.log("WeatherClothes -> location", location)
     const [todaysTemp, setTodaysTemp] = useState();
     const [todayDescript, setTodayDescript] = useState();
-    console.log("WeatherClothes -> todayDescript", todayDescript)
     const [weekDay, setWeekDay] = useState();
+    console.log("WeatherClothes -> weekDay", weekDay)
     const [outfit, setOutfit] = useState("No Outfit Loading (out of API calls)");
-    console.log("WeatherClothes -> outfit", setOutfit)
 
     // Convert kelvin temp to faranheight
     const kelvinToFaran = (kelvin) => {
@@ -30,6 +30,14 @@ const WeatherClothes = () => {
         .where('uid', '==', user.uid)
         .onSnapshot(snapshot => setLocation(snapshot.docs.map((doc) => doc.data().city)))
 
+        // Get & set the day of the week
+        setWeekDay(moment().format('dddd'))
+
+    //eslint-disable-next-line
+    },[])
+
+    useEffect(() => {
+
         // Get weather data from API based on city from DB
         API.search(location)
         .then((res) => {
@@ -38,11 +46,7 @@ const WeatherClothes = () => {
             setTodayDescript(res.data.list[0].weather[0].description)
         })
 
-        // Get & set the day of the week
-        setWeekDay(moment().format('dddd'))
-
-    //eslint-disable-next-line
-    },[])
+    },[location])
 
     useEffect(() => {
 
@@ -76,14 +80,14 @@ const WeatherClothes = () => {
                 // Row 1 - Weekdays list
             }
             <div className="row">
-LLLL
+                
                 <div className="col-12">
 
                     <ul className="day-list">
 
                         <li className={weekDay === "Monday" ? "current-day" : "days"}>M</li>
                         <li className={weekDay === "Tuesday" ? "current-day" : "days"}>T</li>
-                        <li className={weekDay === "Wednsday" ? "current-day" : "days"}>W</li>
+                        <li className={weekDay === "Wednesday" ? "current-day" : "days"}>W</li>
                         <li className={weekDay === "Thursday" ? "current-day" : "days"}>T</li>
                         <li className={weekDay === "Friday" ? "current-day" : "days"}>F</li>
                         <li className={weekDay === "Saturday" ? "current-day" : "days"}>S</li>
