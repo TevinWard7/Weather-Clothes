@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./nav.css";
 import SettingsSharpIcon from '@material-ui/icons/SettingsSharp';
 import { IconButton, Avatar } from "@material-ui/core";
@@ -7,6 +7,8 @@ import { useHistory } from "react-router-dom";
 import moment from "moment";
 import { auth } from "../../utils/firebase";
 import { Button } from "@material-ui/core";
+import API from "../../utils/API";
+import db from "../../utils/firebase";
 
 const Navbar = () => {
 
@@ -17,6 +19,31 @@ const Navbar = () => {
     // Determine annimation
     const [fadeIn, setFadeIn] = useState(0);
     const history = useHistory();
+    const [location, setLocation] = useState();
+    const [todaysTemp, setTodaysTemp] = useState();
+    const [todayDescript, setTodayDescript] = useState();
+
+    useEffect(() => {
+
+        // Get location data from DB
+        db
+        .collection("city")
+        .where('uid', '==', user.uid)
+        .onSnapshot(snapshot => setLocation(snapshot.docs.map((doc) => doc.data().city)))
+        
+    //eslint-disable-next-line    
+    },[])
+
+    useEffect(() => {
+
+        // Get weather data from API based on city from DB
+        API.search(location)
+        .then((res) => {
+            setTodaysTemp(res.data.list[0].main.temp)
+            setTodayDescript(res.data.list[0].weather[0].description)
+        })
+
+    },[location])
     
     // Toggle Our Navigation Bar
     const toggleNav = () => {
@@ -58,6 +85,11 @@ const Navbar = () => {
         toggleNav();
     };
 
+    // Convert kelvin temp to faranheight
+    const kelvinToFaran = (kelvin) => {
+        return (kelvin - 273.15) * 9/5 + 32
+    };
+
     const signOut = () => {
         auth.signOut()
     };
@@ -70,7 +102,29 @@ const Navbar = () => {
                 <div className="bar">
 
                     <IconButton id="gear" onClick={toggleNav}><SettingsSharpIcon /></IconButton>
-                    <p>{moment().format("MMM Do YY")}</p>
+                    <p>
+                        {
+                            (()=> {
+
+                                if (typeof todaysTemp === "number") {
+    
+                                    const temperature = Math.round(kelvinToFaran(todaysTemp)) + "°";
+    
+                                    return (
+                                        <>
+                                            {temperature + " " + todayDescript}
+                                        </>
+                                    )
+                                }
+                                else {
+    
+                                    return 0
+    
+                                }
+                                })()
+                        }
+                        {/* {moment().format("MMM Do YY")} */}
+                    </p>
 
                 </div>
 

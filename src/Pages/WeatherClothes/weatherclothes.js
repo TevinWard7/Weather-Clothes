@@ -9,17 +9,12 @@ const WeatherClothes = () => {
 
     const [{ user }] = useStateValue();
     const [location, setLocation] = useState();
-    console.log("WeatherClothes -> location", location)
     const [todaysTemp, setTodaysTemp] = useState();
-    const [todayDescript, setTodayDescript] = useState();
+    // const [todayDescript, setTodayDescript] = useState();
     const [weekDay, setWeekDay] = useState();
-    console.log("WeatherClothes -> weekDay", weekDay)
     const [outfit, setOutfit] = useState("No Outfit Loading (out of API calls)");
-
-    // Convert kelvin temp to faranheight
-    const kelvinToFaran = (kelvin) => {
-        return (kelvin - 273.15) * 9/5 + 32
-    };
+    const outfitSavedDay = localStorage.getItem("today");
+    let dayCheck;
 
     // Location, Weather & Weekday Data fetching
     useEffect(() => {
@@ -31,7 +26,7 @@ const WeatherClothes = () => {
         .onSnapshot(snapshot => setLocation(snapshot.docs.map((doc) => doc.data().city)))
 
         // Get & set the day of the week
-        setWeekDay(moment().format('dddd'))
+        setWeekDay(moment().format('dddd'));
 
     //eslint-disable-next-line
     },[])
@@ -43,34 +38,83 @@ const WeatherClothes = () => {
         .then((res) => {
             console.log(res)
             setTodaysTemp(res.data.list[0].main.temp)
-            setTodayDescript(res.data.list[0].weather[0].description)
         })
 
     },[location])
 
     useEffect(() => {
 
+        console.log(moment().format('dddd'))
+        console.log("outfitsaved day --->" + outfitSavedDay)
+
+
+        if (moment().format('dddd') != outfitSavedDay) {
+            console.log("days dont match!")
+            localStorage.removeItem("todaysOutfit");
+            localStorage.removeItem("today");
+            return
+        }
+        else {
+            
+            console.log("Days DO match!")
+        }
+
+        dayCheck = true;
+
+        
+    }, [weekDay, outfitSavedDay])
+
+    
+    useEffect(() => {
+
+        const savedOutfit = localStorage.getItem("todaysOutfit");
+
         // Get outfits from DB
-        db
-        .collection("wardrobe")
-        .where('uid', '==', user.uid)
-        .onSnapshot(snapshot => {
+        const determineOutfit = () => {
 
-            const fits = snapshot.docs.map((doc) => doc.data())
-            let hotFits = fits.filter(fit => fit.temperature === "hot");
-            // let neutralFits = fits.filter(fit => fit.temperature === "neutral");
-            // let coldFits = fits.filter(fit => fit.temperature === "cold");
+            db
+            .collection("wardrobe")
+            .where('uid', '==', user.uid)
+            .onSnapshot(snapshot => {
 
-            // if (todaysTemp => 70) {
-                const hotfitNum = hotFits.length
-                const randomHotFitNum = (Math.floor(Math.random() * hotfitNum));
-                console.log(hotFits[randomHotFitNum])
-            // }
+                const fits = snapshot.docs.map((doc) => doc.data())
+                let hotFits = fits.filter(fit => fit.temperature === "hot");
+                let neutralFits = fits.filter(fit => fit.temperature === "neutral");
+                let coldFits = fits.filter(fit => fit.temperature === "cold");
 
-        })
+                if (todaysTemp => 70) {
+                    const hotfitNum = hotFits.length
+                    const randomHotFitNum = (Math.floor(Math.random() * hotfitNum));
+                    setOutfit(hotFits[randomHotFitNum].image);
+                    localStorage.setItem("todaysOutfit", hotFits[randomHotFitNum].image)
+                    localStorage.setItem("today", weekDay)
+                }
+                if (todaysTemp > 70 && todaysTemp > 68) {
+                    const randomNeutralFitNum = (Math.floor(Math.random() * neutralFits.length));
+                    setOutfit(neutralFits[randomNeutralFitNum].image);
+                    localStorage.setItem("todaysOutfit", neutralFits[randomNeutralFitNum].image)
+                    localStorage.setItem("today", weekDay)
+                }
+                if (todaysTemp > 68 ) {
+                    const randomColdFitNum = (Math.floor(Math.random() * coldFits.length));
+                    setOutfit(coldFits[randomColdFitNum].image)
+                    localStorage.setItem("todaysOutfit", coldFits[randomColdFitNum].image)
+                    localStorage.setItem("today", weekDay)
+                }
+
+            });
+
+        };
+
+        // If there is an outfit saved in local storage set it to Outfit state else determine a new one
+        savedOutfit ? setOutfit(savedOutfit) : determineOutfit()
+
+        console.log(savedOutfit)
+        
 
     //eslint-disable-next-line
-    },[]);
+    },[weekDay, dayCheck]);
+
 
     return(
 
@@ -104,39 +148,17 @@ const WeatherClothes = () => {
             }
             <div className="row text-center">
 
-                <div className="col">
-
-                        {
-                            (()=> {
-
-                            if (typeof todaysTemp === "number") {
-
-                                const temperature = Math.round(kelvinToFaran(todaysTemp)) + "°";
-
-                                return (
-                                    <>
-                                        <div>{temperature}</div>
-                                    </>
-                                )
-                            }
-                            else {
-                                // console.log("no temperture found")
-                                return <div></div>
-                            }
-                            })()
-                        }
-
-                </div>
+                <div className="col"></div>
 
                 <div className="col">
 
-                        {outfit}
+                    <h1>Today's Outfit</h1>
+                    <hr />
+                    <img src={outfit} alt="oufit" height="300px" width="auto"/>
 
                 </div>
 
-                <div className="col">
-
-                </div>
+                <div className="col"></div>
 
             </div>
 
