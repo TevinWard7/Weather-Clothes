@@ -5,7 +5,7 @@ import db from "../../utils/firebase";
 import { Button } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { storage } from "../../utils/firebase";
-import { Toast } from 'react-bootstrap';
+// import { Toast } from 'react-bootstrap';
 
 const AddOutfit = () => {
 
@@ -20,7 +20,7 @@ const AddOutfit = () => {
     const [fitWeather, setFitWeather] = useState();
     const [fitTemp, setFitTemp] = useState();
     const [fitContext, setFitContext] = useState();
-    const [show, setShow] = useState(false);
+    // const [show, setShow] = useState(false);
 
     const handleImgUpload = (event) => {
 
@@ -46,7 +46,7 @@ const AddOutfit = () => {
                 )
             }
         )
-        setShow(true)
+        alert("Image uploaded!")
 
     };
 
@@ -71,11 +71,11 @@ const AddOutfit = () => {
             {/* <Row>
                 <Col xs={12}> */}
 
-                    <Toast className="toastie" onClose={() => setShow(false)} show={show} delay={3000} autohide>
+                    {/* <Toast className="toastie" onClose={() => setShow(false)} show={show} delay={3000} autohide>
                         <Toast.Header>
                         </Toast.Header>
                         <Toast.Body>Image uploaded!</Toast.Body>
-                    </Toast>
+                    </Toast> */}
 
                 {/* </Col>
             </Row> */}
