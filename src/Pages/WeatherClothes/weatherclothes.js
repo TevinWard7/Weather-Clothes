@@ -19,7 +19,7 @@ const WeatherClothes = () => {
     const outfitSavedDay = localStorage.getItem("today");
     let dayCheck;
     let noFits = true;
-    const {setBck, toggleInfo, setInfoPop} = useContext(UserContext);
+    const {setBck, setInfoPop} = useContext(UserContext);
 
     // Location, Weather & Weekday Data fetching
     useEffect(() => {
