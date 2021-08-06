@@ -19,7 +19,7 @@ const WeatherClothes = () => {
     const outfitSavedDay = localStorage.getItem("today");
     let dayCheck;
     let noFits = true;
-    const {setBck} = useContext(UserContext);
+    const {setBck, toggleInfo, setInfoPop} = useContext(UserContext);
 
     // Location, Weather & Weekday Data fetching
     useEffect(() => {
@@ -140,7 +140,7 @@ const WeatherClothes = () => {
 
     const todaysFit = () => {
         if (noFits === true) {
-            return (<div className="how"><h3>How to</h3>&nbsp;<img src={info} alt="info" width="15" heigh="15"/></div>)
+            return (<div className="how" onClick={() => setInfoPop("block")}><h3>How to</h3>&nbsp;<img src={info} alt="info" width="15" heigh="15"/></div>)
         }
         if (noFits === false) {
             return (<img src={outfit} alt="oufit" height="300px" width="auto"/>)

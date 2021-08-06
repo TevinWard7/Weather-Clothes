@@ -16,12 +16,15 @@ import { auth } from "./utils/firebase";
 import { actionTypes } from "./utils/reducer";
 import { CircularProgress } from "@material-ui/core";
 import { UserContext } from './utils/UserContext';
+import { Button } from "@material-ui/core";
+// import zIndex from '@material-ui/core/styles/zIndex';
 
 const App = () => {
 
   const [{ user }, dispatch] = useStateValue();
   const [fetching, setFetching] = useState();
   const [bck, setBck] = useState();
+  const [infoPop, setInfoPop] = useState("none");
 
   useEffect(() => { 
 
@@ -38,6 +41,11 @@ const App = () => {
 
   },[dispatch])
 
+  // const toggleInfo = () => {
+  //   if (infoPop === "none") setInfoPop("block");
+  //   if (infoPop === "block") setInfoPop("none");
+  // };
+
   return (
     <div className="app" style={{backgroundImage: bck, height:"100vh", width:"100vw", zIndex:"2"}}>
       {
@@ -46,9 +54,19 @@ const App = () => {
         <Router>
 
           <div>
-            <UserContext.Provider value={{setBck}}>
+            <UserContext.Provider value={{setBck, setInfoPop}}>
 
+              <div style={{display:infoPop, zIndex:999}} className="info-pop">
+                <ul>
+                  <li><h2>1. Enter Your Location</h2></li>
+                  <li><h2>2. Upload Photos Of Your Wardrobe</h2></li>
+                  <li><h2>3. View Your Outfit Each Day</h2></li>
+                  <li><Button onClick={() => setInfoPop("none")}>Close</Button></li>
+                </ul>
+              </div>
+              
               <Navbar />
+              
 
               <Switch>
 
@@ -67,6 +85,8 @@ const App = () => {
                 <Route path="/">
                   <WeatherClothes />
                 </Route>
+
+                
               
               </Switch>
 

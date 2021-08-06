@@ -86,3 +86,18 @@ h1::before, li::before {
   align-items: flex-start;
   cursor: pointer;
 }
+
+.info-pop {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(255, 255, 255);
+}
+
+.info-pop > ul {
+  list-style: none;
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  padding: 5rem;
+}
