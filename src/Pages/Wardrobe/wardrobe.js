@@ -73,12 +73,38 @@ const Wardrobe = () => {
         dots: false,
         infinite: true,
         arrows: true,
-        // prevArrow: <Arrows />,
+        prevArrow: <Arrows />,
         nextArrow: <Arrows />,
         swipe: true,
         speed: 500,
         slidesToShow: 3,
-        slidesToScroll: 1
+        slidesToScroll: 3,
+        responsive: [
+            {
+              breakpoint: 1024,
+              settings: {
+                slidesToShow: 3,
+                slidesToScroll: 3,
+                infinite: true,
+                dots: true
+              }
+            },
+            {
+              breakpoint: 600,
+              settings: {
+                slidesToShow: 2,
+                slidesToScroll: 2,
+                initialSlide: 2
+              }
+            },
+            {
+              breakpoint: 480,
+              settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1
+              }
+            }
+          ]
     };
 
     return(
@@ -91,16 +117,16 @@ const Wardrobe = () => {
                     {
                     outfits ? 
                         outfits.map(doc =>   
-                    <>
+                    <div key={doc.id}>
                         <h1 id="fit-name">{doc.data().outfit}</h1>
 
-                        <IconButton onClick={() => removeFit(doc.id)}>
+                        <IconButton key={doc.id} onClick={() => removeFit(doc.id)}>
                             {/* <ClearIcon fontSize="small" /> */}
                             <img src={hanger} alt="hanger" width="25" height="25" id="hang"/>
                         </IconButton>
                         
-                        <img src={doc.data().image} alt="outfit" id="fit-pic" /> 
-                    </>
+                        <img src={doc.data().image} alt="outfit" id="fit-pic"/> 
+                    </div>
                     ) 
                     : 
                     <p>Add outfits</p>
