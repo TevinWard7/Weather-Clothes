@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import db from "../../utils/firebase";
 import { useStateValue } from "../../utils/stateProvider";
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
@@ -9,6 +9,10 @@ import "slick-carousel/slick/slick-theme.css";
 import { useHistory } from "react-router-dom";
 import "./wardrobe.css"
 import ClearIcon from '@material-ui/icons/Clear';
+import hanger from "../../images/hanger.png";
+import closet from "../../images/closet.png";
+import { UserContext } from "../../utils/UserContext";
+import garmetsBck from "../../images/garmets.png";
 
 const Wardrobe = () => {
 
@@ -16,9 +20,12 @@ const Wardrobe = () => {
     const [{ user }] = useStateValue();
     const [outfits, setOutfits] = useState();
     const history = useHistory();
+    const {setBck} = useContext(UserContext);
 
     // Get outfits
     useEffect(() => {
+
+        setBck(`url(${garmetsBck})`);
         
         db
         .collection("wardrobe")
@@ -63,65 +70,53 @@ const Wardrobe = () => {
 
     const settings = {
         className: "fits",
-        dots: true,
+        dots: false,
         infinite: true,
         arrows: true,
-        prevArrow: <Arrows />,
+        // prevArrow: <Arrows />,
         nextArrow: <Arrows />,
         swipe: true,
         speed: 500,
-        slidesToShow: 1,
+        slidesToShow: 3,
         slidesToScroll: 1
     };
 
     return(
-        <div className="container wardrobe-page">
+        <div className="wardrobe-page">
 
-            <div className="row text-center">
-
-                <div className="col">
+            <div className="text-center slide">
 
                     <Slider {...settings}>
 
                     {
                     outfits ? 
                         outfits.map(doc =>   
-                    <div className="slide">
+                    <>
+                        <h1 id="fit-name">{doc.data().outfit}</h1>
 
-                            <div className="x-button">
-                                <IconButton onClick={() => removeFit(doc.id)}>
-                                    <ClearIcon fontSize="small" />
-                                </IconButton>
-                            </div>
+                        <IconButton onClick={() => removeFit(doc.id)}>
+                            {/* <ClearIcon fontSize="small" /> */}
+                            <img src={hanger} alt="hanger" width="25" height="25" id="hang"/>
+                        </IconButton>
                         
-                            <h1 id="fit-name">
-                                {doc.data().outfit}
-                            </h1>
-                        
-                        <img src={doc.data().image} alt="outfit" id="fit-pic" />
-                        
-
-                    </div>
+                        <img src={doc.data().image} alt="outfit" id="fit-pic" /> 
+                    </>
                     ) 
-                    : <div>
-                        <p>Add outfits</p>
-                    </div>
+                    : 
+                    <p>Add outfits</p>
                     }
 
                     </Slider>
-
-                </div>
                 
             </div>
 
-            <div>
-
-                <div className="add-fit">
-                    <IconButton onClick={() => history.push("/add")}><AddOutlinedIcon /></IconButton>
-                    <p>Add Outfit</p>
-                </div>
-
+            <div className="add-fit">
+                <img src={closet} alt="closet"/><br/>
+                <IconButton onClick={() => history.push("/add")}><AddOutlinedIcon /></IconButton>
+                <p>Add Outfit</p>
             </div>
+
+            {/* <div className="dim"></div> */}
 
         </div>
     )

@@ -2,9 +2,9 @@
   display: flex;
 	justify-content: space-between;
 	align-items: center;
-  background-color: #EDEAE4;
+  /* background-color: #edebe4; */
   height: 45px;
-  padding: 1rem;
+  padding: 2rem 1rem;
 }
 
 #gear {
@@ -26,7 +26,7 @@
   list-style-type: none;
   position: absolute;
   left: 0px;
-  background-color: #EDEAE4;
+  background-color: #fcf3ed;
   width: 50%;
   height: 100vh;
   display: flex;

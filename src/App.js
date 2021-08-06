@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import Navbar from "./components/Navbar/nav"
+import Navbar from "./components/Navbar/nav";
 import WeatherClothes from "./Pages/WeatherClothes/weatherclothes";
 import {
   BrowserRouter as Router,
@@ -14,12 +14,14 @@ import LogIn from "./Pages/LogIn/login";
 import { useStateValue } from "./utils/stateProvider";
 import { auth } from "./utils/firebase";
 import { actionTypes } from "./utils/reducer";
-import { CircularProgress} from "@material-ui/core";
+import { CircularProgress } from "@material-ui/core";
+import { UserContext } from './utils/UserContext';
 
 const App = () => {
 
   const [{ user }, dispatch] = useStateValue();
-  const [fetching, setFetching] = useState()
+  const [fetching, setFetching] = useState();
+  const [bck, setBck] = useState();
 
   useEffect(() => { 
 
@@ -37,48 +39,46 @@ const App = () => {
   },[dispatch])
 
   return (
-    <>
-      {!user ? (
-        fetching ? (
-          <div id="loader"><CircularProgress /></div>
-        )
-        : (
-        <LogIn />
-        )
-      ) : (
+    <div className="app" style={{backgroundImage: bck, height:"100vh", width:"100vw", zIndex:"2"}}>
+      {
+      !user ? (fetching ? (<div id="loader"><CircularProgress /></div>): (<LogIn />)) : (
+        
         <Router>
 
-          <Navbar />
-          
-          <Switch>
+          <div>
+            <UserContext.Provider value={{setBck}}>
 
-            <Route path="/wardrobe">
-                <Wardrobe /> 
-            </Route>
+              <Navbar />
 
-            <div className="default-bck">
+              <Switch>
 
-              <Route path="/location">
-                <Location />
-              </Route>
+                <Route path="/wardrobe">
+                  <Wardrobe /> 
+                </Route>
 
-              <Route path="/add">
+                <Route path="/location">
+                  <Location />
+                </Route>
+
+                <Route path="/add">
                   <AddOutfit />
-              </Route>
+                </Route>
 
-              <Route path="/">
+                <Route path="/">
                   <WeatherClothes />
-              </Route>
+                </Route>
+              
+              </Switch>
 
-            </div>
-            
-
-          </Switch>
+            </UserContext.Provider>
+          </div>
 
         </Router>
-      )}
+
+      )
+      }
     
-    </>
+    </div>
   
   );
 }

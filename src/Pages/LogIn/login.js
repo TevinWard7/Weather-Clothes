@@ -100,7 +100,7 @@ const LogIn = () => {
                 <p><strong>Weather Wear</strong></p>
                 <Button onClick={signIn} style={{opacity: 0}}>Sign In</Button>
                 <div><img src={sunImg} alt="sun-icon" id="sun" /></div>
-                <div><img src={catImg} alt="model" id="model"  /></div>
+                {/* <div><img src={catImg} alt="model" id="model"  /></div> */}
 
             </div>
 

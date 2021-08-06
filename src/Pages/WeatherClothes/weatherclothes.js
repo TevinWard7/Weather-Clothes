@@ -1,9 +1,12 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import "./weatherclothes.css";
 import db from "../../utils/firebase";
 import { useStateValue } from "../../utils/stateProvider";
 import moment from "moment";
 import API from "../../utils/API";
+import { UserContext } from "../../utils/UserContext";
+import info from "../../images/info.png";
+// import garmetsBck from "../../images/garmets.png";
 
 const WeatherClothes = () => {
 
@@ -15,9 +18,14 @@ const WeatherClothes = () => {
     const [outfit, setOutfit] = useState("No Outfit Loading (out of API calls)");
     const outfitSavedDay = localStorage.getItem("today");
     let dayCheck;
+    let noFits = true;
+    const {setBck} = useContext(UserContext);
 
     // Location, Weather & Weekday Data fetching
     useEffect(() => {
+
+        // setBck(`url(${garmetsBck})`);
+        setBck("-webkit-linear-gradient(150deg, #ecdfd100 50%, #fcf3ed 50%)");
 
         // Get location data from DB
         db
@@ -48,7 +56,7 @@ const WeatherClothes = () => {
         console.log("outfitsaved day --->" + outfitSavedDay)
 
 
-        if (moment().format('dddd') != outfitSavedDay) {
+        if (moment().format('dddd') !== outfitSavedDay) {
             console.log("days dont match!")
             localStorage.removeItem("todaysOutfit");
             localStorage.removeItem("today");
@@ -64,104 +72,130 @@ const WeatherClothes = () => {
         
     }, [weekDay, outfitSavedDay])
 
+    const determineOutfit = (hotFits, neutralFits, coldFits) => {
+
+        if (todaysTemp => 70) {
+            const hotfitNum = hotFits.length
+            const randomHotFitNum = (Math.floor(Math.random() * hotfitNum));
+            setOutfit(hotFits[randomHotFitNum].image);
+            localStorage.setItem("todaysOutfit", hotFits[randomHotFitNum].image)
+            localStorage.setItem("today", weekDay)
+        }
+        if (todaysTemp > 70 && todaysTemp > 68) {
+            const randomNeutralFitNum = (Math.floor(Math.random() * neutralFits.length));
+            setOutfit(neutralFits[randomNeutralFitNum].image);
+            localStorage.setItem("todaysOutfit", neutralFits[randomNeutralFitNum].image)
+            localStorage.setItem("today", weekDay)
+        }
+        if (todaysTemp > 68 ) {
+            const randomColdFitNum = (Math.floor(Math.random() * coldFits.length));
+            setOutfit(coldFits[randomColdFitNum].image)
+            localStorage.setItem("todaysOutfit", coldFits[randomColdFitNum].image)
+            localStorage.setItem("today", weekDay)
+        }
+
+    }
+
+    const storeDbVals = (snapshot) => {
+        const fits = snapshot.docs.map((doc) => doc.data());
+        const hotFits = fits.filter(fit => fit.temperature === "hot");
+        const neutralFits = fits.filter(fit => fit.temperature === "neutral");
+        const coldFits = fits.filter(fit => fit.temperature === "cold");
+        determineOutfit(hotFits, neutralFits, coldFits);
+    }
+
+    // Get outfits from DB
+    const queryDb = () => {
+
+        db
+        .collection("wardrobe")
+        .where('uid', '==', user.uid)
+        .onSnapshot(snapshot => {
+
+            const snap = snapshot.docs.map((doc) => doc.data());
+            console.log("snap: " + snap.length)
+            if (snap.length === 0) {
+                noFits = true
+            }
+            else if (snap.length > 0) {
+                noFits = false
+                storeDbVals(snapshot)
+            }
+
+        });
+
+    };
     
     useEffect(() => {
 
         const savedOutfit = localStorage.getItem("todaysOutfit");
 
-        // Get outfits from DB
-        const determineOutfit = () => {
-
-            db
-            .collection("wardrobe")
-            .where('uid', '==', user.uid)
-            .onSnapshot(snapshot => {
-
-                const fits = snapshot.docs.map((doc) => doc.data())
-                let hotFits = fits.filter(fit => fit.temperature === "hot");
-                let neutralFits = fits.filter(fit => fit.temperature === "neutral");
-                let coldFits = fits.filter(fit => fit.temperature === "cold");
-
-                if (todaysTemp => 70) {
-                    const hotfitNum = hotFits.length
-                    const randomHotFitNum = (Math.floor(Math.random() * hotfitNum));
-                    setOutfit(hotFits[randomHotFitNum].image);
-                    localStorage.setItem("todaysOutfit", hotFits[randomHotFitNum].image)
-                    localStorage.setItem("today", weekDay)
-                }
-                if (todaysTemp > 70 && todaysTemp > 68) {
-                    const randomNeutralFitNum = (Math.floor(Math.random() * neutralFits.length));
-                    setOutfit(neutralFits[randomNeutralFitNum].image);
-                    localStorage.setItem("todaysOutfit", neutralFits[randomNeutralFitNum].image)
-                    localStorage.setItem("today", weekDay)
-                }
-                if (todaysTemp > 68 ) {
-                    const randomColdFitNum = (Math.floor(Math.random() * coldFits.length));
-                    setOutfit(coldFits[randomColdFitNum].image)
-                    localStorage.setItem("todaysOutfit", coldFits[randomColdFitNum].image)
-                    localStorage.setItem("today", weekDay)
-                }
-
-            });
-
-        };
-
         // If there is an outfit saved in local storage set it to Outfit state else determine a new one
-        savedOutfit ? setOutfit(savedOutfit) : determineOutfit()
+        savedOutfit ? setOutfit(savedOutfit) : queryDb()
 
         console.log(savedOutfit)
         
-
     //eslint-disable-next-line
-    },[weekDay, dayCheck]);
+    },[]);
+
+    const todaysFit = () => {
+        if (noFits === true) {
+            return (<div className="how"><h3>How to</h3>&nbsp;<img src={info} alt="info" width="15" heigh="15"/></div>)
+        }
+        if (noFits === false) {
+            return (<img src={outfit} alt="oufit" height="300px" width="auto"/>)
+        }                
+    }
 
 
     return(
+        <div>
+            <div className="container">
+                {
+                    // Row 1 - Weekdays list
+                }
+                <div className="row text-center">
+                    
+                    <div className="col-12">
 
-        <div className="container">
+                        <ul className="day-list">
 
-            {
-                // Row 1 - Weekdays list
-            }
-            <div className="row">
-                
-                <div className="col-12">
+                            <li className={weekDay === "Monday" ? "current-day" : "days"}>M</li>
+                            <li className={weekDay === "Tuesday" ? "current-day" : "days"}>T</li>
+                            <li className={weekDay === "Wednesday" ? "current-day" : "days"}>W</li>
+                            <li className={weekDay === "Thursday" ? "current-day" : "days"}>T</li>
+                            <li className={weekDay === "Friday" ? "current-day" : "days"}>F</li>
+                            <li className={weekDay === "Saturday" ? "current-day" : "days"}>S</li>
+                            <li className={weekDay === "Sunday" ? "current-day" : "days"}>S</li>
 
-                    <ul className="day-list">
+                        </ul>
 
-                        <li className={weekDay === "Monday" ? "current-day" : "days"}>M</li>
-                        <li className={weekDay === "Tuesday" ? "current-day" : "days"}>T</li>
-                        <li className={weekDay === "Wednesday" ? "current-day" : "days"}>W</li>
-                        <li className={weekDay === "Thursday" ? "current-day" : "days"}>T</li>
-                        <li className={weekDay === "Friday" ? "current-day" : "days"}>F</li>
-                        <li className={weekDay === "Saturday" ? "current-day" : "days"}>S</li>
-                        <li className={weekDay === "Sunday" ? "current-day" : "days"}>S</li>
-
-                    </ul>
-
-                </div>
-                
-            </div>
-
-            {
-                // Row 2 - Outfit for today
-            }
-            <div className="row text-center">
-
-                <div className="col"></div>
-
-                <div className="col">
-
-                    <h1>Today's Outfit</h1>
-                    <hr />
-                    <img src={outfit} alt="oufit" height="300px" width="auto"/>
-
+                    </div>
+                    
                 </div>
 
-                <div className="col"></div>
+                {
+                    // Row 2 - Outfit for today
+                }
+                <div className="row text-center">
+
+                    <div className="col"></div>
+
+                    <div className="col">
+
+                        <h1>Today's Outfit</h1>
+                        <hr />
+                        {todaysFit()}
+
+                    </div>
+
+                    <div className="col"></div>
+
+                </div>
+
+                <div className="day-page"></div>
 
             </div>
-
         </div>
         
     )

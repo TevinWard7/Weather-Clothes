@@ -4,11 +4,13 @@ import SettingsSharpIcon from '@material-ui/icons/SettingsSharp';
 import { IconButton, Avatar } from "@material-ui/core";
 import { useStateValue } from "../../utils/stateProvider";
 import { useHistory } from "react-router-dom";
-import moment from "moment";
+// import moment from "moment";
 import { auth } from "../../utils/firebase";
 import { Button } from "@material-ui/core";
 import API from "../../utils/API";
 import db from "../../utils/firebase";
+import temp from "../../images/temp.png";
+import info from "../../images/info.png";
 
 const Navbar = () => {
 
@@ -100,8 +102,9 @@ const Navbar = () => {
             <nav>
 
                 <div className="bar">
-
+                    
                     <IconButton id="gear" onClick={toggleNav}><SettingsSharpIcon /></IconButton>
+                    
                     <p>
                         {
                             (()=> {
@@ -112,6 +115,7 @@ const Navbar = () => {
     
                                     return (
                                         <>
+                                            <img src={temp} alt="tempurature-icon" height="25px" width="25px"/>
                                             {temperature + " " + todayDescript}
                                         </>
                                     )
@@ -131,9 +135,10 @@ const Navbar = () => {
                 <ul className={`nav-links ${navActive === "true" ? "nav-active" : ""}`} fadein={fadeIn} onAnimationEnd={() => {setFadeIn(0)}}>
                     
                     <li><Avatar src={user.photoURL}/></li>
-                    <li onClick={() => linkAction("/")}>Home</li>
-                    <li onClick={() => linkAction("/wardrobe")}>Wardrobe</li>
                     <li onClick={() => linkAction("/location")}>Location</li>
+                    <li onClick={() => linkAction("/wardrobe")}>Wardrobe</li>
+                    <li onClick={() => linkAction("/")}>Today's Outfit</li>
+                    <li className="how">How to&nbsp;<img src={info} alt="info" width="15" heigh="15"/></li>
                     <li><Button id="sign-out" onClick={signOut}>Sign Out</Button></li>
 
                 </ul>

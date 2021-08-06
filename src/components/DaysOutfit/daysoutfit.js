@@ -7,4 +7,6 @@ const DaysOutfit = (props) => {
     <div><img src={props.image} alt="outfit img"></img></div>
     </>)
     
-}
+};
+
+export default DaysOutfit;

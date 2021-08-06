@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./location.css";
 import { useStateValue } from "../../utils/stateProvider";
 import { Button } from "@material-ui/core";
 import db from "../../utils/firebase";
 // import { Toast } from 'react-bootstrap';
+import { UserContext } from "../../utils/UserContext";
 
 
 const Location = () => {
@@ -13,10 +14,13 @@ const Location = () => {
     const [newCity, setNewCity] = useState();
     const [id, setId] = useState();
     const cityRef = db.collection("city").where('uid', '==', user.uid);
-    // const [show, setShow] = useState(false);
+    const {setBck} = useContext(UserContext);
 
     // Pull user's city from the database
     useEffect(() => {
+
+        setBck("-webkit-linear-gradient(150deg, #ecdfd100 50%, #fcf3ed 50%)");
+        // setBck("-webkit-linear-gradient(150deg, #ecdfd100 50%, #e1d4c0 50%)");
 
         cityRef.onSnapshot(snapshot => {
 

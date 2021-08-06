@@ -1,3 +1,13 @@
+.day-page {
+    background-image: url(../../images/garmets.png);
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: -1;
+}
+
 .day-list{
     list-style: none;
     display: flex;
@@ -15,10 +25,6 @@
 .current-day {
     opacity: 100%;
     font-size: 20px;
-}
-
-.clothes-list {
-    list-style-type: none;
 }
 
 #weather-icon {

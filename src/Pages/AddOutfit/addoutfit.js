@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "./addoutfit.css";
 import { useStateValue } from "../../utils/stateProvider";
 import db from "../../utils/firebase";
@@ -6,6 +6,8 @@ import { Button } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { storage } from "../../utils/firebase";
 // import { Toast } from 'react-bootstrap';
+import garmetsBck from "../../images/garmets.png";
+import { UserContext } from "../../utils/UserContext";
 
 const AddOutfit = () => {
 
@@ -20,7 +22,13 @@ const AddOutfit = () => {
     const [fitWeather, setFitWeather] = useState();
     const [fitTemp, setFitTemp] = useState();
     const [fitContext, setFitContext] = useState();
-    // const [show, setShow] = useState(false);
+    const {setBck} = useContext(UserContext);
+
+    useEffect(() => {
+
+        setBck(`url(${garmetsBck})`);
+
+    },[setBck])
 
     const handleImgUpload = (event) => {
 
