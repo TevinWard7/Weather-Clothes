@@ -62,6 +62,8 @@ const App = () => {
                   <li><h2>2. Upload Photos Of Your Wardrobe</h2></li>
                   <li><h2>3. View Your Outfit Each Day</h2></li>
                   <li><Button onClick={() => setInfoPop("none")}>Close</Button></li>
+                  <br/>
+                  <br/>
                 </ul>
               </div>
               

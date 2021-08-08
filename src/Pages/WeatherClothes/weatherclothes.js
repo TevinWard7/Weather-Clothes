@@ -15,10 +15,10 @@ const WeatherClothes = () => {
     const [todaysTemp, setTodaysTemp] = useState();
     // const [todayDescript, setTodayDescript] = useState();
     const [weekDay, setWeekDay] = useState();
-    const [outfit, setOutfit] = useState("No Outfit Loading (out of API calls)");
+    const [outfit, setOutfit] = useState();
     const outfitSavedDay = localStorage.getItem("today");
-    let dayCheck;
-    let noFits = true;
+    // const [dayCheck, setDayCheck] = useState();
+    const [noFits, setNoFits] = useState();
     const {setBck, setInfoPop} = useContext(UserContext);
 
     // Location, Weather & Weekday Data fetching
@@ -67,34 +67,37 @@ const WeatherClothes = () => {
             console.log("Days DO match!")
         }
 
-        dayCheck = true;
+        // setDayCheck(true);
 
         
     }, [weekDay, outfitSavedDay])
 
     const determineOutfit = (hotFits, neutralFits, coldFits) => {
 
-        if (todaysTemp => 70) {
+        if (!todaysTemp) setOutfit("No Outfit Loading (out of API calls)");
+        else {
+            if (todaysTemp => 70) {
             const hotfitNum = hotFits.length
             const randomHotFitNum = (Math.floor(Math.random() * hotfitNum));
             setOutfit(hotFits[randomHotFitNum].image);
             localStorage.setItem("todaysOutfit", hotFits[randomHotFitNum].image)
             localStorage.setItem("today", weekDay)
-        }
-        if (todaysTemp > 70 && todaysTemp > 68) {
-            const randomNeutralFitNum = (Math.floor(Math.random() * neutralFits.length));
-            setOutfit(neutralFits[randomNeutralFitNum].image);
-            localStorage.setItem("todaysOutfit", neutralFits[randomNeutralFitNum].image)
-            localStorage.setItem("today", weekDay)
-        }
-        if (todaysTemp > 68 ) {
-            const randomColdFitNum = (Math.floor(Math.random() * coldFits.length));
-            setOutfit(coldFits[randomColdFitNum].image)
-            localStorage.setItem("todaysOutfit", coldFits[randomColdFitNum].image)
-            localStorage.setItem("today", weekDay)
+            }
+            if (todaysTemp > 70 && todaysTemp > 68) {
+                const randomNeutralFitNum = (Math.floor(Math.random() * neutralFits.length));
+                setOutfit(neutralFits[randomNeutralFitNum].image);
+                localStorage.setItem("todaysOutfit", neutralFits[randomNeutralFitNum].image)
+                localStorage.setItem("today", weekDay)
+            }
+            if (todaysTemp > 68 ) {
+                const randomColdFitNum = (Math.floor(Math.random() * coldFits.length));
+                setOutfit(coldFits[randomColdFitNum].image)
+                localStorage.setItem("todaysOutfit", coldFits[randomColdFitNum].image)
+                localStorage.setItem("today", weekDay)
+            }
         }
 
-    }
+    };
 
     const storeDbVals = (snapshot) => {
         const fits = snapshot.docs.map((doc) => doc.data());
@@ -102,7 +105,7 @@ const WeatherClothes = () => {
         const neutralFits = fits.filter(fit => fit.temperature === "neutral");
         const coldFits = fits.filter(fit => fit.temperature === "cold");
         determineOutfit(hotFits, neutralFits, coldFits);
-    }
+    };
 
     // Get outfits from DB
     const queryDb = () => {
@@ -113,12 +116,13 @@ const WeatherClothes = () => {
         .onSnapshot(snapshot => {
 
             const snap = snapshot.docs.map((doc) => doc.data());
-            console.log("snap: " + snap.length)
+            console.log("snap: " + snap);
+
             if (snap.length === 0) {
-                noFits = true
+                setNoFits(true);
             }
-            else if (snap.length > 0) {
-                noFits = false
+            if (snap.length > 0) {
+                setNoFits(false);
                 storeDbVals(snapshot)
             }
 
@@ -133,23 +137,33 @@ const WeatherClothes = () => {
         // If there is an outfit saved in local storage set it to Outfit state else determine a new one
         savedOutfit ? setOutfit(savedOutfit) : queryDb()
 
-        console.log(savedOutfit)
+        console.log(savedOutfit);
         
     //eslint-disable-next-line
     },[]);
 
     const todaysFit = () => {
         if (noFits === true) {
-            return (<div className="how" onClick={() => setInfoPop("block")}><h3>How to</h3>&nbsp;<img src={info} alt="info" width="15" heigh="15"/></div>)
+            return (
+            <div className="how" onClick={() => setInfoPop("block")}>
+                <h3>How to</h3>&nbsp;<img src={info} alt="info" width="15" heigh="15"/>
+            </div>
+            )
         }
         if (noFits === false) {
-            return (<img src={outfit} alt="oufit" height="300px" width="auto"/>)
+            return (
+            outfit === "No Outfit Loading (out of API calls)" ? <p>{outfit}</p> 
+            :
+            <img src={outfit} alt="oufit" height="300px" width="auto"/>
+            )
         }                
-    }
+    };
 
 
     return(
+        
         <div>
+            {console.log(`no fit: ${noFits}, outfit: ${outfit}`)}
             <div className="container">
                 {
                     // Row 1 - Weekdays list

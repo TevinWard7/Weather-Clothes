@@ -8,7 +8,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useHistory } from "react-router-dom";
 import "./wardrobe.css"
-import ClearIcon from '@material-ui/icons/Clear';
+// import ClearIcon from '@material-ui/icons/Clear';
 import hanger from "../../images/hanger.png";
 import closet from "../../images/closet.png";
 import { UserContext } from "../../utils/UserContext";
