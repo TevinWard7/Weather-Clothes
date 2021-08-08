@@ -62,9 +62,12 @@ const W2 = () => {
 
     };
 
+    // retreive slide # var from css
+    let num = getComputedStyle(document.documentElement).getPropertyValue('--slideNum');
+
     return(
         <div className="wardrobe-page">
-            <Swiper navigation={true} spaceBetween={50} slidesPerView={3} onSlideChange={() => console.log('slide change')} className="mySwiper">
+            <Swiper navigation={true} spaceBetween={50} slidesPerView={num} onSlideChange={() => console.log('slide change')} className="mySwiper">
 
 
                         {

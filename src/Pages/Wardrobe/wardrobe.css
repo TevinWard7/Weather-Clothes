@@ -43,12 +43,19 @@
     height: 100%;
 }
 
-.swiper-button-next {
+.swiper-button-next, .swiper-button-prev{
     color: black;
+}
+
+:root {
+    --slideNum: 3;
 }
 
 
 @media screen and (max-width: 540px) {
+    :root {
+        --slideNum: 1;
+    }
     #fit-pic {
         margin: 0px;
         padding: 0px;
