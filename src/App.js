@@ -17,7 +17,6 @@ import { actionTypes } from "./utils/reducer";
 import { CircularProgress } from "@material-ui/core";
 import { UserContext } from './utils/UserContext';
 import { Button } from "@material-ui/core";
-// import zIndex from '@material-ui/core/styles/zIndex';
 
 const App = () => {
 
@@ -25,6 +24,8 @@ const App = () => {
   const [fetching, setFetching] = useState();
   const [bck, setBck] = useState();
   const [infoPop, setInfoPop] = useState("none");
+  const [infoContent, setInfoContent] = useState();
+  const [confirmDl, setConfirmDl] = useState();
 
   useEffect(() => { 
 
@@ -41,10 +42,22 @@ const App = () => {
 
   },[dispatch])
 
-  // const toggleInfo = () => {
-  //   if (infoPop === "none") setInfoPop("block");
-  //   if (infoPop === "block") setInfoPop("none");
-  // };
+  const popContent = (content) => {
+    if (content === "how") {
+
+      return(
+        <>
+          <li><h2>1. Enter Your Location</h2></li>
+          <li><h2>2. Upload Photos Of Your Wardrobe</h2></li>
+          <li><h2>3. View Your Outfit Each Day</h2></li>
+        </>
+      )
+
+    }
+    if (content === "img") return(<li><h2>Image Uploaded</h2></li>)
+
+    if (content === "rmvFit") return(<li><h2>Are You Sure?</h2><Button onClick={setConfirmDl("yes")}>Yes</Button></li>)
+  }
 
   return (
     <div className="app" style={{backgroundImage: bck, height:"100vh", width:"100vw", zIndex:"2"}}>
@@ -54,22 +67,19 @@ const App = () => {
         <Router>
 
           <div>
-            <UserContext.Provider value={{setBck, setInfoPop}}>
+            <UserContext.Provider value={{setBck, setInfoPop, setInfoContent, confirmDl, setConfirmDl}}>
 
               <div style={{display:infoPop, zIndex:999}} className="info-pop">
                 <ul>
-                  <li><h2>1. Enter Your Location</h2></li>
-                  <li><h2>2. Upload Photos Of Your Wardrobe</h2></li>
-                  <li><h2>3. View Your Outfit Each Day</h2></li>
+                  {popContent(infoContent)}
                   <li><Button onClick={() => setInfoPop("none")}>Close</Button></li>
-                  <br/>
-                  <br/>
                 </ul>
+                  <br/>
+                  <br/>
               </div>
               
               <Navbar />
               
-
               <Switch>
 
                 <Route path="/wardrobe">
@@ -88,8 +98,6 @@ const App = () => {
                   <WeatherClothes />
                 </Route>
 
-                
-              
               </Switch>
 
             </UserContext.Provider>

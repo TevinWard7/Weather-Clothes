@@ -7,8 +7,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useHistory } from "react-router-dom";
-import "./wardrobe.css"
-// import ClearIcon from '@material-ui/icons/Clear';
+import "./wardrobe.css";
 import hanger from "../../images/hanger.png";
 import closet from "../../images/closet.png";
 import { UserContext } from "../../utils/UserContext";
@@ -20,7 +19,7 @@ const Wardrobe = () => {
     const [{ user }] = useStateValue();
     const [outfits, setOutfits] = useState();
     const history = useHistory();
-    const {setBck} = useContext(UserContext);
+    const {setBck, setInfoPop, setInfoContent, confirmDl, setConfirmDl} = useContext(UserContext);
 
     // Get outfits
     useEffect(() => {
@@ -37,15 +36,16 @@ const Wardrobe = () => {
 
     const removeFit = (theDoc) => {
 
-        const confirmDelete = window.confirm("are you sure?");
+      let confirmDl = window.confirm("are you sure?")
 
-        if (confirmDelete) {
+        if (confirmDl) {
             db
             .collection("wardrobe")
             .doc(theDoc)
             .delete()
             .then(() => {
                 console.log("Document successfully deleted!");
+                setConfirmDl("");
                 
             }).catch((error) => {
                 console.error("Error removing document: ", error);
@@ -121,8 +121,9 @@ const Wardrobe = () => {
                         <h1 id="fit-name">{doc.data().outfit}</h1>
 
                         <IconButton key={doc.id} onClick={() => removeFit(doc.id)}>
-                            {/* <ClearIcon fontSize="small" /> */}
+        
                             <img src={hanger} alt="hanger" width="25" height="25" id="hang"/>
+
                         </IconButton>
                         
                         <img src={doc.data().image} alt="outfit" id="fit-pic"/> 
@@ -141,8 +142,6 @@ const Wardrobe = () => {
                 <IconButton onClick={() => history.push("/add")}><AddOutlinedIcon /></IconButton>
                 <p>Add Outfit</p>
             </div>
-
-            {/* <div className="dim"></div> */}
 
         </div>
     )

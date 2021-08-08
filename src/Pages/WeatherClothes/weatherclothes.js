@@ -6,7 +6,6 @@ import moment from "moment";
 import API from "../../utils/API";
 import { UserContext } from "../../utils/UserContext";
 import info from "../../images/info.png";
-// import garmetsBck from "../../images/garmets.png";
 
 const WeatherClothes = () => {
 
@@ -19,7 +18,7 @@ const WeatherClothes = () => {
     const outfitSavedDay = localStorage.getItem("today");
     // const [dayCheck, setDayCheck] = useState();
     const [noFits, setNoFits] = useState();
-    const {setBck, setInfoPop} = useContext(UserContext);
+    const {setBck, setInfoPop, setInfoContent} = useContext(UserContext);
 
     // Location, Weather & Weekday Data fetching
     useEffect(() => {
@@ -145,7 +144,7 @@ const WeatherClothes = () => {
     const todaysFit = () => {
         if (noFits === true) {
             return (
-            <div className="how" onClick={() => setInfoPop("block")}>
+            <div className="how" onClick={() => {setInfoPop("block"); setInfoContent("how");}}>
                 <h3>How to</h3>&nbsp;<img src={info} alt="info" width="15" heigh="15"/>
             </div>
             )
@@ -162,7 +161,7 @@ const WeatherClothes = () => {
 
     return(
         
-        <div>
+        <>
             {console.log(`no fit: ${noFits}, outfit: ${outfit}`)}
             <div className="container">
                 {
@@ -210,7 +209,7 @@ const WeatherClothes = () => {
                 <div className="day-page"></div>
 
             </div>
-        </div>
+        </>
         
     )
 };

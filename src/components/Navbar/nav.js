@@ -25,7 +25,7 @@ const Navbar = () => {
     const [location, setLocation] = useState();
     const [todaysTemp, setTodaysTemp] = useState();
     const [todayDescript, setTodayDescript] = useState();
-    const {setInfoPop} = useContext(UserContext);
+    const {setInfoPop, setInfoContent} = useContext(UserContext);
 
     useEffect(() => {
 
@@ -140,7 +140,7 @@ const Navbar = () => {
                     <li onClick={() => linkAction("/location")}>Location</li>
                     <li onClick={() => linkAction("/wardrobe")}>Wardrobe</li>
                     <li onClick={() => linkAction("/")}>Today's Outfit</li>
-                    <li className="how" onClick={() => setInfoPop("block")}>How to&nbsp;<img src={info} alt="info" width="15" heigh="15"/></li>
+                    <li className="how" onClick={() => {setInfoPop("block"); setInfoContent("how")}}>How to&nbsp;<img src={info} alt="info" width="15" heigh="15"/></li>
                     <li><Button id="sign-out" onClick={signOut}>Sign Out</Button></li>
 
                 </ul>

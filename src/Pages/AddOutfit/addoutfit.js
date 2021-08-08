@@ -22,7 +22,7 @@ const AddOutfit = () => {
     const [fitWeather, setFitWeather] = useState();
     const [fitTemp, setFitTemp] = useState();
     const [fitContext, setFitContext] = useState();
-    const {setBck} = useContext(UserContext);
+    const {setBck, setInfoPop, setInfoContent} = useContext(UserContext);
 
     useEffect(() => {
 
@@ -54,7 +54,8 @@ const AddOutfit = () => {
                 )
             }
         )
-        alert("Image uploaded!")
+        setInfoPop("block");
+        setInfoContent("img")
 
     };
 
@@ -75,18 +76,6 @@ const AddOutfit = () => {
     return(
 
         <div className="add-page">
-
-            {/* <Row>
-                <Col xs={12}> */}
-
-                    {/* <Toast className="toastie" onClose={() => setShow(false)} show={show} delay={3000} autohide>
-                        <Toast.Header>
-                        </Toast.Header>
-                        <Toast.Body>Image uploaded!</Toast.Body>
-                    </Toast> */}
-
-                {/* </Col>
-            </Row> */}
 
             <div className="row text-center">
 
