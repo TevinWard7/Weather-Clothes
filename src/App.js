@@ -8,7 +8,7 @@ import {
   Switch,
 } from "react-router-dom";
 import AddOutfit from './Pages/AddOutfit/addoutfit';
-import Wardrobe from './Pages/Wardrobe/w2';
+import Wardrobe from './Pages/Wardrobe/wardrobe';
 import Location from "./Pages/Location/location";
 import LogIn from "./Pages/LogIn/login";
 import { useStateValue } from "./utils/stateProvider";
