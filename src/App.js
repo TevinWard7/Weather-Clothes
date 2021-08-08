@@ -8,7 +8,7 @@ import {
   Switch,
 } from "react-router-dom";
 import AddOutfit from './Pages/AddOutfit/addoutfit';
-import Wardrobe from './Pages/Wardrobe/wardrobe';
+import Wardrobe from './Pages/Wardrobe/w2';
 import Location from "./Pages/Location/location";
 import LogIn from "./Pages/LogIn/login";
 import { useStateValue } from "./utils/stateProvider";
@@ -55,8 +55,8 @@ const App = () => {
 
     }
     if (content === "img") return(<li><h2>Image Uploaded</h2></li>)
-
-    if (content === "rmvFit") return(<li><h2>Are You Sure?</h2><Button onClick={setConfirmDl("yes")}>Yes</Button></li>)
+    if (content === "update") return(<li><h2>Updated</h2></li>)
+    // if (content === "rmvFit") return(<li><h2>Are You Sure?</h2><Button onClick={setConfirmDl("yes")}>Yes</Button></li>)
   }
 
   return (

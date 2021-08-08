@@ -14,7 +14,7 @@ const Location = () => {
     const [newCity, setNewCity] = useState();
     const [id, setId] = useState();
     const cityRef = db.collection("city").where('uid', '==', user.uid);
-    const {setBck} = useContext(UserContext);
+    const {setBck, setInfoPop, setInfoContent} = useContext(UserContext);
 
     // Pull user's city from the database
     useEffect(() => {
@@ -78,26 +78,14 @@ const Location = () => {
             city: newCity
         })
         .then(
-            // setShow(true)
-            alert("updated")
+            setInfoPop("block"),
+            setInfoContent("update")
         )
 
     };
 
     return(
         <div className="location-page">
-
-            {/* <Row>
-                <Col xs={12}> */}
-
-                    {/* <Toast className="toastie" onClose={() => setShow(false)} show={show} delay={2000} autohide>
-                        <Toast.Header>
-                        </Toast.Header>
-                        <Toast.Body>Updated!</Toast.Body>
-                    </Toast> */}
-
-                {/* </Col>
-            </Row> */}
 
             <div className="row text-center">
 

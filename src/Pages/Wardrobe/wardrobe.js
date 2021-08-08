@@ -19,7 +19,7 @@ const Wardrobe = () => {
     const [{ user }] = useStateValue();
     const [outfits, setOutfits] = useState();
     const history = useHistory();
-    const {setBck, setInfoPop, setInfoContent, confirmDl, setConfirmDl} = useContext(UserContext);
+    const {setBck} = useContext(UserContext);
 
     // Get outfits
     useEffect(() => {
@@ -36,7 +36,7 @@ const Wardrobe = () => {
 
     const removeFit = (theDoc) => {
 
-      let confirmDl = window.confirm("are you sure?")
+      let confirmDl = window.confirm("are you want to delete?")
 
         if (confirmDl) {
             db
@@ -45,7 +45,6 @@ const Wardrobe = () => {
             .delete()
             .then(() => {
                 console.log("Document successfully deleted!");
-                setConfirmDl("");
                 
             }).catch((error) => {
                 console.error("Error removing document: ", error);
