@@ -19,11 +19,14 @@
 }
 
 *{
-    font-family: apercu;
-    margin: 0px;
-    padding: 0px;
-    box-sizing: border-box;
-    overflow: hidden;
+  font-family: apercu;
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+body {
+  overflow: hidden;
 }
 
 * > h1 {
@@ -99,9 +102,8 @@ h1::before {
   padding: 5rem;
 }
 
-@media only screen and (max-width: 768px) {
-  /* For mobile phones: */
+@media screen and (max-width: 540px) {
   body {
-    overflow: scroll;
+    overflow-y: scroll;
   }
 }
