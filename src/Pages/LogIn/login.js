@@ -96,7 +96,8 @@ const LogIn = () => {
     return(
         <div className="login">
 
-            <h2 id="title">Weather Wear Clothes</h2>
+            <h2 id="title">WW</h2>
+            <p>Weather Wear Clothes</p>
 
             <div className="login-container">
             
