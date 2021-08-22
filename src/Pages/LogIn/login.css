@@ -7,7 +7,6 @@
     align-items: center;
     flex-wrap: wrap;
     background-image: url(../../images/rack.png);
-    background-size: cover;
 }
 
 .login-container {
@@ -35,23 +34,6 @@
     position: relative;
     z-index: 999;
 }
-
-/* #sun {
-    position: absolute;
-    left: 550px;
-    height: 1000px;
-    width: 1400px; 
-    opacity: 0%;
-    top: 150px;
-}
-
-#model {
-    position: absolute;
-    height: 800px;
-    top: 60px;
-    left: 400px;
-    opacity: 80%;
-} */
 
 /* For Mobile */
 @media screen and (max-width: 540px) {
