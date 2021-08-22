@@ -6,6 +6,8 @@ import { useStateValue } from "../../utils/stateProvider";
 import { actionTypes } from "../../utils/reducer";
 import anime from 'animejs/lib/anime.es.js';
 import { storage } from "../../utils/firebase";
+import sky from "../../images/rack.png";
+import jean from "../../images/jean.png";
 // import catImg from "../../images/cat.png";
 // import sunImg from "../../images/sun.png";
 
@@ -94,12 +96,15 @@ const LogIn = () => {
     return(
         <div className="login">
 
-            <div className="login-container">
+            <h2 id="title">Weather Wear Clothes</h2>
 
-                <h1 style={{opacity: 0}}>WW</h1>
-                <p><strong>Weather Wear</strong></p>
-                <Button onClick={signIn} style={{opacity: 0}}>Sign In</Button>
-                <div><img src={sunImg} alt="sun-icon" id="sun" /></div>
+            <div className="login-container">
+            
+                {/* <h2><strong>Weather Wear Clothes</strong></h2> */}
+                {/* <img src={jean} alt="mann" height="200px" width="200px"/> */}
+                {/* <img src={sky} alt="mann" height="50px" width="30px"/> */}
+                <Button size="large" onClick={signIn} style={{opacity: 0}}>Sign In</Button>
+                {/* <div><img src={sunImg} alt="sun-icon" id="sun" /></div> */}
                 {/* <div><img src={catImg} alt="model" id="model"  /></div> */}
 
             </div>

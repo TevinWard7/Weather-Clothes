@@ -42,7 +42,7 @@ const W2 = () => {
 
     const removeFit = (theDoc) => {
 
-      let confirmDl = window.confirm("are you sure?")
+      let confirmDl = window.confirm("delete?")
 
         if (confirmDl) {
             db

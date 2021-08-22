@@ -56,8 +56,7 @@ body {
   align-items: center;
 }
 
-
-
+/* Hover State */
 h1::before {  
   transform: scaleX(0);
   transform-origin: bottom right;
@@ -79,6 +78,7 @@ h1::before {
   transition: transform .3s ease;
 }
 
+/* Pop Up */
 .how {
   display: flex;
   flex-direction: row;
