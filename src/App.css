@@ -23,10 +23,7 @@
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
-}
-
-body {
-  overflow: hidden;
+    overflow: hidden;
 }
 
 * > h1 {
