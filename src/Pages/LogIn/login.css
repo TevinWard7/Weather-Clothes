@@ -1,5 +1,4 @@
 .login {
-    /* background-image: linear-gradient(to bottom right, rgba(255, 255, 255, 0.945), rgb(250, 249, 249),#edeae4, #e1d4c0); */
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -8,6 +7,7 @@
     align-items: center;
     flex-wrap: wrap;
     background-image: url(../../images/rack.png);
+    background-size: cover;
 }
 
 .login-container {
@@ -36,7 +36,7 @@
     z-index: 999;
 }
 
-#sun {
+/* #sun {
     position: absolute;
     left: 550px;
     height: 1000px;
@@ -51,22 +51,14 @@
     top: 60px;
     left: 400px;
     opacity: 80%;
-}
+} */
 
 /* For Mobile */
 @media screen and (max-width: 540px) {
     .login {
-        height: calc(var(--vh, 1vh) * 100);
-    }
-    #model {
-        left: 0px;
-        height: 1000px;
-        width: 200px;
-    }
-    #sun {
-        left: 40px;
-        height: 100px;
-        width: 175px;
+        background-image: url(../../images/rack.png);
+        background-size: cover;
+        background-position: top left;
     }
 }
 

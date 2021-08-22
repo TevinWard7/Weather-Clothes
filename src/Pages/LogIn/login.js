@@ -6,8 +6,8 @@ import { useStateValue } from "../../utils/stateProvider";
 import { actionTypes } from "../../utils/reducer";
 import anime from 'animejs/lib/anime.es.js';
 import { storage } from "../../utils/firebase";
-import sky from "../../images/rack.png";
-import jean from "../../images/jean.png";
+// import sky from "../../images/rack.png";
+// import jean from "../../images/jean.png";
 // import catImg from "../../images/cat.png";
 // import sunImg from "../../images/sun.png";
 

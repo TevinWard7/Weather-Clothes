@@ -39,3 +39,11 @@
     opacity: 20%;
     /* z-index: 1; */
 }
+
+@media screen and (max-width: 540px) {
+    .day-page {
+        background-image: url(../../images/rack.png);
+        background-size: cover;
+        background-position: top left;
+    }
+}
