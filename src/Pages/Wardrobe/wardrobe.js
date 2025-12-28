@@ -12,7 +12,6 @@ import hanger from "../../images/hanger.png";
 import closet from "../../images/closet.png";
 import { UserContext } from "../../utils/UserContext";
 import garmetsBck from "../../images/garmets.png";
-// No carousel library needed - using simple CSS Grid
 
 const W2 = () => {
     const [{ user }] = useStateValue();
@@ -25,7 +24,7 @@ const W2 = () => {
     const [weatherFilter, setWeatherFilter] = useState("all");
     const [showFilters, setShowFilters] = useState(false);
     const history = useHistory();
-    const {setBck, setInfoPop, setInfoContent} = useContext(UserContext);
+    const {setBck} = useContext(UserContext);
 
     // Get outfits with loading state
     useEffect(() => {
@@ -74,6 +73,11 @@ const W2 = () => {
 
     // Filter and search logic
     useEffect(() => {
+        if (!outfits || outfits.length === 0) {
+            setFilteredOutfits([]);
+            return;
+        }
+
         let result = [...outfits];
 
         // Search filter
@@ -108,10 +112,6 @@ const W2 = () => {
             db.collection("wardrobe")
                 .doc(outfit.id)
                 .delete()
-                .then(() => {
-                    setInfoPop("block");
-                    setInfoContent("Outfit deleted successfully");
-                })
                 .catch((error) => {
                     console.error("Error removing outfit:", error);
                     alert("Error removing outfit. Please try again.");
@@ -163,42 +163,56 @@ const W2 = () => {
 
     return(
         <div className="wardrobe-page">
-            {/* Search and Filter Bar */}
-            <div style={{ padding: '20px', background: 'rgba(255,255,255,0.9)', marginBottom: '20px' }}>
-                <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
-                    {/* Search */}
+            {/* Compact Search/Filter Bar - Less Prominent */}
+            <div style={{
+                padding: '10px 20px',
+                background: 'rgba(255,255,255,0.7)',
+                borderBottom: '1px solid rgba(0,0,0,0.1)'
+            }}>
+                <div style={{ display: 'flex', gap: '8px', alignItems: 'center', justifyContent: 'center' }}>
+                    {/* Compact Search */}
                     <TextField
-                        placeholder="Search outfits..."
+                        placeholder="Search..."
                         variant="outlined"
                         size="small"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         InputProps={{
-                            startAdornment: <SearchIcon style={{ marginRight: '8px', color: '#999' }} />
+                            startAdornment: <SearchIcon style={{ fontSize: '18px', marginRight: '4px', color: '#999' }} />
                         }}
-                        style={{ flex: 1, minWidth: '200px' }}
+                        style={{
+                            width: '200px',
+                            background: 'white'
+                        }}
                     />
 
-                    {/* Filter Toggle */}
+                    {/* Compact Filter Toggle */}
                     <IconButton
+                        size="small"
                         onClick={() => setShowFilters(!showFilters)}
-                        style={{ position: 'relative' }}
+                        style={{
+                            position: 'relative',
+                            background: showFilters ? '#e3f2fd' : 'white',
+                            border: '1px solid #ddd'
+                        }}
+                        title="Filter options"
                     >
-                        <FilterListIcon />
+                        <FilterListIcon style={{ fontSize: '20px' }} />
                         {activeFiltersCount > 0 && (
                             <span style={{
                                 position: 'absolute',
-                                top: 5,
-                                right: 5,
+                                top: 2,
+                                right: 2,
                                 background: '#f44336',
                                 color: 'white',
                                 borderRadius: '50%',
-                                width: '18px',
-                                height: '18px',
-                                fontSize: '12px',
+                                width: '16px',
+                                height: '16px',
+                                fontSize: '10px',
                                 display: 'flex',
                                 alignItems: 'center',
-                                justifyContent: 'center'
+                                justifyContent: 'center',
+                                fontWeight: 'bold'
                             }}>
                                 {activeFiltersCount}
                             </span>
@@ -206,15 +220,24 @@ const W2 = () => {
                     </IconButton>
                 </div>
 
-                {/* Filter Options */}
+                {/* Collapsible Filter Options - Less Prominent */}
                 {showFilters && (
-                    <div style={{ display: 'flex', gap: '10px', marginTop: '15px', flexWrap: 'wrap' }}>
-                        <FormControl variant="outlined" size="small" style={{ minWidth: 120 }}>
-                            <InputLabel>Temperature</InputLabel>
+                    <div style={{
+                        display: 'flex',
+                        gap: '8px',
+                        marginTop: '10px',
+                        flexWrap: 'wrap',
+                        justifyContent: 'center',
+                        paddingTop: '10px',
+                        borderTop: '1px solid #eee'
+                    }}>
+                        <FormControl variant="outlined" size="small" style={{ minWidth: 110, background: 'white' }}>
+                            <InputLabel style={{ fontSize: '14px' }}>Temperature</InputLabel>
                             <Select
                                 value={temperatureFilter}
                                 onChange={(e) => setTemperatureFilter(e.target.value)}
                                 label="Temperature"
+                                style={{ fontSize: '14px' }}
                             >
                                 <MenuItem value="all">All</MenuItem>
                                 <MenuItem value="hot">Hot</MenuItem>
@@ -223,12 +246,13 @@ const W2 = () => {
                             </Select>
                         </FormControl>
 
-                        <FormControl variant="outlined" size="small" style={{ minWidth: 120 }}>
-                            <InputLabel>Context</InputLabel>
+                        <FormControl variant="outlined" size="small" style={{ minWidth: 110, background: 'white' }}>
+                            <InputLabel style={{ fontSize: '14px' }}>Context</InputLabel>
                             <Select
                                 value={contextFilter}
                                 onChange={(e) => setContextFilter(e.target.value)}
                                 label="Context"
+                                style={{ fontSize: '14px' }}
                             >
                                 <MenuItem value="all">All</MenuItem>
                                 <MenuItem value="home">Home</MenuItem>
@@ -237,12 +261,13 @@ const W2 = () => {
                             </Select>
                         </FormControl>
 
-                        <FormControl variant="outlined" size="small" style={{ minWidth: 120 }}>
-                            <InputLabel>Weather</InputLabel>
+                        <FormControl variant="outlined" size="small" style={{ minWidth: 110, background: 'white' }}>
+                            <InputLabel style={{ fontSize: '14px' }}>Weather</InputLabel>
                             <Select
                                 value={weatherFilter}
                                 onChange={(e) => setWeatherFilter(e.target.value)}
                                 label="Weather"
+                                style={{ fontSize: '14px' }}
                             >
                                 <MenuItem value="all">All</MenuItem>
                                 <MenuItem value="clear Sky">Clear Sky</MenuItem>
@@ -256,23 +281,20 @@ const W2 = () => {
                             <button
                                 onClick={resetFilters}
                                 style={{
-                                    padding: '5px 15px',
+                                    padding: '5px 12px',
                                     background: '#f5f5f5',
                                     border: '1px solid #ddd',
                                     borderRadius: '4px',
-                                    cursor: 'pointer'
+                                    cursor: 'pointer',
+                                    fontSize: '13px',
+                                    height: '40px'
                                 }}
                             >
-                                Clear Filters
+                                Clear
                             </button>
                         )}
                     </div>
                 )}
-
-                {/* Results count */}
-                <div style={{ marginTop: '10px', color: '#666', fontSize: '14px' }}>
-                    Showing {filteredOutfits.length} of {outfits.length} outfits
-                </div>
             </div>
 
             {/* Loading State */}
@@ -300,106 +322,150 @@ const W2 = () => {
                     </button>
                 </div>
             ) : (
+                /* Carousel - Similar to master's Swiper style but with CSS */
                 <div style={{
                     display: 'flex',
                     overflowX: 'auto',
                     scrollSnapType: 'x mandatory',
                     gap: '30px',
-                    padding: '20px',
+                    padding: '30px 20px',
                     scrollBehavior: 'smooth',
                     WebkitOverflowScrolling: 'touch'
                 }}>
                     {filteredOutfits.map(outfit => (
                         <div key={outfit.id} style={{
-                            flex: '0 0 320px',
+                            flex: '0 0 280px',
                             scrollSnapAlign: 'center',
-                            background: 'rgba(255, 255, 255, 0.95)',
-                            borderRadius: '12px',
-                            padding: '20px',
-                            boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-                            transition: 'transform 0.2s, box-shadow 0.2s'
+                            background: 'rgba(255, 255, 255, 0.9)',
+                            borderRadius: '8px',
+                            padding: '15px',
+                            boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                            transition: 'transform 0.2s, box-shadow 0.2s',
+                            position: 'relative'
                         }}
                         onMouseEnter={(e) => {
-                            e.currentTarget.style.transform = 'translateY(-5px)';
-                            e.currentTarget.style.boxShadow = '0 8px 12px rgba(0,0,0,0.15)';
+                            e.currentTarget.style.transform = 'translateY(-3px)';
+                            e.currentTarget.style.boxShadow = '0 4px 8px rgba(0,0,0,0.15)';
                         }}
                         onMouseLeave={(e) => {
                             e.currentTarget.style.transform = 'translateY(0)';
-                            e.currentTarget.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+                            e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
                         }}>
-                            {/* Outfit Name */}
-                            <h2 style={{
+                            {/* Outfit Name - Master style */}
+                            <h1 style={{
                                 textAlign: 'center',
-                                marginBottom: '15px',
-                                fontSize: '1.5em',
-                                color: '#333'
-                            }}>{outfit.outfit}</h2>
+                                marginBottom: '10px',
+                                fontSize: '1.3em',
+                                color: '#333',
+                                fontWeight: '500'
+                            }}>{outfit.outfit}</h1>
 
-                            {/* Action Buttons */}
-                            <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginBottom: '15px' }}>
+                            {/* Action Buttons - Subtle, top right corner */}
+                            <div style={{
+                                position: 'absolute',
+                                top: '10px',
+                                right: '10px',
+                                display: 'flex',
+                                gap: '5px',
+                                opacity: 0.7
+                            }}
+                            onMouseEnter={(e) => e.currentTarget.style.opacity = '1'}
+                            onMouseLeave={(e) => e.currentTarget.style.opacity = '0.7'}>
                                 <IconButton
+                                    size="small"
                                     onClick={() => editOutfit(outfit)}
                                     title="Edit outfit"
-                                    style={{ background: '#f5f5f5', padding: '8px' }}
+                                    style={{
+                                        background: 'rgba(255,255,255,0.9)',
+                                        padding: '5px',
+                                        boxShadow: '0 1px 3px rgba(0,0,0,0.2)'
+                                    }}
                                 >
-                                    <EditIcon style={{ width: '20px', height: '20px' }} />
+                                    <EditIcon style={{ width: '16px', height: '16px' }} />
                                 </IconButton>
                                 <IconButton
+                                    size="small"
                                     onClick={() => removeFit(outfit)}
                                     title="Delete outfit"
-                                    style={{ background: '#f5f5f5', padding: '8px' }}
+                                    style={{
+                                        background: 'rgba(255,255,255,0.9)',
+                                        padding: '5px',
+                                        boxShadow: '0 1px 3px rgba(0,0,0,0.2)'
+                                    }}
                                 >
-                                    <img src={hanger} alt="delete" width="20" height="20" />
+                                    <img src={hanger} alt="delete" width="16" height="16" />
                                 </IconButton>
                             </div>
 
-                            {/* Outfit Image */}
+                            {/* Outfit Image - Master style */}
                             <img
                                 src={outfit.image}
                                 alt="outfit"
                                 style={{
                                     width: '100%',
-                                    height: '300px',
+                                    height: '280px',
                                     objectFit: 'cover',
-                                    borderRadius: '8px',
-                                    marginBottom: '15px'
+                                    borderRadius: '4px',
+                                    marginBottom: '10px'
                                 }}
                             />
 
-                            {/* Metadata Tags */}
-                            <div style={{ display: 'flex', gap: '5px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                                {outfit.temperature && (
-                                    <Chip
-                                        label={outfit.temperature}
-                                        size="small"
-                                        style={{
-                                            background: outfit.temperature === 'hot' ? '#ff5722' :
-                                                       outfit.temperature === 'cold' ? '#2196f3' : '#ff9800',
-                                            color: 'white'
-                                        }}
-                                    />
-                                )}
-                                {outfit.context && (
-                                    <Chip
-                                        label={outfit.context}
-                                        size="small"
-                                        variant="outlined"
-                                    />
-                                )}
-                                {outfit.weather && (
-                                    <Chip
-                                        label={outfit.weather}
-                                        size="small"
-                                        variant="outlined"
-                                    />
-                                )}
-                            </div>
+                            {/* Metadata Tags - Subtle and compact */}
+                            {(outfit.temperature || outfit.context || outfit.weather) && (
+                                <div style={{
+                                    display: 'flex',
+                                    gap: '4px',
+                                    justifyContent: 'center',
+                                    flexWrap: 'wrap',
+                                    marginTop: '8px'
+                                }}>
+                                    {outfit.temperature && (
+                                        <Chip
+                                            label={outfit.temperature}
+                                            size="small"
+                                            style={{
+                                                height: '22px',
+                                                fontSize: '11px',
+                                                background: outfit.temperature === 'hot' ? '#ffebee' :
+                                                           outfit.temperature === 'cold' ? '#e3f2fd' : '#fff3e0',
+                                                color: outfit.temperature === 'hot' ? '#d32f2f' :
+                                                       outfit.temperature === 'cold' ? '#1976d2' : '#e65100',
+                                                border: 'none'
+                                            }}
+                                        />
+                                    )}
+                                    {outfit.context && (
+                                        <Chip
+                                            label={outfit.context}
+                                            size="small"
+                                            style={{
+                                                height: '22px',
+                                                fontSize: '11px',
+                                                background: '#f5f5f5',
+                                                color: '#666'
+                                            }}
+                                        />
+                                    )}
+                                    {outfit.weather && (
+                                        <Chip
+                                            label={outfit.weather}
+                                            size="small"
+                                            style={{
+                                                height: '22px',
+                                                fontSize: '11px',
+                                                background: '#f5f5f5',
+                                                color: '#666'
+                                            }}
+                                        />
+                                    )}
+                                </div>
+                            )}
                         </div>
                     ))}
                 </div>
             )}
 
-            {/* Add Outfit Button */}
+            {/* Add Outfit Button - Master style */}
             <div className="add-fit">
                 <img src={closet} alt="closet"/><br/>
                 <IconButton onClick={() => history.push("/add")}>
