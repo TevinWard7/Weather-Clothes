@@ -23,7 +23,8 @@ const Location = () => {
 
         setBck("-webkit-linear-gradient(150deg, #ecdfd100 50%, #fcf3ed 50%)");
 
-        const unsubscribe = cityRef.onSnapshot(snapshot => {
+        // Use .get() instead of .onSnapshot() for static data
+        cityRef.get().then(snapshot => {
 
             const data = snapshot.docs.map((doc) => doc.data())
 
@@ -32,9 +33,6 @@ const Location = () => {
                 setInitialCity(data[0].city)
             }
         })
-
-        // Cleanup function
-        return () => unsubscribe();
 
     //eslint-disable-next-line
     },[])
