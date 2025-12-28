@@ -28,8 +28,23 @@ REACT_APP_OPENWEATHER_API_KEY=
 
 **Deployment Instructions:**
 - For local development: Copy `.env.example` to `.env` and fill in your values
+- For GitHub Actions CI/CD: Add secrets in repository Settings → Secrets and variables → Actions
 - For Netlify: Add environment variables in Site Settings → Environment Variables
 - For other platforms: Configure environment variables according to platform documentation
+
+**GitHub Actions Setup:**
+Add the following secrets to your GitHub repository for CI/CD workflows:
+1. Go to repository Settings → Secrets and variables → Actions
+2. Click "New repository secret" for each environment variable:
+   - `REACT_APP_FIREBASE_API_KEY`
+   - `REACT_APP_FIREBASE_AUTH_DOMAIN`
+   - `REACT_APP_FIREBASE_DATABASE_URL`
+   - `REACT_APP_FIREBASE_PROJECT_ID`
+   - `REACT_APP_FIREBASE_STORAGE_BUCKET`
+   - `REACT_APP_FIREBASE_MESSAGING_SENDER_ID`
+   - `REACT_APP_FIREBASE_APP_ID`
+   - `REACT_APP_FIREBASE_MEASUREMENT_ID`
+   - `REACT_APP_OPENWEATHER_API_KEY`
 
 ### 2. Input Validation and Sanitization ✅
 
@@ -107,6 +122,11 @@ firebase deploy --only storage:rules
    npm outdated
    ```
 
+5. **Installing dependencies**
+   - The project includes a `.npmrc` file configured with `legacy-peer-deps=true`
+   - This allows React 18 to work with Material-UI v4
+   - Simply run `npm install` (the flag is applied automatically)
+
 ### For Deployment
 
 1. **Set environment variables on your hosting platform**
@@ -135,6 +155,9 @@ firebase deploy --only storage:rules
 - [x] Storage security rules implemented
 - [x] Critical dependencies updated
 - [x] .env added to .gitignore
+- [x] .npmrc configured for legacy peer deps
+- [x] GitHub Actions workflows updated with environment variables
+- [ ] GitHub Secrets configured for CI/CD
 - [ ] Firebase security rules deployed to production
 - [ ] Environment variables configured on hosting platform
 - [ ] Firebase App Check enabled (optional, recommended)
