@@ -1,11 +1,12 @@
 import React from 'react';
 import './LoadingScreen.css';
+import loadingGif from '../../images/peacock-loading.gif';
 
 const LoadingScreen = () => {
     return (
         <div className="loading-screen">
             <img
-                src="https://media.giphy.com/media/3o6ZsW8cFKGKBJe7mM/giphy.gif"
+                src={loadingGif}
                 alt="Loading..."
                 className="peacock-gif"
             />
