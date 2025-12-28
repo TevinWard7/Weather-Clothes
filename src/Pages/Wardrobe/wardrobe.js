@@ -3,8 +3,6 @@ import db from "../../utils/firebase";
 import { useStateValue } from "../../utils/stateProvider";
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 import { IconButton } from "@material-ui/core";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import { useHistory } from "react-router-dom";
 import "./wardrobe.css";
 import hanger from "../../images/hanger.png";
@@ -31,11 +29,14 @@ const W2 = () => {
     useEffect(() => {
 
         setBck(`url(${garmetsBck})`);
-        
-        db
+
+        const unsubscribe = db
         .collection("wardrobe")
         .where('uid', '==', user.uid)
         .onSnapshot(snapshot => setOutfits(snapshot.docs.map((doc) => doc)))
+
+        // Cleanup function
+        return () => unsubscribe();
 
     //eslint-disable-next-line
     },[]);
@@ -49,15 +50,9 @@ const W2 = () => {
             .collection("wardrobe")
             .doc(theDoc)
             .delete()
-            .then(() => {
-                console.log("Document successfully deleted!");
-                
-            }).catch((error) => {
-                console.error("Error removing document: ", error);
+            .catch((error) => {
+                alert("Error removing outfit. Please try again.");
             });
-        }
-        else {
-            console.log("good save")
         }
 
     };
@@ -67,7 +62,7 @@ const W2 = () => {
 
     return(
         <div className="wardrobe-page">
-            <Swiper navigation={true} spaceBetween={50} slidesPerView={num} onSlideChange={() => console.log('slide change')} className="mySwiper">
+            <Swiper navigation={true} spaceBetween={50} slidesPerView={num} className="mySwiper">
 
 
                         {

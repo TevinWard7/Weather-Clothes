@@ -13,10 +13,8 @@ import { storage } from "../../utils/firebase";
 
 const LogIn = () => {
 
-    const [catImg, setCatImg] = useState(); 
-    console.log("LogIn -> catImg", catImg)
+    const [catImg, setCatImg] = useState();
     const [sunImg, setSunImg] = useState();
-    console.log("LogIn -> sunImg", sunImg)
     // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
     let vh = window.innerHeight * 0.01;
     // Then we set the value in the --vh custom property to the root of the document
@@ -87,7 +85,9 @@ const LogIn = () => {
                 user: result.user
             })
         })
-        .catch(err => console.log(err.message))
+        .catch(err => {
+            alert("Error signing in. Please try again.");
+        })
 
         })
 

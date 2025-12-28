@@ -20,21 +20,21 @@ const Location = () => {
     useEffect(() => {
 
         setBck("-webkit-linear-gradient(150deg, #ecdfd100 50%, #fcf3ed 50%)");
-        // setBck("-webkit-linear-gradient(150deg, #ecdfd100 50%, #e1d4c0 50%)");
 
-        cityRef.onSnapshot(snapshot => {
+        const unsubscribe = cityRef.onSnapshot(snapshot => {
 
             const data = snapshot.docs.map((doc) => doc.data())
 
-            // If the DB has a city store it else log no city
+            // If the DB has a city store it else set default
             if (data[0]) {
                 setInitialCity(data[0].city)
-            } else {
-                console.log("no city from db")
             }
         })
 
-    //eslint-disable-next-line        
+        // Cleanup function
+        return () => unsubscribe();
+
+    //eslint-disable-next-line
     },[])
 
     // Pull ID of the doc from firebase
