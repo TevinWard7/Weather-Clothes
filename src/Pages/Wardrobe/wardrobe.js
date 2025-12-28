@@ -13,9 +13,9 @@ import closet from "../../images/closet.png";
 import { UserContext } from "../../utils/UserContext";
 import garmetsBck from "../../images/garmets.png";
 import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore, { Navigation } from 'swiper';
 import 'swiper/swiper.scss';
-import SwiperCore, {Navigation} from 'swiper/core';
-import "swiper/components/navigation/navigation.min.css"
+import 'swiper/components/navigation/navigation.scss';
 
 SwiperCore.use([Navigation]);
 

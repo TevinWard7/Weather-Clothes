@@ -42,7 +42,12 @@ const Navbar = () => {
         const unsubscribe = db
         .collection("city")
         .where('uid', '==', user.uid)
-        .onSnapshot(snapshot => setLocation(snapshot.docs.map((doc) => doc.data().city)))
+        .onSnapshot(snapshot => {
+            const cities = snapshot.docs.map((doc) => doc.data().city);
+            if (cities.length > 0) {
+                setLocation(cities[0]); // Get first city only, not array
+            }
+        })
 
         // Cleanup function
         return () => unsubscribe();
@@ -53,11 +58,17 @@ const Navbar = () => {
     useEffect(() => {
 
         // Get weather data from API based on city from DB
-        API.search(location)
-        .then((res) => {
-            setTodaysTemp(res.data.list[0].main.temp)
-            setTodayDescript(res.data.list[0].weather[0].description)
-        })
+        if (location) {
+            API.search(location)
+            .then((res) => {
+                setTodaysTemp(res.data.list[0].main.temp)
+                setTodayDescript(res.data.list[0].weather[0].description)
+            })
+            .catch((error) => {
+                console.error('Error fetching weather:', error);
+                // Don't crash the app, just log the error
+            });
+        }
 
     },[location])
     
