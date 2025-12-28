@@ -95,21 +95,10 @@ const App = () => {
               <Suspense fallback={<div id="loader"><CircularProgress /></div>}>
                 <Switch>
 
-                  <Route path="/wardrobe">
-                    <Wardrobe />
-                  </Route>
-
-                  <Route path="/location">
-                    <Location />
-                  </Route>
-
-                  <Route path="/add">
-                    <AddOutfit />
-                  </Route>
-
-                  <Route exact path="/">
-                    <WeatherClothes />
-                  </Route>
+                  <Route path="/wardrobe" component={Wardrobe} />
+                  <Route path="/location" component={Location} />
+                  <Route path="/add" component={AddOutfit} />
+                  <Route exact path="/" component={WeatherClothes} />
 
                 </Switch>
               </Suspense>
