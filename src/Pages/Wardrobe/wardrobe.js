@@ -13,7 +13,7 @@ import closet from "../../images/closet.png";
 import { UserContext } from "../../utils/UserContext";
 import garmetsBck from "../../images/garmets.png";
 import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Navigation } from 'swiper';
+import SwiperCore, { Navigation } from 'swiper/core';
 import 'swiper/swiper.scss';
 import 'swiper/components/navigation/navigation.scss';
 
