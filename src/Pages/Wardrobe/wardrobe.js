@@ -1,10 +1,12 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import db from "../../utils/firebase";
 import { useStateValue } from "../../utils/stateProvider";
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 import EditIcon from '@material-ui/icons/Edit';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import SearchIcon from '@material-ui/icons/Search';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { IconButton, TextField, Select, MenuItem, FormControl, InputLabel, Chip } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import "./wardrobe.css";
@@ -24,6 +26,7 @@ const W2 = () => {
     const [showFilters, setShowFilters] = useState(false);
     const history = useHistory();
     const {setBck} = useContext(UserContext);
+    const carouselRef = useRef(null);
 
     // Get outfits
     useEffect(() => {
@@ -108,22 +111,61 @@ const W2 = () => {
 
     const displayOutfits = filteredOutfits.length > 0 ? filteredOutfits : outfits;
 
+    const scrollNext = () => {
+        if (carouselRef.current) {
+            const scrollAmount = carouselRef.current.offsetWidth * 0.8;
+            carouselRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        }
+    };
+
+    const scrollPrev = () => {
+        if (carouselRef.current) {
+            const scrollAmount = carouselRef.current.offsetWidth * 0.8;
+            carouselRef.current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        }
+    };
+
     return(
         <div className="wardrobe-page" style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-            {/* Carousel - Exact master style */}
-            <div className="mySwiper" style={{
-                display: 'flex',
-                overflowX: 'auto',
-                overflowY: 'hidden',
-                scrollSnapType: 'x mandatory',
-                gap: '50px',
-                padding: '20px 50px',
-                scrollBehavior: 'smooth',
-                WebkitOverflowScrolling: 'touch',
-                maxHeight: 'calc(100vh - 280px)',
-                alignItems: 'center',
-                minHeight: 0
-            }}>
+            {/* Carousel with Navigation Arrows */}
+            <div style={{ position: 'relative', maxHeight: 'calc(100vh - 280px)', display: 'flex', alignItems: 'center' }}>
+                {/* Previous Arrow */}
+                <IconButton
+                    onClick={scrollPrev}
+                    className="swiper-button-prev"
+                    style={{
+                        position: 'absolute',
+                        left: '10px',
+                        zIndex: 10,
+                        background: 'rgba(255, 255, 255, 0.9)',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                        '&:hover': {
+                            background: 'rgba(255, 255, 255, 1)'
+                        }
+                    }}
+                >
+                    <ArrowBackIosIcon style={{ color: 'black' }} />
+                </IconButton>
+
+                {/* Carousel */}
+                <div
+                    ref={carouselRef}
+                    className="mySwiper"
+                    style={{
+                        display: 'flex',
+                        overflowX: 'auto',
+                        overflowY: 'hidden',
+                        gap: '50px',
+                        padding: '20px 50px',
+                        scrollBehavior: 'smooth',
+                        WebkitOverflowScrolling: 'touch',
+                        flex: 1,
+                        alignItems: 'center',
+                        minHeight: 0,
+                        scrollbarWidth: 'none',
+                        msOverflowStyle: 'none'
+                    }}
+                >
                 {displayOutfits && displayOutfits.length > 0 ? (
                     displayOutfits.map(outfit => (
                         <div key={outfit.id} className="swiper-slide" style={{
@@ -250,6 +292,25 @@ const W2 = () => {
                 ) : (
                     <p style={{ width: '100%', textAlign: 'center' }}>Add outfits</p>
                 )}
+                </div>
+
+                {/* Next Arrow */}
+                <IconButton
+                    onClick={scrollNext}
+                    className="swiper-button-next"
+                    style={{
+                        position: 'absolute',
+                        right: '10px',
+                        zIndex: 10,
+                        background: 'rgba(255, 255, 255, 0.9)',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                        '&:hover': {
+                            background: 'rgba(255, 255, 255, 1)'
+                        }
+                    }}
+                >
+                    <ArrowForwardIosIcon style={{ color: 'black' }} />
+                </IconButton>
             </div>
 
             {/* Floating transparent search bar */}

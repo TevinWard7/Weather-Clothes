@@ -6,6 +6,10 @@
     z-index: 3;
 }
 
+.mySwiper::-webkit-scrollbar {
+    display: none;
+}
+
 .add-fit {
     width: 100%;
     bottom: 25;
