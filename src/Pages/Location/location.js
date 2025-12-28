@@ -14,7 +14,6 @@ const Location = () => {
     const [initialCity, setInitialCity] = useState("City");
     const [newCity, setNewCity] = useState();
     const [id, setId] = useState();
-    const [error, setError] = useState('');
     const cityRef = db.collection("city").where('uid', '==', user.uid);
     const {setBck, setInfoPop, setInfoContent} = useContext(UserContext);
 
@@ -60,7 +59,6 @@ const Location = () => {
         // Validate city name
         const validation = validateCity(newCity);
         if (!validation.isValid) {
-            setError(validation.error);
             alert(validation.error);
             return;
         }
@@ -74,7 +72,6 @@ const Location = () => {
             city: sanitizedCity,
         })
         .then(() => {
-            setError('');
             alert("Saved");
         })
 
@@ -86,7 +83,6 @@ const Location = () => {
         // Validate city name
         const validation = validateCity(newCity);
         if (!validation.isValid) {
-            setError(validation.error);
             alert(validation.error);
             return;
         }
@@ -101,7 +97,6 @@ const Location = () => {
             city: sanitizedCity
         })
         .then(() => {
-            setError('');
             setInfoPop("block");
             setInfoContent("update");
         })

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, lazy, Suspense } from 'react';
 import './App.css';
 import Navbar from "./components/Navbar/nav";
+import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 import {
   BrowserRouter as Router,
   Route,
@@ -62,22 +63,23 @@ const App = () => {
   }
 
   return (
-    <div className="app" style={{backgroundImage: bck, height:"100vh", width:"100vw", zIndex:"2"}}>
-      {
-      !user ? (
-        fetching ? (
-          <div id="loader"><CircularProgress /></div>
+    <ErrorBoundary>
+      <div className="app" style={{backgroundImage: bck, height:"100vh", width:"100vw", zIndex:"2"}}>
+        {
+        !user ? (
+          fetching ? (
+            <div id="loader"><CircularProgress /></div>
+          ) : (
+            <Suspense fallback={<div id="loader"><CircularProgress /></div>}>
+              <LogIn />
+            </Suspense>
+          )
         ) : (
-          <Suspense fallback={<div id="loader"><CircularProgress /></div>}>
-            <LogIn />
-          </Suspense>
-        )
-      ) : (
 
-        <Router>
+          <Router>
 
-          <div>
-            <UserContext.Provider value={{setBck, setInfoPop, setInfoContent, confirmDl, setConfirmDl}}>
+            <div>
+              <UserContext.Provider value={{setBck, setInfoPop, setInfoContent, confirmDl, setConfirmDl}}>
 
               <div style={{display:infoPop, zIndex:999}} className="info-pop">
                 <ul>
@@ -117,11 +119,11 @@ const App = () => {
 
         </Router>
 
-      )
-      }
+        )
+        }
 
-    </div>
-
+      </div>
+    </ErrorBoundary>
   );
 }
 

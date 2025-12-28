@@ -3,7 +3,7 @@ import "./addoutfit.css";
 import { useStateValue } from "../../utils/stateProvider";
 import db from "../../utils/firebase";
 import { Button } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { storage } from "../../utils/firebase";
 // import { Toast } from 'react-bootstrap';
 import garmetsBck from "../../images/garmets.png";
@@ -16,6 +16,7 @@ const AddOutfit = () => {
     // Get loggedin user info
     const [{ user }] = useStateValue();
     const history = useHistory();
+    const location = useLocation();
     // Get colleection from firebase
     const wardrobeRef = db.collection("wardrobe");
     const [outfitName, setOutfitName] = useState();
@@ -25,13 +26,46 @@ const AddOutfit = () => {
     const [fitTemp, setFitTemp] = useState();
     const [fitContext, setFitContext] = useState();
     const [errors, setErrors] = useState({});
+    const [isEditMode, setIsEditMode] = useState(false);
+    const [outfitId, setOutfitId] = useState(null);
     const {setBck, setInfoPop, setInfoContent} = useContext(UserContext);
 
     useEffect(() => {
 
         setBck(`url(${garmetsBck})`);
 
-    },[setBck])
+        // Check if we're in edit mode
+        const params = new URLSearchParams(location.search);
+        const editId = params.get('edit');
+
+        if (editId) {
+            setIsEditMode(true);
+            setOutfitId(editId);
+
+            // Load outfit data from localStorage
+            const editingOutfit = localStorage.getItem('editingOutfit');
+            if (editingOutfit) {
+                try {
+                    const outfit = JSON.parse(editingOutfit);
+
+                    // Pre-populate form fields
+                    setOutfitName(outfit.outfit || '');
+                    setImgUrl(outfit.image || '');
+                    setFitWeather(outfit.weather || '');
+                    setFitTemp(outfit.temperature || '');
+                    setFitContext(outfit.context || '');
+
+                    // Clean up localStorage
+                    localStorage.removeItem('editingOutfit');
+                } catch (error) {
+                    console.error('Error loading outfit for editing:', error);
+                    alert('Error loading outfit data. Redirecting to add mode.');
+                    setIsEditMode(false);
+                }
+            }
+        }
+
+    },[setBck, location.search])
 
     const handleImgUpload = async (event) => {
 
@@ -99,16 +133,39 @@ const AddOutfit = () => {
         // Sanitize inputs before storing
         const sanitizedOutfitName = sanitizeText(outfitName);
 
-        wardrobeRef.add(
-            {
-                uid: user.uid,
-                outfit: sanitizedOutfitName,
-                weather: fitWeather,
-                temperature: fitTemp,
-                image: imgUrl,
-                context: fitContext
-            }
-        ).then(history.push('/wardrobe'))
+        const outfitData = {
+            uid: user.uid,
+            outfit: sanitizedOutfitName,
+            weather: fitWeather,
+            temperature: fitTemp,
+            image: imgUrl,
+            context: fitContext
+        };
+
+        if (isEditMode && outfitId) {
+            // Update existing outfit
+            wardrobeRef.doc(outfitId)
+                .update(outfitData)
+                .then(() => {
+                    setInfoPop("block");
+                    setInfoContent("update");
+                    history.push('/wardrobe');
+                })
+                .catch((error) => {
+                    console.error("Error updating outfit:", error);
+                    alert("Error updating outfit. Please try again.");
+                });
+        } else {
+            // Create new outfit
+            wardrobeRef.add(outfitData)
+                .then(() => {
+                    history.push('/wardrobe');
+                })
+                .catch((error) => {
+                    console.error("Error adding outfit:", error);
+                    alert("Error adding outfit. Please try again.");
+                });
+        }
     };
 
     return(
@@ -123,9 +180,10 @@ const AddOutfit = () => {
 
                         {//Outfit Name Entry
                         }
-                        <h1 id="enter-fit">Enter Outfit</h1>
-                        <p><em>lay out your outfit and take a photo!</em></p>
-                        <input type="text" placeholder="Name Your Outfit" 
+                        <h1 id="enter-fit">{isEditMode ? 'Edit Outfit' : 'Enter Outfit'}</h1>
+                        <p><em>{isEditMode ? 'update your outfit details' : 'lay out your outfit and take a photo!'}</em></p>
+                        <input type="text" placeholder="Name Your Outfit"
+                        value={outfitName || ''}
                         onChange={(e) => setOutfitName(e.target.value)} id="fit-input"></input>
                         
                         <br/>
@@ -139,29 +197,35 @@ const AddOutfit = () => {
 
                         {// Get Weather description input for oufit
                         }
-                        <select className="custom-select" style={{width: "133px"}} onChange={(e) => {
-                            setFitWeather(e.target.value)
-                        }}>
-                            <option></option>
+                        <select className="custom-select" style={{width: "133px"}}
+                            value={fitWeather || ''}
+                            onChange={(e) => {
+                                setFitWeather(e.target.value)
+                            }}>
+                            <option value="">Select Weather</option>
                             <option value="clear Sky" className="select-items">Clear Sky</option>
                             <option value="overcast">Overcast</option>
                             <option value="rain">Rain</option>
                             <option value="sunny">Sunny</option>
                         </select>
 
-                        <select className="custom-select" style={{width: "133px"}} onChange={(e) => {
-                            setFitTemp(e.target.value)
-                        }}>
-                            <option></option>
+                        <select className="custom-select" style={{width: "133px"}}
+                            value={fitTemp || ''}
+                            onChange={(e) => {
+                                setFitTemp(e.target.value)
+                            }}>
+                            <option value="">Select Temp</option>
                             <option value="neutral">Neutral</option>
                             <option value="hot">Hot</option>
                             <option value="cold">Cold</option>
                         </select>
 
-                        <select className="custom-select" style={{width: "133px"}} onChange={(e) => {
-                            setFitContext(e.target.value)
-                        }}>
-                            <option></option>
+                        <select className="custom-select" style={{width: "133px"}}
+                            value={fitContext || ''}
+                            onChange={(e) => {
+                                setFitContext(e.target.value)
+                            }}>
+                            <option value="">Select Context</option>
                             <option value="home">Home</option>
                             <option value="work">Work</option>
                             <option value="casual">Casual</option>
@@ -173,10 +237,10 @@ const AddOutfit = () => {
                         {// If there is no outfit name and details disable submit button otherwise enable
                         }
                         {
-                        outfitName && fitWeather && fitTemp && imgUrl && fitContext  ? 
-                        <Button onClick={() => addOutfit()}>Submit</Button>
+                        outfitName && fitWeather && fitTemp && imgUrl && fitContext  ?
+                        <Button onClick={() => addOutfit()}>{isEditMode ? 'Update' : 'Submit'}</Button>
                         :
-                        <Button disabled>Submit</Button>
+                        <Button disabled>{isEditMode ? 'Update' : 'Submit'}</Button>
                         }
                         
                     </form>
