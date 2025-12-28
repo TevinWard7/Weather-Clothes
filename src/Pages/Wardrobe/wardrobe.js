@@ -120,7 +120,7 @@ const W2 = () => {
                 padding: '20px 50px',
                 scrollBehavior: 'smooth',
                 WebkitOverflowScrolling: 'touch',
-                flex: 1,
+                maxHeight: 'calc(100vh - 250px)',
                 alignItems: 'center',
                 minHeight: 0
             }}>
