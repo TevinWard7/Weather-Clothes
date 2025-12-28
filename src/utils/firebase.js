@@ -2,14 +2,14 @@ import firebase from "firebase";
 import "firebase/storage"
 
 const firebaseConfig = {
-    apiKey: "AIzaSyABq4T8AGbIDOc2ZJMewwYp3XNVzanTjC4",
-    authDomain: "weatherclothes-66103.firebaseapp.com",
-    databaseURL: "https://weatherclothes-66103.firebaseio.com",
-    projectId: "weatherclothes-66103",
-    storageBucket: "weatherclothes-66103.appspot.com",
-    messagingSenderId: "754530863180",
-    appId: "1:754530863180:web:423b081faa2e7fbd4d8ce9",
-    measurementId: "G-J5GBYEKKCQ"
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+    databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
+    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_FIREBASE_APP_ID,
+    measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 };
   
   // Initialize Firebase

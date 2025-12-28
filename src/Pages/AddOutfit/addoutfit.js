@@ -8,6 +8,7 @@ import { storage } from "../../utils/firebase";
 // import { Toast } from 'react-bootstrap';
 import garmetsBck from "../../images/garmets.png";
 import { UserContext } from "../../utils/UserContext";
+import { sanitizeText, validateOutfitName, validateImageFile } from "../../utils/validation";
 
 const AddOutfit = () => {
 
@@ -22,6 +23,7 @@ const AddOutfit = () => {
     const [fitWeather, setFitWeather] = useState();
     const [fitTemp, setFitTemp] = useState();
     const [fitContext, setFitContext] = useState();
+    const [errors, setErrors] = useState({});
     const {setBck, setInfoPop, setInfoContent} = useContext(UserContext);
 
     useEffect(() => {
@@ -33,6 +35,16 @@ const AddOutfit = () => {
     const handleImgUpload = (event) => {
 
         event.preventDefault()
+
+        // Validate image file
+        const validation = validateImageFile(fitImage);
+        if (!validation.isValid) {
+            setErrors({ ...errors, image: validation.error });
+            alert(validation.error);
+            return;
+        }
+
+        setErrors({ ...errors, image: '' });
 
         // Upload image to firestore and store in variable
         const uploadTask = storage.ref(`images/${fitImage.name}`).put(fitImage);
@@ -61,10 +73,21 @@ const AddOutfit = () => {
 
     const addOutfit = () => {
 
+        // Validate outfit name
+        const validation = validateOutfitName(outfitName);
+        if (!validation.isValid) {
+            setErrors({ ...errors, outfitName: validation.error });
+            alert(validation.error);
+            return;
+        }
+
+        // Sanitize inputs before storing
+        const sanitizedOutfitName = sanitizeText(outfitName);
+
         wardrobeRef.add(
             {
                 uid: user.uid,
-                outfit: outfitName,
+                outfit: sanitizedOutfitName,
                 weather: fitWeather,
                 temperature: fitTemp,
                 image: imgUrl,

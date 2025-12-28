@@ -1,0 +1,72 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper function to check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Helper function to check if user owns the document
+    function isOwner(uid) {
+      return isAuthenticated() && request.auth.uid == uid;
+    }
+
+    // Helper function to validate outfit data
+    function isValidOutfit() {
+      return request.resource.data.keys().hasAll(['uid', 'outfit', 'weather', 'temperature', 'image', 'context'])
+        && request.resource.data.outfit is string
+        && request.resource.data.outfit.size() > 0
+        && request.resource.data.outfit.size() <= 50
+        && request.resource.data.weather is string
+        && request.resource.data.temperature is string
+        && request.resource.data.image is string
+        && request.resource.data.context is string
+        && request.resource.data.uid is string;
+    }
+
+    // Helper function to validate city data
+    function isValidCity() {
+      return request.resource.data.keys().hasAll(['uid', 'city'])
+        && request.resource.data.city is string
+        && request.resource.data.city.size() > 0
+        && request.resource.data.city.size() <= 100
+        && request.resource.data.uid is string;
+    }
+
+    // Wardrobe collection rules
+    match /wardrobe/{outfitId} {
+      // Allow read if user is authenticated and owns the outfit
+      allow read: if isAuthenticated() && resource.data.uid == request.auth.uid;
+
+      // Allow create if user is authenticated, owns the outfit, and data is valid
+      allow create: if isOwner(request.resource.data.uid) && isValidOutfit();
+
+      // Allow update if user owns the outfit and data is valid
+      allow update: if isOwner(resource.data.uid) && isValidOutfit();
+
+      // Allow delete if user owns the outfit
+      allow delete: if isOwner(resource.data.uid);
+    }
+
+    // City collection rules
+    match /city/{cityId} {
+      // Allow read if user is authenticated and owns the city document
+      allow read: if isAuthenticated() && resource.data.uid == request.auth.uid;
+
+      // Allow create if user is authenticated, owns the document, and data is valid
+      allow create: if isOwner(request.resource.data.uid) && isValidCity();
+
+      // Allow update if user owns the document and data is valid
+      allow update: if isOwner(resource.data.uid) && isValidCity();
+
+      // Allow delete if user owns the document
+      allow delete: if isOwner(resource.data.uid);
+    }
+
+    // Default: deny all other access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
