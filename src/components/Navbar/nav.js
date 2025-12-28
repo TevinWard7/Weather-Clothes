@@ -25,7 +25,16 @@ const Navbar = () => {
     const [location, setLocation] = useState();
     const [todaysTemp, setTodaysTemp] = useState();
     const [todayDescript, setTodayDescript] = useState();
+    const [tempUnit, setTempUnit] = useState('F'); // 'F' or 'C'
     const {setInfoPop, setInfoContent} = useContext(UserContext);
+
+    useEffect(() => {
+        // Load temperature unit preference from localStorage
+        const savedUnit = localStorage.getItem('tempUnit');
+        if (savedUnit === 'C' || savedUnit === 'F') {
+            setTempUnit(savedUnit);
+        }
+    }, []);
 
     useEffect(() => {
 
@@ -33,7 +42,12 @@ const Navbar = () => {
         const unsubscribe = db
         .collection("city")
         .where('uid', '==', user.uid)
-        .onSnapshot(snapshot => setLocation(snapshot.docs.map((doc) => doc.data().city)))
+        .onSnapshot(snapshot => {
+            const cities = snapshot.docs.map((doc) => doc.data().city);
+            if (cities.length > 0) {
+                setLocation(cities[0]); // Get first city only, not array
+            }
+        })
 
         // Cleanup function
         return () => unsubscribe();
@@ -44,11 +58,17 @@ const Navbar = () => {
     useEffect(() => {
 
         // Get weather data from API based on city from DB
-        API.search(location)
-        .then((res) => {
-            setTodaysTemp(res.data.list[0].main.temp)
-            setTodayDescript(res.data.list[0].weather[0].description)
-        })
+        if (location) {
+            API.search(location)
+            .then((res) => {
+                setTodaysTemp(res.data.list[0].main.temp)
+                setTodayDescript(res.data.list[0].weather[0].description)
+            })
+            .catch((error) => {
+                console.error('Error fetching weather:', error);
+                // Don't crash the app, just log the error
+            });
+        }
 
     },[location])
     
@@ -92,9 +112,30 @@ const Navbar = () => {
         toggleNav();
     };
 
-    // Convert kelvin temp to faranheight
+    // Convert kelvin temp to fahrenheit
     const kelvinToFaran = (kelvin) => {
         return (kelvin - 273.15) * 9/5 + 32
+    };
+
+    // Convert kelvin temp to celsius
+    const kelvinToCelsius = (kelvin) => {
+        return kelvin - 273.15
+    };
+
+    // Convert temperature based on user preference
+    const convertTemp = (kelvin) => {
+        if (tempUnit === 'C') {
+            return Math.round(kelvinToCelsius(kelvin));
+        } else {
+            return Math.round(kelvinToFaran(kelvin));
+        }
+    };
+
+    // Toggle temperature unit
+    const toggleTempUnit = () => {
+        const newUnit = tempUnit === 'F' ? 'C' : 'F';
+        setTempUnit(newUnit);
+        localStorage.setItem('tempUnit', newUnit);
     };
 
     const signOut = () => {
@@ -110,25 +151,41 @@ const Navbar = () => {
                     
                     <IconButton id="gear" onClick={toggleNav}><SettingsSharpIcon /></IconButton>
                     
-                    <p>
+                    <p style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
                         {
                             (()=> {
 
                                 if (typeof todaysTemp === "number") {
-    
-                                    const temperature = Math.round(kelvinToFaran(todaysTemp)) + "°";
-    
+
+                                    const temperature = convertTemp(todaysTemp) + "°" + tempUnit;
+
                                     return (
                                         <>
                                             <img src={temp} alt="tempurature-icon" height="25px" width="25px"/>
-                                            {temperature + " " + todayDescript}
+                                            <span>{temperature + " " + todayDescript}</span>
+                                            <button
+                                                onClick={toggleTempUnit}
+                                                style={{
+                                                    marginLeft: '5px',
+                                                    padding: '2px 6px',
+                                                    fontSize: '11px',
+                                                    background: 'rgba(255,255,255,0.2)',
+                                                    border: '1px solid rgba(255,255,255,0.3)',
+                                                    borderRadius: '3px',
+                                                    cursor: 'pointer',
+                                                    color: 'inherit'
+                                                }}
+                                                title={`Switch to °${tempUnit === 'F' ? 'C' : 'F'}`}
+                                            >
+                                                °{tempUnit === 'F' ? 'C' : 'F'}
+                                            </button>
                                         </>
                                     )
                                 }
                                 else {
-    
+
                                     return 0
-    
+
                                 }
                                 })()
                         }

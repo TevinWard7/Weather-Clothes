@@ -1,10 +1,12 @@
-import React, { useEffect, useState, lazy, Suspense } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import Navbar from "./components/Navbar/nav";
+import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 import {
   BrowserRouter as Router,
   Route,
   Switch,
+  useLocation,
 } from "react-router-dom";
 import { useStateValue } from "./utils/stateProvider";
 import { auth } from "./utils/firebase";
@@ -13,12 +15,26 @@ import { CircularProgress } from "@material-ui/core";
 import { UserContext } from './utils/UserContext';
 import { Button } from "@material-ui/core";
 
-// Lazy load page components for code splitting
-const WeatherClothes = lazy(() => import("./Pages/WeatherClothes/weatherclothes"));
-const AddOutfit = lazy(() => import('./Pages/AddOutfit/addoutfit'));
-const Wardrobe = lazy(() => import('./Pages/Wardrobe/wardrobe'));
-const Location = lazy(() => import("./Pages/Location/location"));
-const LogIn = lazy(() => import("./Pages/LogIn/login"));
+// Direct imports - no lazy loading to fix routing issues
+import WeatherClothes from "./Pages/WeatherClothes/weatherclothes";
+import AddOutfit from './Pages/AddOutfit/addoutfit';
+import Wardrobe from './Pages/Wardrobe/wardrobe';
+import Location from "./Pages/Location/location";
+import LogIn from "./Pages/LogIn/login";
+
+// Routes component that uses location as key to force re-renders
+const Routes = () => {
+  const location = useLocation();
+
+  return (
+    <Switch key={location.pathname}>
+      <Route path="/wardrobe" component={Wardrobe} />
+      <Route path="/location" component={Location} />
+      <Route path="/add" component={AddOutfit} />
+      <Route exact path="/" component={WeatherClothes} />
+    </Switch>
+  );
+};
 
 const App = () => {
 
@@ -62,22 +78,21 @@ const App = () => {
   }
 
   return (
-    <div className="app" style={{backgroundImage: bck, height:"100vh", width:"100vw", zIndex:"2"}}>
-      {
-      !user ? (
-        fetching ? (
-          <div id="loader"><CircularProgress /></div>
-        ) : (
-          <Suspense fallback={<div id="loader"><CircularProgress /></div>}>
+    <ErrorBoundary>
+      <div className="app" style={{backgroundImage: bck, height:"100vh", width:"100vw", zIndex:"2"}}>
+        {
+        !user ? (
+          fetching ? (
+            <div id="loader"><CircularProgress /></div>
+          ) : (
             <LogIn />
-          </Suspense>
-        )
-      ) : (
+          )
+        ) : (
 
-        <Router>
+          <Router>
 
-          <div>
-            <UserContext.Provider value={{setBck, setInfoPop, setInfoContent, confirmDl, setConfirmDl}}>
+            <div>
+              <UserContext.Provider value={{setBck, setInfoPop, setInfoContent, confirmDl, setConfirmDl}}>
 
               <div style={{display:infoPop, zIndex:999}} className="info-pop">
                 <ul>
@@ -90,38 +105,18 @@ const App = () => {
 
               <Navbar />
 
-              <Suspense fallback={<div id="loader"><CircularProgress /></div>}>
-                <Switch>
-
-                  <Route path="/wardrobe">
-                    <Wardrobe />
-                  </Route>
-
-                  <Route path="/location">
-                    <Location />
-                  </Route>
-
-                  <Route path="/add">
-                    <AddOutfit />
-                  </Route>
-
-                  <Route path="/">
-                    <WeatherClothes />
-                  </Route>
-
-                </Switch>
-              </Suspense>
+              <Routes />
 
             </UserContext.Provider>
           </div>
 
         </Router>
 
-      )
-      }
+        )
+        }
 
-    </div>
-
+      </div>
+    </ErrorBoundary>
   );
 }
 
