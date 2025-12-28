@@ -107,7 +107,7 @@ const App = () => {
                     <AddOutfit />
                   </Route>
 
-                  <Route path="/">
+                  <Route exact path="/">
                     <WeatherClothes />
                   </Route>
 
