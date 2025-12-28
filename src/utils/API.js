@@ -1,6 +1,6 @@
 import Axios from "axios";
 
-const apiKey = "536ab6af7ef7bf09fed9adc314232d23";
+const apiKey = process.env.REACT_APP_OPENWEATHER_API_KEY;
 
 const API = {
     search: (city) => {

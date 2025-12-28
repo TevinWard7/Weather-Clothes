@@ -5,6 +5,7 @@ import { Button } from "@material-ui/core";
 import db from "../../utils/firebase";
 // import { Toast } from 'react-bootstrap';
 import { UserContext } from "../../utils/UserContext";
+import { sanitizeText, validateCity } from "../../utils/validation";
 
 
 const Location = () => {
@@ -13,6 +14,7 @@ const Location = () => {
     const [initialCity, setInitialCity] = useState("City");
     const [newCity, setNewCity] = useState();
     const [id, setId] = useState();
+    const [error, setError] = useState('');
     const cityRef = db.collection("city").where('uid', '==', user.uid);
     const {setBck, setInfoPop, setInfoContent} = useContext(UserContext);
 
@@ -57,30 +59,54 @@ const Location = () => {
     // Send new city input into databae
     const addCity = (newCity) => {
 
+        // Validate city name
+        const validation = validateCity(newCity);
+        if (!validation.isValid) {
+            setError(validation.error);
+            alert(validation.error);
+            return;
+        }
+
+        // Sanitize city name
+        const sanitizedCity = sanitizeText(newCity);
+
         db.collection("city")
         .add({
             uid: user.uid,
-            city: newCity,
+            city: sanitizedCity,
         })
-        .then(
-            alert("Saved")
-        )
+        .then(() => {
+            setError('');
+            alert("Saved");
+        })
 
     };
 
     // Update city in db according to new user input
     const updateCity = (id, newCity) => {
 
+        // Validate city name
+        const validation = validateCity(newCity);
+        if (!validation.isValid) {
+            setError(validation.error);
+            alert(validation.error);
+            return;
+        }
+
+        // Sanitize city name
+        const sanitizedCity = sanitizeText(newCity);
+
         db
         .collection("city")
         .doc(id)
         .update({
-            city: newCity
+            city: sanitizedCity
         })
-        .then(
-            setInfoPop("block"),
-            setInfoContent("update")
-        )
+        .then(() => {
+            setError('');
+            setInfoPop("block");
+            setInfoContent("update");
+        })
 
     };
 
