@@ -6,6 +6,7 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
+  useLocation,
 } from "react-router-dom";
 import { useStateValue } from "./utils/stateProvider";
 import { auth } from "./utils/firebase";
@@ -20,6 +21,22 @@ const AddOutfit = lazy(() => import('./Pages/AddOutfit/addoutfit'));
 const Wardrobe = lazy(() => import('./Pages/Wardrobe/wardrobe'));
 const Location = lazy(() => import("./Pages/Location/location"));
 const LogIn = lazy(() => import("./Pages/LogIn/login"));
+
+// Routes component that uses location as key to force re-renders
+const Routes = () => {
+  const location = useLocation();
+
+  return (
+    <Suspense fallback={<div id="loader"><CircularProgress /></div>}>
+      <Switch key={location.pathname}>
+        <Route path="/wardrobe" component={Wardrobe} />
+        <Route path="/location" component={Location} />
+        <Route path="/add" component={AddOutfit} />
+        <Route exact path="/" component={WeatherClothes} />
+      </Switch>
+    </Suspense>
+  );
+};
 
 const App = () => {
 
@@ -92,16 +109,7 @@ const App = () => {
 
               <Navbar />
 
-              <Suspense fallback={<div id="loader"><CircularProgress /></div>}>
-                <Switch>
-
-                  <Route path="/wardrobe" component={Wardrobe} />
-                  <Route path="/location" component={Location} />
-                  <Route path="/add" component={AddOutfit} />
-                  <Route exact path="/" component={WeatherClothes} />
-
-                </Switch>
-              </Suspense>
+              <Routes />
 
             </UserContext.Provider>
           </div>
