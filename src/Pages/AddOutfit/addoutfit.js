@@ -9,6 +9,7 @@ import { storage } from "../../utils/firebase";
 import garmetsBck from "../../images/garmets.png";
 import { UserContext } from "../../utils/UserContext";
 import { sanitizeText, validateOutfitName, validateImageFile } from "../../utils/validation";
+import imageCompression from 'browser-image-compression';
 
 const AddOutfit = () => {
 
@@ -32,7 +33,7 @@ const AddOutfit = () => {
 
     },[setBck])
 
-    const handleImgUpload = (event) => {
+    const handleImgUpload = async (event) => {
 
         event.preventDefault()
 
@@ -46,28 +47,42 @@ const AddOutfit = () => {
 
         setErrors({ ...errors, image: '' });
 
-        // Upload image to firestore and store in variable
-        const uploadTask = storage.ref(`images/${fitImage.name}`).put(fitImage);
+        try {
+            // Compress image before uploading
+            const options = {
+                maxSizeMB: 1,          // Maximum file size in MB
+                maxWidthOrHeight: 1920, // Maximum width or height
+                useWebWorker: true,     // Use web workers for better performance
+                fileType: fitImage.type // Preserve original file type
+            };
 
-        // Get url of image just uploaded to firestore storage
-        uploadTask.on(
-            "state_changed",
-            snapshot => {},
-            error => {
-                alert("Error uploading image. Please try again.");
-            },
-            () => {
-                storage
-                .ref("images")
-                .child(fitImage.name)
-                .getDownloadURL()
-                .then(url =>
-                    setImgUrl(url)
-                )
-            }
-        )
-        setInfoPop("block");
-        setInfoContent("img")
+            const compressedFile = await imageCompression(fitImage, options);
+
+            // Upload compressed image to firestore storage
+            const uploadTask = storage.ref(`images/${fitImage.name}`).put(compressedFile);
+
+            // Get url of image just uploaded to firestore storage
+            uploadTask.on(
+                "state_changed",
+                snapshot => {},
+                error => {
+                    alert("Error uploading image. Please try again.");
+                },
+                () => {
+                    storage
+                    .ref("images")
+                    .child(fitImage.name)
+                    .getDownloadURL()
+                    .then(url =>
+                        setImgUrl(url)
+                    )
+                }
+            )
+            setInfoPop("block");
+            setInfoContent("img")
+        } catch (error) {
+            alert("Error compressing image. Please try again.");
+        }
 
     };
 
