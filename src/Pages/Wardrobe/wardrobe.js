@@ -16,7 +16,7 @@ import garmetsBck from "../../images/garmets.png";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
-import 'swiper/swiper-bundle.css';
+import 'swiper/swiper.min.css';
 
 const W2 = () => {
     const [{ user }] = useStateValue();
