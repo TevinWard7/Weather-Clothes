@@ -301,24 +301,31 @@ const W2 = () => {
                 </div>
             ) : (
                 <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+                    display: 'flex',
+                    overflowX: 'auto',
+                    scrollSnapType: 'x mandatory',
                     gap: '30px',
                     padding: '20px',
-                    maxWidth: '1400px',
-                    margin: '0 auto'
+                    scrollBehavior: 'smooth',
+                    WebkitOverflowScrolling: 'touch'
                 }}>
                     {filteredOutfits.map(outfit => (
                         <div key={outfit.id} style={{
+                            flex: '0 0 320px',
+                            scrollSnapAlign: 'center',
                             background: 'rgba(255, 255, 255, 0.95)',
                             borderRadius: '12px',
                             padding: '20px',
                             boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-                            transition: 'transform 0.2s, box-shadow 0.2s',
-                            ':hover': {
-                                transform: 'translateY(-5px)',
-                                boxShadow: '0 8px 12px rgba(0,0,0,0.15)'
-                            }
+                            transition: 'transform 0.2s, box-shadow 0.2s'
+                        }}
+                        onMouseEnter={(e) => {
+                            e.currentTarget.style.transform = 'translateY(-5px)';
+                            e.currentTarget.style.boxShadow = '0 8px 12px rgba(0,0,0,0.15)';
+                        }}
+                        onMouseLeave={(e) => {
+                            e.currentTarget.style.transform = 'translateY(0)';
+                            e.currentTarget.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
                         }}>
                             {/* Outfit Name */}
                             <h2 style={{
