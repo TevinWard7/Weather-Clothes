@@ -402,7 +402,7 @@ const W2 = () => {
             <div className="add-fit" style={{
                 width: '100%',
                 textAlign: 'center',
-                padding: '15px 0',
+                padding: '15px 0 25px 0',
                 flexShrink: 0
             }}>
                 <img src={closet} alt="closet"/><br/>
