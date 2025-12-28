@@ -30,12 +30,15 @@ const Navbar = () => {
     useEffect(() => {
 
         // Get location data from DB
-        db
+        const unsubscribe = db
         .collection("city")
         .where('uid', '==', user.uid)
         .onSnapshot(snapshot => setLocation(snapshot.docs.map((doc) => doc.data().city)))
-        
-    //eslint-disable-next-line    
+
+        // Cleanup function
+        return () => unsubscribe();
+
+    //eslint-disable-next-line
     },[])
 
     useEffect(() => {

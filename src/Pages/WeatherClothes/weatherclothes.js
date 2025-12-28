@@ -23,17 +23,19 @@ const WeatherClothes = () => {
     // Location, Weather & Weekday Data fetching
     useEffect(() => {
 
-        // setBck(`url(${garmetsBck})`);
         setBck("-webkit-linear-gradient(150deg, #ecdfd100 50%, #fcf3ed 50%)");
 
         // Get location data from DB
-        db
+        const unsubscribe = db
         .collection("city")
         .where('uid', '==', user.uid)
         .onSnapshot(snapshot => setLocation(snapshot.docs.map((doc) => doc.data().city)))
 
         // Get & set the day of the week
         setWeekDay(moment().format('dddd'));
+
+        // Cleanup function
+        return () => unsubscribe();
 
     //eslint-disable-next-line
     },[])
@@ -43,7 +45,6 @@ const WeatherClothes = () => {
         // Get weather data from API based on city from DB
         API.search(location)
         .then((res) => {
-            console.log(res)
             setTodaysTemp(res.data.list[0].main.temp)
         })
 
@@ -51,48 +52,39 @@ const WeatherClothes = () => {
 
     useEffect(() => {
 
-        console.log(moment().format('dddd'))
-        console.log("outfitsaved day --->" + outfitSavedDay)
-
-
         if (moment().format('dddd') !== outfitSavedDay) {
-            console.log("days dont match!")
             localStorage.removeItem("todaysOutfit");
             localStorage.removeItem("today");
             return
         }
-        else {
-            
-            console.log("Days DO match!")
-        }
 
-        // setDayCheck(true);
-
-        
     }, [weekDay, outfitSavedDay])
 
     const determineOutfit = (hotFits, neutralFits, coldFits) => {
 
         if (!todaysTemp) setOutfit("No Outfit Loading (out of API calls)");
         else {
-            if (todaysTemp => 70) {
-            const hotfitNum = hotFits.length
-            const randomHotFitNum = (Math.floor(Math.random() * hotfitNum));
-            setOutfit(hotFits[randomHotFitNum].image);
-            localStorage.setItem("todaysOutfit", hotFits[randomHotFitNum].image)
-            localStorage.setItem("today", weekDay)
+            // Convert Kelvin to Fahrenheit
+            const tempF = (todaysTemp - 273.15) * 9/5 + 32;
+
+            if (tempF >= 70) {
+                const hotfitNum = hotFits.length;
+                const randomHotFitNum = (Math.floor(Math.random() * hotfitNum));
+                setOutfit(hotFits[randomHotFitNum].image);
+                localStorage.setItem("todaysOutfit", hotFits[randomHotFitNum].image);
+                localStorage.setItem("today", weekDay);
             }
-            if (todaysTemp > 70 && todaysTemp > 68) {
+            else if (tempF >= 68 && tempF < 70) {
                 const randomNeutralFitNum = (Math.floor(Math.random() * neutralFits.length));
                 setOutfit(neutralFits[randomNeutralFitNum].image);
-                localStorage.setItem("todaysOutfit", neutralFits[randomNeutralFitNum].image)
-                localStorage.setItem("today", weekDay)
+                localStorage.setItem("todaysOutfit", neutralFits[randomNeutralFitNum].image);
+                localStorage.setItem("today", weekDay);
             }
-            if (todaysTemp > 68 ) {
+            else if (tempF < 68) {
                 const randomColdFitNum = (Math.floor(Math.random() * coldFits.length));
-                setOutfit(coldFits[randomColdFitNum].image)
-                localStorage.setItem("todaysOutfit", coldFits[randomColdFitNum].image)
-                localStorage.setItem("today", weekDay)
+                setOutfit(coldFits[randomColdFitNum].image);
+                localStorage.setItem("todaysOutfit", coldFits[randomColdFitNum].image);
+                localStorage.setItem("today", weekDay);
             }
         }
 
@@ -109,13 +101,12 @@ const WeatherClothes = () => {
     // Get outfits from DB
     const queryDb = () => {
 
-        db
+        const unsubscribe = db
         .collection("wardrobe")
         .where('uid', '==', user.uid)
         .onSnapshot(snapshot => {
 
             const snap = snapshot.docs.map((doc) => doc.data());
-            console.log("snap: " + snap);
 
             if (snap.length === 0) {
                 setNoFits(true);
@@ -127,6 +118,8 @@ const WeatherClothes = () => {
 
         });
 
+        return unsubscribe;
+
     };
     
     useEffect(() => {
@@ -134,10 +127,14 @@ const WeatherClothes = () => {
         const savedOutfit = localStorage.getItem("todaysOutfit");
 
         // If there is an outfit saved in local storage set it to Outfit state else determine a new one
-        savedOutfit ? setOutfit(savedOutfit) : queryDb()
+        if (savedOutfit) {
+            setOutfit(savedOutfit);
+        } else {
+            const unsubscribe = queryDb();
+            // Cleanup function
+            return () => unsubscribe();
+        }
 
-        console.log(savedOutfit);
-        
     //eslint-disable-next-line
     },[]);
 
@@ -160,9 +157,8 @@ const WeatherClothes = () => {
 
 
     return(
-        
+
         <>
-            {console.log(`no fit: ${noFits}, outfit: ${outfit}`)}
             <div className="container">
                 {
                     // Row 1 - Weekdays list

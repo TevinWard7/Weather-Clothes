@@ -42,7 +42,7 @@ const AddOutfit = () => {
             "state_changed",
             snapshot => {},
             error => {
-                console.log(error)
+                alert("Error uploading image. Please try again.");
             },
             () => {
                 storage
