@@ -67,12 +67,10 @@ const AddOutfit = () => {
 
     },[setBck, location.search])
 
-    const handleImgUpload = async (event) => {
-
-        event.preventDefault()
+    const handleImgUpload = async (imageFile) => {
 
         // Validate image file
-        const validation = validateImageFile(fitImage);
+        const validation = validateImageFile(imageFile);
         if (!validation.isValid) {
             setErrors({ ...errors, image: validation.error });
             alert(validation.error);
@@ -87,13 +85,13 @@ const AddOutfit = () => {
                 maxSizeMB: 1,          // Maximum file size in MB
                 maxWidthOrHeight: 1920, // Maximum width or height
                 useWebWorker: true,     // Use web workers for better performance
-                fileType: fitImage.type // Preserve original file type
+                fileType: imageFile.type // Preserve original file type
             };
 
-            const compressedFile = await imageCompression(fitImage, options);
+            const compressedFile = await imageCompression(imageFile, options);
 
             // Upload compressed image to firestore storage
-            const uploadTask = storage.ref(`images/${fitImage.name}`).put(compressedFile);
+            const uploadTask = storage.ref(`images/${imageFile.name}`).put(compressedFile);
 
             // Get url of image just uploaded to firestore storage
             uploadTask.on(
@@ -105,7 +103,7 @@ const AddOutfit = () => {
                 () => {
                     storage
                     .ref("images")
-                    .child(fitImage.name)
+                    .child(imageFile.name)
                     .getDownloadURL()
                     .then(url =>
                         setImgUrl(url)
@@ -118,6 +116,14 @@ const AddOutfit = () => {
             alert("Error compressing image. Please try again.");
         }
 
+    };
+
+    const handleFileSelect = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            setFitImage(file);
+            handleImgUpload(file); // Auto-upload immediately
+        }
     };
 
     const addOutfit = () => {
@@ -189,8 +195,7 @@ const AddOutfit = () => {
                         <br/>
                         <br/>
 
-                        <input type="file" accept="image/*" onChange={(event) => setFitImage(event.target.files[0])} id="img-upload"></input>
-                        <button onClick={(event) => {handleImgUpload(event)}} id="upload-button">Upload</button>
+                        <input type="file" accept="image/*" onChange={handleFileSelect} id="img-upload"></input>
                         
                         <br/>
                         <br/>
