@@ -109,17 +109,18 @@ const W2 = () => {
     const displayOutfits = filteredOutfits.length > 0 ? filteredOutfits : outfits;
 
     return(
-        <div className="wardrobe-page">
+        <div className="wardrobe-page" style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
             {/* Floating transparent search bar */}
             <div style={{
-                position: 'absolute',
-                top: '80px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                zIndex: 10,
+                paddingTop: '10px',
+                paddingBottom: '10px',
                 display: 'flex',
                 gap: '8px',
-                alignItems: 'center'
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: 'transparent',
+                zIndex: 10,
+                flexShrink: 0
             }}>
                 {/* Compact Search */}
                 <TextField
@@ -196,11 +197,6 @@ const W2 = () => {
             {/* Collapsible Filter Options */}
             {showFilters && (
                 <div style={{
-                    position: 'absolute',
-                    top: '130px',
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    zIndex: 10,
                     display: 'flex',
                     gap: '8px',
                     flexWrap: 'wrap',
@@ -209,7 +205,10 @@ const W2 = () => {
                     backdropFilter: 'blur(10px)',
                     padding: '10px',
                     borderRadius: '4px',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                    margin: '0 auto 10px',
+                    maxWidth: '600px',
+                    flexShrink: 0
                 }}>
                     <FormControl variant="outlined" size="small" style={{ minWidth: 110 }}>
                         <InputLabel style={{ fontSize: '14px' }}>Temperature</InputLabel>
@@ -283,11 +282,12 @@ const W2 = () => {
                 overflowY: 'hidden',
                 scrollSnapType: 'x mandatory',
                 gap: '50px',
-                padding: '40px 50px',
+                padding: '20px 50px',
                 scrollBehavior: 'smooth',
                 WebkitOverflowScrolling: 'touch',
-                height: 'calc(100vh - 200px)',
-                alignItems: 'center'
+                flex: 1,
+                alignItems: 'center',
+                minHeight: 0
             }}>
                 {displayOutfits && displayOutfits.length > 0 ? (
                     displayOutfits.map(outfit => (
@@ -418,12 +418,17 @@ const W2 = () => {
             </div>
 
             {/* Add Outfit Button - exact master style */}
-            <div className="add-fit">
+            <div className="add-fit" style={{
+                width: '100%',
+                textAlign: 'center',
+                padding: '15px 0',
+                flexShrink: 0
+            }}>
                 <img src={closet} alt="closet"/><br/>
                 <IconButton onClick={() => history.push("/add")}>
                     <AddOutlinedIcon />
                 </IconButton>
-                <p>Add Outfit</p>
+                <p style={{ margin: '5px 0 0 0' }}>Add Outfit</p>
             </div>
         </div>
     );
