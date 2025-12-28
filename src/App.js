@@ -1,4 +1,4 @@
-import React, { useEffect, useState, lazy, Suspense } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import Navbar from "./components/Navbar/nav";
 import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
@@ -15,26 +15,24 @@ import { CircularProgress } from "@material-ui/core";
 import { UserContext } from './utils/UserContext';
 import { Button } from "@material-ui/core";
 
-// Lazy load page components for code splitting
-const WeatherClothes = lazy(() => import("./Pages/WeatherClothes/weatherclothes"));
-const AddOutfit = lazy(() => import('./Pages/AddOutfit/addoutfit'));
-const Wardrobe = lazy(() => import('./Pages/Wardrobe/wardrobe'));
-const Location = lazy(() => import("./Pages/Location/location"));
-const LogIn = lazy(() => import("./Pages/LogIn/login"));
+// Direct imports - no lazy loading to fix routing issues
+import WeatherClothes from "./Pages/WeatherClothes/weatherclothes";
+import AddOutfit from './Pages/AddOutfit/addoutfit';
+import Wardrobe from './Pages/Wardrobe/wardrobe';
+import Location from "./Pages/Location/location";
+import LogIn from "./Pages/LogIn/login";
 
 // Routes component that uses location as key to force re-renders
 const Routes = () => {
   const location = useLocation();
 
   return (
-    <Suspense fallback={<div id="loader"><CircularProgress /></div>}>
-      <Switch key={location.pathname}>
-        <Route path="/wardrobe" component={Wardrobe} />
-        <Route path="/location" component={Location} />
-        <Route path="/add" component={AddOutfit} />
-        <Route exact path="/" component={WeatherClothes} />
-      </Switch>
-    </Suspense>
+    <Switch key={location.pathname}>
+      <Route path="/wardrobe" component={Wardrobe} />
+      <Route path="/location" component={Location} />
+      <Route path="/add" component={AddOutfit} />
+      <Route exact path="/" component={WeatherClothes} />
+    </Switch>
   );
 };
 
@@ -87,9 +85,7 @@ const App = () => {
           fetching ? (
             <div id="loader"><CircularProgress /></div>
           ) : (
-            <Suspense fallback={<div id="loader"><CircularProgress /></div>}>
-              <LogIn />
-            </Suspense>
+            <LogIn />
           )
         ) : (
 
