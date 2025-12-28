@@ -165,7 +165,11 @@ const AddOutfit = () => {
             // Create new outfit
             wardrobeRef.add(outfitData)
                 .then(() => {
-                    history.push('/wardrobe');
+                    setInfoPop("block");
+                    setInfoContent("added");
+                    setTimeout(() => {
+                        history.push('/wardrobe');
+                    }, 1500); // Show success message for 1.5 seconds before redirecting
                 })
                 .catch((error) => {
                     console.error("Error adding outfit:", error);

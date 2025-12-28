@@ -74,6 +74,7 @@ const App = () => {
     }
     if (content === "img") return(<li><h2>Image Uploaded</h2></li>)
     if (content === "update") return(<li><h2>Updated</h2></li>)
+    if (content === "added") return(<li><h2>✓ Outfit Added Successfully!</h2></li>)
     // if (content === "rmvFit") return(<li><h2>Are You Sure?</h2><Button onClick={setConfirmDl("yes")}>Yes</Button></li>)
   }
 
