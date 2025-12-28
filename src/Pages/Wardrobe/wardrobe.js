@@ -173,25 +173,6 @@ const W2 = () => {
                         </span>
                     )}
                 </IconButton>
-
-                {/* Edit mode toggle */}
-                <IconButton
-                    size="small"
-                    onClick={() => {
-                        const editIcons = document.querySelectorAll('.edit-icon-overlay');
-                        editIcons.forEach(icon => {
-                            icon.style.display = icon.style.display === 'none' ? 'flex' : 'none';
-                        });
-                    }}
-                    style={{
-                        background: 'rgba(255, 255, 255, 0.85)',
-                        backdropFilter: 'blur(10px)',
-                        border: '1px solid rgba(0,0,0,0.1)'
-                    }}
-                    title="Toggle edit mode"
-                >
-                    <EditIcon style={{ fontSize: '20px' }} />
-                </IconButton>
             </div>
 
             {/* Collapsible Filter Options */}
@@ -318,14 +299,14 @@ const W2 = () => {
                                 <img src={hanger} alt="hanger" width="25" height="25" id="hang"/>
                             </IconButton>
 
-                            {/* Edit button overlay - hidden by default */}
+                            {/* Edit button overlay - always visible */}
                             <div
                                 className="edit-icon-overlay"
                                 style={{
                                     position: 'absolute',
                                     top: '10px',
                                     right: '10px',
-                                    display: 'none',
+                                    display: 'flex',
                                     gap: '5px'
                                 }}
                             >
