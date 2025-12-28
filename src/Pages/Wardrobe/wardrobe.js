@@ -120,7 +120,7 @@ const W2 = () => {
                 padding: '20px 50px',
                 scrollBehavior: 'smooth',
                 WebkitOverflowScrolling: 'touch',
-                maxHeight: 'calc(100vh - 250px)',
+                maxHeight: 'calc(100vh - 280px)',
                 alignItems: 'center',
                 minHeight: 0
             }}>
@@ -402,8 +402,9 @@ const W2 = () => {
             <div className="add-fit" style={{
                 width: '100%',
                 textAlign: 'center',
-                padding: '15px 0 25px 0',
-                flexShrink: 0
+                padding: '10px 0 40px 0',
+                flexShrink: 0,
+                marginBottom: '20px'
             }}>
                 <img src={closet} alt="closet"/><br/>
                 <IconButton onClick={() => history.push("/add")}>
