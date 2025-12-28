@@ -12,11 +12,7 @@ import hanger from "../../images/hanger.png";
 import closet from "../../images/closet.png";
 import { UserContext } from "../../utils/UserContext";
 import garmetsBck from "../../images/garmets.png";
-// Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
-
-// Import Swiper styles
-import 'swiper/swiper.min.css';
+// No carousel library needed - using simple CSS Grid
 
 const W2 = () => {
     const [{ user }] = useStateValue();
@@ -138,9 +134,6 @@ const W2 = () => {
 
     const activeFiltersCount = [temperatureFilter, contextFilter, weatherFilter]
         .filter(f => f !== "all").length;
-
-    // Retrieve slide # var from css
-    let num = getComputedStyle(document.documentElement).getPropertyValue('--slideNum');
 
     // Render empty state
     if (!loading && outfits.length === 0) {
@@ -307,35 +300,67 @@ const W2 = () => {
                     </button>
                 </div>
             ) : (
-                <Swiper spaceBetween={50} slidesPerView={num} className="mySwiper">
+                <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+                    gap: '30px',
+                    padding: '20px',
+                    maxWidth: '1400px',
+                    margin: '0 auto'
+                }}>
                     {filteredOutfits.map(outfit => (
-                        <SwiperSlide className="swiper-slide" key={outfit.id}>
+                        <div key={outfit.id} style={{
+                            background: 'rgba(255, 255, 255, 0.95)',
+                            borderRadius: '12px',
+                            padding: '20px',
+                            boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+                            transition: 'transform 0.2s, box-shadow 0.2s',
+                            ':hover': {
+                                transform: 'translateY(-5px)',
+                                boxShadow: '0 8px 12px rgba(0,0,0,0.15)'
+                            }
+                        }}>
                             {/* Outfit Name */}
-                            <h1 id="fit-name">{outfit.outfit}</h1>
+                            <h2 style={{
+                                textAlign: 'center',
+                                marginBottom: '15px',
+                                fontSize: '1.5em',
+                                color: '#333'
+                            }}>{outfit.outfit}</h2>
 
                             {/* Action Buttons */}
-                            <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginBottom: '10px' }}>
+                            <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginBottom: '15px' }}>
                                 <IconButton
                                     onClick={() => editOutfit(outfit)}
                                     title="Edit outfit"
-                                    style={{ background: '#fff', padding: '8px' }}
+                                    style={{ background: '#f5f5f5', padding: '8px' }}
                                 >
                                     <EditIcon style={{ width: '20px', height: '20px' }} />
                                 </IconButton>
                                 <IconButton
                                     onClick={() => removeFit(outfit)}
                                     title="Delete outfit"
-                                    style={{ background: '#fff', padding: '8px' }}
+                                    style={{ background: '#f5f5f5', padding: '8px' }}
                                 >
                                     <img src={hanger} alt="delete" width="20" height="20" />
                                 </IconButton>
                             </div>
 
                             {/* Outfit Image */}
-                            <img src={outfit.image} alt="outfit" id="fit-pic" />
+                            <img
+                                src={outfit.image}
+                                alt="outfit"
+                                style={{
+                                    width: '100%',
+                                    height: '300px',
+                                    objectFit: 'cover',
+                                    borderRadius: '8px',
+                                    marginBottom: '15px'
+                                }}
+                            />
 
                             {/* Metadata Tags */}
-                            <div style={{ display: 'flex', gap: '5px', justifyContent: 'center', marginTop: '10px', flexWrap: 'wrap' }}>
+                            <div style={{ display: 'flex', gap: '5px', justifyContent: 'center', flexWrap: 'wrap' }}>
                                 {outfit.temperature && (
                                     <Chip
                                         label={outfit.temperature}
@@ -362,9 +387,9 @@ const W2 = () => {
                                     />
                                 )}
                             </div>
-                        </SwiperSlide>
+                        </div>
                     ))}
-                </Swiper>
+                </div>
             )}
 
             {/* Add Outfit Button */}
