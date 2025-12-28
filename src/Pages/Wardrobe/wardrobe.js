@@ -110,6 +110,148 @@ const W2 = () => {
 
     return(
         <div className="wardrobe-page" style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+            {/* Carousel - Exact master style */}
+            <div className="mySwiper" style={{
+                display: 'flex',
+                overflowX: 'auto',
+                overflowY: 'hidden',
+                scrollSnapType: 'x mandatory',
+                gap: '50px',
+                padding: '20px 50px',
+                scrollBehavior: 'smooth',
+                WebkitOverflowScrolling: 'touch',
+                flex: 1,
+                alignItems: 'center',
+                minHeight: 0
+            }}>
+                {displayOutfits && displayOutfits.length > 0 ? (
+                    displayOutfits.map(outfit => (
+                        <div key={outfit.id} className="swiper-slide" style={{
+                            flex: '0 0 auto',
+                            scrollSnapAlign: 'center',
+                            position: 'relative',
+                            minWidth: '300px',
+                            maxWidth: '400px'
+                        }}>
+                            {/* Outfit name - exact master style */}
+                            <h1 id="fit-name" style={{
+                                textAlign: 'center',
+                                fontSize: '2em',
+                                marginBottom: '10px',
+                                color: '#333'
+                            }}>{outfit.outfit}</h1>
+
+                            {/* Delete button - exact master style */}
+                            <IconButton
+                                onClick={() => removeFit(outfit.id, outfit.outfit)}
+                                style={{
+                                    display: 'block',
+                                    margin: '0 auto 10px',
+                                    padding: '8px'
+                                }}
+                            >
+                                <img src={hanger} alt="hanger" width="25" height="25" id="hang"/>
+                            </IconButton>
+
+                            {/* Edit button overlay - always visible */}
+                            <div
+                                className="edit-icon-overlay"
+                                style={{
+                                    position: 'absolute',
+                                    top: '10px',
+                                    right: '10px',
+                                    display: 'flex',
+                                    gap: '5px'
+                                }}
+                            >
+                                <IconButton
+                                    size="small"
+                                    onClick={() => editOutfit(outfit)}
+                                    title="Edit outfit"
+                                    style={{
+                                        background: 'rgba(255,255,255,0.9)',
+                                        padding: '5px',
+                                        boxShadow: '0 1px 3px rgba(0,0,0,0.2)'
+                                    }}
+                                >
+                                    <EditIcon style={{ width: '16px', height: '16px' }} />
+                                </IconButton>
+                            </div>
+
+                            {/* Outfit image - exact master style */}
+                            <img
+                                src={outfit.image}
+                                alt="outfit"
+                                id="fit-pic"
+                                style={{
+                                    width: '100%',
+                                    maxHeight: '500px',
+                                    objectFit: 'cover',
+                                    borderRadius: '8px',
+                                    display: 'block'
+                                }}
+                            />
+
+                            {/* Metadata chips - subtle, below image */}
+                            {(outfit.temperature || outfit.context || outfit.weather) && (
+                                <div style={{
+                                    display: 'flex',
+                                    gap: '4px',
+                                    justifyContent: 'center',
+                                    flexWrap: 'wrap',
+                                    marginTop: '8px'
+                                }}>
+                                    {outfit.temperature && (
+                                        <Chip
+                                            label={outfit.temperature}
+                                            size="small"
+                                            style={{
+                                                height: '20px',
+                                                fontSize: '10px',
+                                                background: outfit.temperature === 'hot' ? '#ffebee' :
+                                                           outfit.temperature === 'cold' ? '#e3f2fd' : '#fff3e0',
+                                                color: outfit.temperature === 'hot' ? '#d32f2f' :
+                                                       outfit.temperature === 'cold' ? '#1976d2' : '#e65100',
+                                                border: 'none',
+                                                opacity: 0.8
+                                            }}
+                                        />
+                                    )}
+                                    {outfit.context && (
+                                        <Chip
+                                            label={outfit.context}
+                                            size="small"
+                                            style={{
+                                                height: '20px',
+                                                fontSize: '10px',
+                                                background: '#f5f5f5',
+                                                color: '#666',
+                                                opacity: 0.8
+                                            }}
+                                        />
+                                    )}
+                                    {outfit.weather && (
+                                        <Chip
+                                            label={outfit.weather}
+                                            size="small"
+                                            style={{
+                                                height: '20px',
+                                                fontSize: '10px',
+                                                background: '#f5f5f5',
+                                                color: '#666',
+                                                opacity: 0.8
+                                            }}
+                                        />
+                                    )}
+                                </div>
+                            )}
+                        </div>
+                    ))
+                ) : (
+                    <p style={{ width: '100%', textAlign: 'center' }}>Add outfits</p>
+                )}
+            </div>
+
             {/* Floating transparent search bar */}
             <div style={{
                 paddingTop: '10px',
@@ -255,148 +397,6 @@ const W2 = () => {
                     )}
                 </div>
             )}
-
-            {/* Carousel - Exact master style */}
-            <div className="mySwiper" style={{
-                display: 'flex',
-                overflowX: 'auto',
-                overflowY: 'hidden',
-                scrollSnapType: 'x mandatory',
-                gap: '50px',
-                padding: '20px 50px',
-                scrollBehavior: 'smooth',
-                WebkitOverflowScrolling: 'touch',
-                flex: 1,
-                alignItems: 'center',
-                minHeight: 0
-            }}>
-                {displayOutfits && displayOutfits.length > 0 ? (
-                    displayOutfits.map(outfit => (
-                        <div key={outfit.id} className="swiper-slide" style={{
-                            flex: '0 0 auto',
-                            scrollSnapAlign: 'center',
-                            position: 'relative',
-                            minWidth: '300px',
-                            maxWidth: '400px'
-                        }}>
-                            {/* Outfit name - exact master style */}
-                            <h1 id="fit-name" style={{
-                                textAlign: 'center',
-                                fontSize: '2em',
-                                marginBottom: '10px',
-                                color: '#333'
-                            }}>{outfit.outfit}</h1>
-
-                            {/* Delete button - exact master style */}
-                            <IconButton
-                                onClick={() => removeFit(outfit.id, outfit.outfit)}
-                                style={{
-                                    display: 'block',
-                                    margin: '0 auto 10px',
-                                    padding: '8px'
-                                }}
-                            >
-                                <img src={hanger} alt="hanger" width="25" height="25" id="hang"/>
-                            </IconButton>
-
-                            {/* Edit button overlay - always visible */}
-                            <div
-                                className="edit-icon-overlay"
-                                style={{
-                                    position: 'absolute',
-                                    top: '10px',
-                                    right: '10px',
-                                    display: 'flex',
-                                    gap: '5px'
-                                }}
-                            >
-                                <IconButton
-                                    size="small"
-                                    onClick={() => editOutfit(outfit)}
-                                    title="Edit outfit"
-                                    style={{
-                                        background: 'rgba(255,255,255,0.9)',
-                                        padding: '5px',
-                                        boxShadow: '0 1px 3px rgba(0,0,0,0.2)'
-                                    }}
-                                >
-                                    <EditIcon style={{ width: '16px', height: '16px' }} />
-                                </IconButton>
-                            </div>
-
-                            {/* Outfit image - exact master style */}
-                            <img
-                                src={outfit.image}
-                                alt="outfit"
-                                id="fit-pic"
-                                style={{
-                                    width: '100%',
-                                    maxHeight: '500px',
-                                    objectFit: 'cover',
-                                    borderRadius: '8px',
-                                    display: 'block'
-                                }}
-                            />
-
-                            {/* Metadata chips - subtle, below image */}
-                            {(outfit.temperature || outfit.context || outfit.weather) && (
-                                <div style={{
-                                    display: 'flex',
-                                    gap: '4px',
-                                    justifyContent: 'center',
-                                    flexWrap: 'wrap',
-                                    marginTop: '8px'
-                                }}>
-                                    {outfit.temperature && (
-                                        <Chip
-                                            label={outfit.temperature}
-                                            size="small"
-                                            style={{
-                                                height: '20px',
-                                                fontSize: '10px',
-                                                background: outfit.temperature === 'hot' ? '#ffebee' :
-                                                           outfit.temperature === 'cold' ? '#e3f2fd' : '#fff3e0',
-                                                color: outfit.temperature === 'hot' ? '#d32f2f' :
-                                                       outfit.temperature === 'cold' ? '#1976d2' : '#e65100',
-                                                border: 'none',
-                                                opacity: 0.8
-                                            }}
-                                        />
-                                    )}
-                                    {outfit.context && (
-                                        <Chip
-                                            label={outfit.context}
-                                            size="small"
-                                            style={{
-                                                height: '20px',
-                                                fontSize: '10px',
-                                                background: '#f5f5f5',
-                                                color: '#666',
-                                                opacity: 0.8
-                                            }}
-                                        />
-                                    )}
-                                    {outfit.weather && (
-                                        <Chip
-                                            label={outfit.weather}
-                                            size="small"
-                                            style={{
-                                                height: '20px',
-                                                fontSize: '10px',
-                                                background: '#f5f5f5',
-                                                color: '#666',
-                                                opacity: 0.8
-                                            }}
-                                        />
-                                    )}
-                                </div>
-                            )}
-                        </div>
-                    ))
-                ) : (
-                    <p style={{ width: '100%', textAlign: 'center' }}>Add outfits</p>
-                )}
-            </div>
 
             {/* Add Outfit Button - exact master style */}
             <div className="add-fit" style={{
