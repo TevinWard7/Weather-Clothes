@@ -1,11 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import { Button } from "@material-ui/core";
 import "./login.css";
 import { firebase, auth, provider } from "../../utils/firebase";
 import { useStateValue } from "../../utils/stateProvider";
 import { actionTypes } from "../../utils/reducer";
 import anime from 'animejs/lib/anime.es.js';
-import { storage } from "../../utils/firebase";
 // import sky from "../../images/rack.png";
 // import jean from "../../images/jean.png";
 // import catImg from "../../images/cat.png";
@@ -13,30 +12,12 @@ import { storage } from "../../utils/firebase";
 
 const LogIn = () => {
 
-    const [catImg, setCatImg] = useState();
-    const [sunImg, setSunImg] = useState();
     // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
     let vh = window.innerHeight * 0.01;
     // Then we set the value in the --vh custom property to the root of the document
     document.documentElement.style.setProperty('--vh', `${vh}px`);
 
     useEffect(() => {
-
-            storage
-            .ref("myImages")
-            .child("cat.png")
-            .getDownloadURL()
-            .then(url => {
-                setCatImg(url)
-            })
-
-            storage
-            .ref("myImages")
-            .child("sun.png")
-            .getDownloadURL()
-            .then(url => {
-                setSunImg(url)
-            })
 
         anime({
             targets: '.login-container > h1',
