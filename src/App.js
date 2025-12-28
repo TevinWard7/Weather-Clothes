@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import Navbar from "./components/Navbar/nav";
 import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
+import LoadingScreen from "./components/LoadingScreen/LoadingScreen";
 import {
   BrowserRouter as Router,
   Route,
@@ -11,7 +12,6 @@ import {
 import { useStateValue } from "./utils/stateProvider";
 import { auth } from "./utils/firebase";
 import { actionTypes } from "./utils/reducer";
-import { CircularProgress } from "@material-ui/core";
 import { UserContext } from './utils/UserContext';
 import { Button } from "@material-ui/core";
 
@@ -83,7 +83,7 @@ const App = () => {
         {
         !user ? (
           fetching ? (
-            <div id="loader"><CircularProgress /></div>
+            <LoadingScreen />
           ) : (
             <LogIn />
           )
