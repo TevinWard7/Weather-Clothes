@@ -15,14 +15,8 @@ import garmetsBck from "../../images/garmets.png";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
-// Import Swiper core and required modules
-import SwiperCore, { Navigation } from 'swiper';
-
-// Import Swiper styles - use bundled CSS
-import 'swiper/swiper-bundle.min.css';
-
-// Install Swiper modules
-SwiperCore.use([Navigation]);
+// Import Swiper styles
+import 'swiper/swiper-bundle.css';
 
 const W2 = () => {
     const [{ user }] = useStateValue();
@@ -313,7 +307,7 @@ const W2 = () => {
                     </button>
                 </div>
             ) : (
-                <Swiper navigation={true} spaceBetween={50} slidesPerView={num} className="mySwiper">
+                <Swiper spaceBetween={50} slidesPerView={num} className="mySwiper">
                     {filteredOutfits.map(outfit => (
                         <SwiperSlide className="swiper-slide" key={outfit.id}>
                             {/* Outfit Name */}
