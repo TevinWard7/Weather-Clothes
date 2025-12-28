@@ -12,11 +12,16 @@ import hanger from "../../images/hanger.png";
 import closet from "../../images/closet.png";
 import { UserContext } from "../../utils/UserContext";
 import garmetsBck from "../../images/garmets.png";
+// Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Navigation } from 'swiper/core';
-import 'swiper/swiper.scss';
-import 'swiper/components/navigation/navigation.scss';
 
+// Import Swiper core and required modules
+import SwiperCore, { Navigation } from 'swiper';
+
+// Import Swiper styles - use bundled CSS
+import 'swiper/swiper-bundle.min.css';
+
+// Install Swiper modules
 SwiperCore.use([Navigation]);
 
 const W2 = () => {
