@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, lazy, Suspense } from 'react';
 import './App.css';
 import Navbar from "./components/Navbar/nav";
 import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
+import LoadingScreen from "./components/LoadingScreen/LoadingScreen";
 import {
   BrowserRouter as Router,
   Route,
@@ -11,16 +12,15 @@ import {
 import { useStateValue } from "./utils/stateProvider";
 import { auth } from "./utils/firebase";
 import { actionTypes } from "./utils/reducer";
-import { CircularProgress } from "@material-ui/core";
 import { UserContext } from './utils/UserContext';
 import { Button } from "@material-ui/core";
 
-// Direct imports - no lazy loading to fix routing issues
-import WeatherClothes from "./Pages/WeatherClothes/weatherclothes";
-import AddOutfit from './Pages/AddOutfit/addoutfit';
-import Wardrobe from './Pages/Wardrobe/wardrobe';
-import Location from "./Pages/Location/location";
-import LogIn from "./Pages/LogIn/login";
+// Lazy load pages for better performance
+const WeatherClothes = lazy(() => import("./Pages/WeatherClothes/weatherclothes"));
+const AddOutfit = lazy(() => import('./Pages/AddOutfit/addoutfit'));
+const Wardrobe = lazy(() => import('./Pages/Wardrobe/wardrobe'));
+const Location = lazy(() => import("./Pages/Location/location"));
+const LogIn = lazy(() => import("./Pages/LogIn/login"));
 
 // Routes component that uses location as key to force re-renders
 const Routes = () => {
@@ -74,6 +74,7 @@ const App = () => {
     }
     if (content === "img") return(<li><h2>Image Uploaded</h2></li>)
     if (content === "update") return(<li><h2>Updated</h2></li>)
+    if (content === "added") return(<li><h2>✓ Outfit Added Successfully!</h2></li>)
     // if (content === "rmvFit") return(<li><h2>Are You Sure?</h2><Button onClick={setConfirmDl("yes")}>Yes</Button></li>)
   }
 
@@ -83,9 +84,11 @@ const App = () => {
         {
         !user ? (
           fetching ? (
-            <div id="loader"><CircularProgress /></div>
+            <LoadingScreen />
           ) : (
-            <LogIn />
+            <Suspense fallback={<LoadingScreen />}>
+              <LogIn />
+            </Suspense>
           )
         ) : (
 
@@ -105,7 +108,9 @@ const App = () => {
 
               <Navbar />
 
-              <Routes />
+              <Suspense fallback={<LoadingScreen />}>
+                <Routes />
+              </Suspense>
 
             </UserContext.Provider>
           </div>
