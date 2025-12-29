@@ -110,8 +110,6 @@ const AddOutfit = () => {
                     )
                 }
             )
-            setInfoPop("block");
-            setInfoContent("img")
         } catch (error) {
             alert("Error compressing image. Please try again.");
         }
