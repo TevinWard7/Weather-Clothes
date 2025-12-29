@@ -10,6 +10,7 @@ import garmetsBck from "../../images/garmets.png";
 import { UserContext } from "../../utils/UserContext";
 import { sanitizeText, validateOutfitName, validateImageFile } from "../../utils/validation";
 import imageCompression from 'browser-image-compression';
+import { removeBackground } from '@imgly/background-removal';
 
 const AddOutfit = () => {
 
@@ -20,7 +21,6 @@ const AddOutfit = () => {
     // Get colleection from firebase
     const wardrobeRef = db.collection("wardrobe");
     const [outfitName, setOutfitName] = useState();
-    const [fitImage, setFitImage] = useState();
     const [imgUrl, setImgUrl] = useState();
     const [fitWeather, setFitWeather] = useState();
     const [fitTemp, setFitTemp] = useState();
@@ -28,6 +28,7 @@ const AddOutfit = () => {
     const [errors, setErrors] = useState({});
     const [isEditMode, setIsEditMode] = useState(false);
     const [outfitId, setOutfitId] = useState(null);
+    const [isProcessing, setIsProcessing] = useState(false);
     const {setBck, setInfoPop, setInfoContent} = useContext(UserContext);
 
     useEffect(() => {
@@ -78,17 +79,28 @@ const AddOutfit = () => {
         }
 
         setErrors({ ...errors, image: '' });
+        setIsProcessing(true);
 
         try {
+            // Remove background from image using AI
+            const imageBlob = await removeBackground(imageFile);
+
+            // Convert blob to file with original filename
+            const processedFile = new File(
+                [imageBlob],
+                imageFile.name,
+                { type: 'image/png' }
+            );
+
             // Compress image before uploading
             const options = {
                 maxSizeMB: 1,          // Maximum file size in MB
                 maxWidthOrHeight: 1920, // Maximum width or height
                 useWebWorker: true,     // Use web workers for better performance
-                fileType: imageFile.type // Preserve original file type
+                fileType: 'image/png'   // Use PNG to preserve transparency
             };
 
-            const compressedFile = await imageCompression(imageFile, options);
+            const compressedFile = await imageCompression(processedFile, options);
 
             // Upload compressed image to firestore storage
             const uploadTask = storage.ref(`images/${imageFile.name}`).put(compressedFile);
@@ -98,6 +110,7 @@ const AddOutfit = () => {
                 "state_changed",
                 snapshot => {},
                 error => {
+                    setIsProcessing(false);
                     alert("Error uploading image. Please try again.");
                 },
                 () => {
@@ -105,13 +118,16 @@ const AddOutfit = () => {
                     .ref("images")
                     .child(imageFile.name)
                     .getDownloadURL()
-                    .then(url =>
-                        setImgUrl(url)
-                    )
+                    .then(url => {
+                        setImgUrl(url);
+                        setIsProcessing(false);
+                    })
                 }
             )
         } catch (error) {
-            alert("Error compressing image. Please try again.");
+            setIsProcessing(false);
+            console.error('Error processing image:', error);
+            alert("Error processing image. Please try again.");
         }
 
     };
@@ -119,7 +135,6 @@ const AddOutfit = () => {
     const handleFileSelect = (event) => {
         const file = event.target.files[0];
         if (file) {
-            setFitImage(file);
             handleImgUpload(file); // Auto-upload immediately
         }
     };
@@ -193,12 +208,18 @@ const AddOutfit = () => {
                         <input type="text" placeholder="Name Your Outfit"
                         value={outfitName || ''}
                         onChange={(e) => setOutfitName(e.target.value)} id="fit-input"></input>
-                        
+
                         <br/>
                         <br/>
 
-                        <input type="file" accept="image/*" onChange={handleFileSelect} id="img-upload"></input>
-                        
+                        <input type="file" accept="image/*" onChange={handleFileSelect} id="img-upload" disabled={isProcessing}></input>
+
+                        {isProcessing && (
+                            <p style={{color: '#4CAF50', marginTop: '10px', fontWeight: 'bold'}}>
+                                🔄 Removing background and processing image...
+                            </p>
+                        )}
+
                         <br/>
                         <br/>
 
@@ -244,7 +265,7 @@ const AddOutfit = () => {
                         {// If there is no outfit name and details disable submit button otherwise enable
                         }
                         {
-                        outfitName && fitWeather && fitTemp && imgUrl && fitContext  ?
+                        outfitName && fitWeather && fitTemp && imgUrl && fitContext && !isProcessing ?
                         <Button onClick={() => addOutfit()}>{isEditMode ? 'Update' : 'Submit'}</Button>
                         :
                         <Button disabled>{isEditMode ? 'Update' : 'Submit'}</Button>
