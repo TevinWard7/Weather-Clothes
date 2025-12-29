@@ -1,15 +1,26 @@
 import React from 'react';
 import './LoadingScreen.css';
-import loadingGif from '../../images/peacock-loading.gif';
 
 const LoadingScreen = () => {
+    // Try to load the gif, fall back to CSS spinner if not available
+    let loadingGif;
+    try {
+        loadingGif = require('../../images/peacock-loading.gif');
+    } catch (e) {
+        loadingGif = null;
+    }
+
     return (
         <div className="loading-screen">
-            <img
-                src={loadingGif}
-                alt="Loading..."
-                className="peacock-gif"
-            />
+            {loadingGif ? (
+                <img
+                    src={loadingGif}
+                    alt="Loading..."
+                    className="peacock-gif"
+                />
+            ) : (
+                <div className="loading-spinner"></div>
+            )}
         </div>
     );
 };
