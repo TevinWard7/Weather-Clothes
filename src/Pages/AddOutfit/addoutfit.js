@@ -255,8 +255,9 @@ const AddOutfit = () => {
                         <input type="file" accept="image/*" onChange={handleFileSelect} id="img-upload" disabled={isProcessing}></input>
 
                         {isProcessing && (
-                            <p style={{color: '#4CAF50', marginTop: '10px', fontWeight: 'bold'}}>
-                                🔄 Removing background and uploading image...
+                            <p className="processing-message">
+                                <span className="spinner">⚙️</span>
+                                Processing your image...
                             </p>
                         )}
 
