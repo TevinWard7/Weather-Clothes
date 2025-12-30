@@ -67,6 +67,49 @@ const AddOutfit = () => {
 
     },[setBck, location.search])
 
+    const removeBackground = async (imageFile) => {
+        const apiKey = process.env.REACT_APP_REMOVEBG_API_KEY;
+
+        if (!apiKey) {
+            console.warn('Remove.bg API key not configured. Skipping background removal.');
+            return { file: imageFile, backgroundRemoved: false };
+        }
+
+        const formData = new FormData();
+        formData.append("size", "preview"); // Use preview (free tier)
+        formData.append("image_file", imageFile);
+
+        try {
+            const response = await fetch("https://api.remove.bg/v1.0/removebg", {
+                method: "POST",
+                headers: { "X-Api-Key": apiKey },
+                body: formData,
+            });
+
+            if (response.ok) {
+                const blob = await response.blob();
+                // Convert blob to file
+                const processedFile = new File([blob], imageFile.name, { type: 'image/png' });
+                return { file: processedFile, backgroundRemoved: true };
+            } else {
+                const error = await response.json();
+                console.warn('Remove.bg API error:', error);
+
+                // Check if it's an insufficient credits error
+                if (error.errors?.[0]?.code === 'insufficient_credits') {
+                    console.warn('Out of Remove.bg API credits. Uploading image without background removal.');
+                } else {
+                    console.warn('Background removal failed. Uploading original image.');
+                }
+
+                return { file: imageFile, backgroundRemoved: false };
+            }
+        } catch (error) {
+            console.warn('Error removing background. Uploading original image.', error);
+            return { file: imageFile, backgroundRemoved: false };
+        }
+    };
+
     const handleImgUpload = async (imageFile) => {
 
         // Validate image file
@@ -81,14 +124,23 @@ const AddOutfit = () => {
         setIsProcessing(true);
 
         try {
+            // Remove background from image using remove.bg API
+            const { file: processedFile, backgroundRemoved } = await removeBackground(imageFile);
+
+            // Show warning if background removal failed (but continue with upload)
+            if (!backgroundRemoved && process.env.REACT_APP_REMOVEBG_API_KEY) {
+                console.info('Continuing with image upload without background removal.');
+            }
+
             // Compress image before uploading
             const options = {
                 maxSizeMB: 1,          // Maximum file size in MB
                 maxWidthOrHeight: 1920, // Maximum width or height
                 useWebWorker: true,     // Use web workers for better performance
+                fileType: backgroundRemoved ? 'image/png' : undefined   // Use PNG for transparency if background was removed
             };
 
-            const compressedFile = await imageCompression(imageFile, options);
+            const compressedFile = await imageCompression(processedFile, options);
 
             // Upload compressed image to firestore storage
             const uploadTask = storage.ref(`images/${imageFile.name}`).put(compressedFile);
@@ -203,8 +255,9 @@ const AddOutfit = () => {
                         <input type="file" accept="image/*" onChange={handleFileSelect} id="img-upload" disabled={isProcessing}></input>
 
                         {isProcessing && (
-                            <p style={{color: '#4CAF50', marginTop: '10px', fontWeight: 'bold'}}>
-                                🔄 Processing and uploading image...
+                            <p className="processing-message">
+                                <span className="spinner">⚙️</span>
+                                Processing your image...
                             </p>
                         )}
 
