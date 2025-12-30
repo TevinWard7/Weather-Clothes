@@ -4,20 +4,85 @@
     height: 100vh;
     background-image: url(../..//images/ren.png);
     background-size: cover;
+    animation: fadeIn 0.5s ease-in;
 }
 
 .enter-city {
     padding: 1rem;
     background-color: rgba(255, 255, 255, 0.596);
+    animation: scaleIn 0.5s ease-out;
+    border-radius: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.enter-city:hover {
+    transform: scale(1.02);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
 }
 
 .enter-city > h1 {
     font-weight: 400;
     font-size: 50px;
+    animation: slideInFromTop 0.6s ease-out 0.2s both;
 }
 
 .enter-city > div > input {
     font-size: 25px;
     background-color: inherit;
+    transition: border-color 0.3s ease, transform 0.2s ease;
+    border: 2px solid transparent;
+    border-bottom: 2px solid #ccc;
+    padding: 8px;
+}
+
+.enter-city > div > input:focus {
+    border-bottom-color: #333;
+    transform: scale(1.02);
+    outline: none;
+}
+
+.enter-city > div > button {
+    transition: all 0.3s ease;
+}
+
+.enter-city > div > button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.enter-city > div > button:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+/* Animation Keyframes */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromTop {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
