@@ -11,10 +11,14 @@ const firebaseConfig = {
     appId: process.env.REACT_APP_FIREBASE_APP_ID,
     measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 };
-  
+
   // Initialize Firebase
   const firebaseApp = firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
+
+  // Only initialize analytics if all required config values are present
+  if (firebaseConfig.projectId && firebaseConfig.appId) {
+    firebase.analytics();
+  }
   const db = firebaseApp.firestore();
   const auth = firebase.auth();
   const provider = new firebase.auth.GoogleAuthProvider();
