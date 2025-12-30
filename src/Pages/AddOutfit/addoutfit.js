@@ -67,6 +67,40 @@ const AddOutfit = () => {
 
     },[setBck, location.search])
 
+    const removeBackground = async (imageFile) => {
+        const apiKey = process.env.REACT_APP_REMOVEBG_API_KEY;
+
+        if (!apiKey) {
+            console.warn('Remove.bg API key not configured. Skipping background removal.');
+            return imageFile; // Return original file if no API key
+        }
+
+        const formData = new FormData();
+        formData.append("size", "preview"); // Use preview (free tier)
+        formData.append("image_file", imageFile);
+
+        try {
+            const response = await fetch("https://api.remove.bg/v1.0/removebg", {
+                method: "POST",
+                headers: { "X-Api-Key": apiKey },
+                body: formData,
+            });
+
+            if (response.ok) {
+                const blob = await response.blob();
+                // Convert blob to file
+                return new File([blob], imageFile.name, { type: 'image/png' });
+            } else {
+                const error = await response.json();
+                console.error('Remove.bg API error:', error);
+                throw new Error(error.errors?.[0]?.title || 'Background removal failed');
+            }
+        } catch (error) {
+            console.error('Error removing background:', error);
+            throw error;
+        }
+    };
+
     const handleImgUpload = async (imageFile) => {
 
         // Validate image file
@@ -81,14 +115,18 @@ const AddOutfit = () => {
         setIsProcessing(true);
 
         try {
+            // Remove background from image using remove.bg API
+            const processedFile = await removeBackground(imageFile);
+
             // Compress image before uploading
             const options = {
                 maxSizeMB: 1,          // Maximum file size in MB
                 maxWidthOrHeight: 1920, // Maximum width or height
                 useWebWorker: true,     // Use web workers for better performance
+                fileType: 'image/png'   // Use PNG to preserve transparency
             };
 
-            const compressedFile = await imageCompression(imageFile, options);
+            const compressedFile = await imageCompression(processedFile, options);
 
             // Upload compressed image to firestore storage
             const uploadTask = storage.ref(`images/${imageFile.name}`).put(compressedFile);
@@ -204,7 +242,7 @@ const AddOutfit = () => {
 
                         {isProcessing && (
                             <p style={{color: '#4CAF50', marginTop: '10px', fontWeight: 'bold'}}>
-                                🔄 Processing and uploading image...
+                                🔄 Removing background and uploading image...
                             </p>
                         )}
 
