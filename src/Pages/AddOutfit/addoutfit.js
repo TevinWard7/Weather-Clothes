@@ -10,7 +10,6 @@ import garmetsBck from "../../images/garmets.png";
 import { UserContext } from "../../utils/UserContext";
 import { sanitizeText, validateOutfitName, validateImageFile } from "../../utils/validation";
 import imageCompression from 'browser-image-compression';
-import { removeBackground } from '@imgly/background-removal';
 
 const AddOutfit = () => {
 
@@ -82,25 +81,14 @@ const AddOutfit = () => {
         setIsProcessing(true);
 
         try {
-            // Remove background from image using AI
-            const imageBlob = await removeBackground(imageFile);
-
-            // Convert blob to file with original filename
-            const processedFile = new File(
-                [imageBlob],
-                imageFile.name,
-                { type: 'image/png' }
-            );
-
             // Compress image before uploading
             const options = {
                 maxSizeMB: 1,          // Maximum file size in MB
                 maxWidthOrHeight: 1920, // Maximum width or height
                 useWebWorker: true,     // Use web workers for better performance
-                fileType: 'image/png'   // Use PNG to preserve transparency
             };
 
-            const compressedFile = await imageCompression(processedFile, options);
+            const compressedFile = await imageCompression(imageFile, options);
 
             // Upload compressed image to firestore storage
             const uploadTask = storage.ref(`images/${imageFile.name}`).put(compressedFile);
@@ -216,7 +204,7 @@ const AddOutfit = () => {
 
                         {isProcessing && (
                             <p style={{color: '#4CAF50', marginTop: '10px', fontWeight: 'bold'}}>
-                                🔄 Removing background and processing image...
+                                🔄 Processing and uploading image...
                             </p>
                         )}
 
