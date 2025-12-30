@@ -72,7 +72,7 @@ const AddOutfit = () => {
 
         if (!apiKey) {
             console.warn('Remove.bg API key not configured. Skipping background removal.');
-            return imageFile; // Return original file if no API key
+            return { file: imageFile, backgroundRemoved: false };
         }
 
         const formData = new FormData();
@@ -89,15 +89,24 @@ const AddOutfit = () => {
             if (response.ok) {
                 const blob = await response.blob();
                 // Convert blob to file
-                return new File([blob], imageFile.name, { type: 'image/png' });
+                const processedFile = new File([blob], imageFile.name, { type: 'image/png' });
+                return { file: processedFile, backgroundRemoved: true };
             } else {
                 const error = await response.json();
-                console.error('Remove.bg API error:', error);
-                throw new Error(error.errors?.[0]?.title || 'Background removal failed');
+                console.warn('Remove.bg API error:', error);
+
+                // Check if it's an insufficient credits error
+                if (error.errors?.[0]?.code === 'insufficient_credits') {
+                    console.warn('Out of Remove.bg API credits. Uploading image without background removal.');
+                } else {
+                    console.warn('Background removal failed. Uploading original image.');
+                }
+
+                return { file: imageFile, backgroundRemoved: false };
             }
         } catch (error) {
-            console.error('Error removing background:', error);
-            throw error;
+            console.warn('Error removing background. Uploading original image.', error);
+            return { file: imageFile, backgroundRemoved: false };
         }
     };
 
@@ -116,14 +125,19 @@ const AddOutfit = () => {
 
         try {
             // Remove background from image using remove.bg API
-            const processedFile = await removeBackground(imageFile);
+            const { file: processedFile, backgroundRemoved } = await removeBackground(imageFile);
+
+            // Show warning if background removal failed (but continue with upload)
+            if (!backgroundRemoved && process.env.REACT_APP_REMOVEBG_API_KEY) {
+                console.info('Continuing with image upload without background removal.');
+            }
 
             // Compress image before uploading
             const options = {
                 maxSizeMB: 1,          // Maximum file size in MB
                 maxWidthOrHeight: 1920, // Maximum width or height
                 useWebWorker: true,     // Use web workers for better performance
-                fileType: 'image/png'   // Use PNG to preserve transparency
+                fileType: backgroundRemoved ? 'image/png' : undefined   // Use PNG for transparency if background was removed
             };
 
             const compressedFile = await imageCompression(processedFile, options);
