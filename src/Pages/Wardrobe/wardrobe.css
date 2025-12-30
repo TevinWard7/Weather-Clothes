@@ -4,6 +4,7 @@
     height: 100vh;
     width: 100vw;
     z-index: 3;
+    animation: fadeIn 0.4s ease-in;
 }
 
 .mySwiper::-webkit-scrollbar {
@@ -15,6 +16,12 @@
     bottom: 25;
     text-align: center;
     padding-top: 45px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.add-fit:hover {
+    transform: translateY(-5px);
+    opacity: 0.8;
 }
 
 #fit-pic {
@@ -24,6 +31,13 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 8px;
+}
+
+#fit-pic:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 #fit-name {
@@ -32,12 +46,22 @@
     /* margin-bottom: 20px; */
     padding-left: 1rem;
     padding-right: 1rem;
+    transition: color 0.3s ease;
+}
+
+#fit-name:hover {
+    color: #666;
 }
 
 #hang {
     display: block;
     margin-left: auto;
     margin-right: auto;
+    transition: transform 0.2s ease;
+}
+
+#hang:hover {
+    transform: rotate(10deg) scale(1.1);
 }
 
 .swiper-slide {
@@ -45,16 +69,72 @@
     flex-direction: column;
     align-items: center;
     height: 100%;
+    animation: slideInFromBottom 0.5s ease-out;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.swiper-slide:hover {
+    transform: translateY(-10px);
 }
 
 .swiper-button-next, .swiper-button-prev{
     color: black;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.swiper-button-next:hover, .swiper-button-prev:hover {
+    transform: scale(1.2);
+    opacity: 1;
 }
 
 :root {
     --slideNum: 3;
 }
 
+/* Animation Keyframes */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromBottom {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromLeft {
+    from {
+        transform: translateX(-30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Button animations */
+button, .MuiIconButton-root {
+    transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+button:active, .MuiIconButton-root:active {
+    transform: scale(0.95);
+}
+
+button:hover, .MuiIconButton-root:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
 
 @media screen and (max-width: 540px) {
     :root {

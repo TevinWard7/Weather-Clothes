@@ -2,17 +2,25 @@
     display: grid;
     place-items: center;
     height: 100vh;
+    animation: fadeIn 0.5s ease-in;
 }
 
 .clothing-inputs {
     list-style-type: none;
     /* text-align: center; */
+    animation: slideUp 0.6s ease-out;
 }
 
 input {
     text-align: center;
     border: none;
     outline-width: 0;
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 #img-upload::-webkit-file-upload-button {
@@ -24,18 +32,36 @@ input {
         border-radius: 3px;
         white-space: nowrap;
         cursor: pointer;
+        transition: all 0.3s ease;
+}
+
+#img-upload::-webkit-file-upload-button:hover {
+        transform: scale(1.05);
+        background: rgba(0, 0, 0, 0.05);
 }
 
 #img-upload {
     background-color: inherit;
+    transition: transform 0.2s ease;
 }
 
 .fits {
     margin: 25px;
+    transition: transform 0.3s ease;
+}
+
+.fits:hover {
+    transform: scale(1.02);
 }
 
 .custom-select {
     text-align-last: center;
+    transition: all 0.3s ease;
+}
+
+.custom-select:focus {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .select-items {
@@ -50,6 +76,7 @@ input {
 #enter-fit {
     font-weight: 400;
     font-size: 50px;
+    animation: slideInFromTop 0.6s ease-out 0.2s both;
 }
 
 #fit-input {
@@ -68,6 +95,38 @@ input {
     display: inline-block;
     animation: spin 1s linear infinite;
     margin-right: 8px;
+}
+
+/* Animation Keyframes */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromTop {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 @keyframes pulse {
