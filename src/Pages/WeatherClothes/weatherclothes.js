@@ -240,7 +240,7 @@ const WeatherClothes = () => {
 
     return (
         <>
-            <div className="container">
+            <div className="container" style={{animation: 'fadeIn 0.5s ease-in'}}>
                 <div className="row text-center">
                     <div className="col-12">
                         <ul className="day-list">
@@ -257,10 +257,12 @@ const WeatherClothes = () => {
 
                 <div className="row text-center">
                     <div className="col"></div>
-                    <div className="col">
-                        <h1>Today's Outfit</h1>
-                        <hr />
-                        {renderContent()}
+                    <div className="col" style={{animation: 'slideUp 0.6s ease-out 0.2s both'}}>
+                        <h1 style={{animation: 'slideInFromRight 0.5s ease-out 0.3s both'}}>Today's Outfit</h1>
+                        <hr style={{animation: 'scaleX 0.4s ease-out 0.5s both', transformOrigin: 'center'}} />
+                        <div style={{animation: 'scaleIn 0.5s ease-out 0.6s both'}}>
+                            {renderContent()}
+                        </div>
                     </div>
                     <div className="col"></div>
                 </div>
